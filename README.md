@@ -37,7 +37,7 @@ var copyHelper = new PostgreSQLCopyHelper<LocalWeatherData>()
     .AddColumn("wban", x => x.WBAN)
     .AddColumn("sky_condition", x => x.SkyCondition)
     .AddColumn("date", x => x.Date);
-``
+```
 
 And then we can use it to efficiently store the data:
 
