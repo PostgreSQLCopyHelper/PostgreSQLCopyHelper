@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{75C3DC5C-C842-4A22-9A30-B0EE092C3F7C}</ProjectGuid>
+    <ProjectGuid>{AF0280FB-3E4A-4145-8E66-0406164ACB2D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PostgreSQLCopyHelper</RootNamespace>
-    <AssemblyName>PostgreSQLCopyHelper</AssemblyName>
+    <RootNamespace>PostgreSQLCopyHelper.Test</RootNamespace>
+    <AssemblyName>PostgreSQLCopyHelper.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,8 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Npgsql">
+    <Reference Include="Npgsql, Version=3.0.2.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Npgsql.3.0.2\lib\net45\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -42,21 +46,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\BooleanTypeExtensions.cs" />
-    <Compile Include="Extensions\BitStringTypeExtensions.cs" />
-    <Compile Include="Extensions\ArrayTypeExtensions.cs" />
-    <Compile Include="Extensions\UUIDTypeExtensions.cs" />
-    <Compile Include="Extensions\NetworkAddressTypeExtensions.cs" />
-    <Compile Include="Extensions\DateTimeTypeExtensions.cs" />
-    <Compile Include="Extensions\BinaryDataTypeExtensions.cs" />
-    <Compile Include="Extensions\CharacterTypeExtensions.cs" />
-    <Compile Include="Extensions\MonetaryTypeExtensions.cs" />
-    <Compile Include="Extensions\NumericTypeExtensions.cs" />
-    <Compile Include="PostgreSQLCopyHelper.cs" />
+    <Compile Include="BasicDataTypesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PostgreSQLCopyHelper\PostgreSQLCopyHelper.csproj">
+      <Project>{75c3dc5c-c842-4a22-9a30-b0ee092c3f7c}</Project>
+      <Name>PostgreSQLCopyHelper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>PostgreSQLCopyHelper</id>
+        <version>0.1</version>
+        <title>PostgreSQLCopyHelper</title>
+        <authors>Philipp Wagner</authors>
+        <owners>Philipp Wagner</owners>
+        <language>en-US</language>
+        <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+        <projectUrl>https://github.com/bytefish/PostgreSQLCopyHelper</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Provides a nice wrapper around PostgreSQL COPY.</description>
+        <copyright>Copyright © 2015 Philipp Wagner</copyright>
+        <tags>postgresql, bulk copy</tags>
+    </metadata>
+    <dependencies>
+        <dependency id="Npgsql" version="(3.0.2,)" />
+    </dependencies>
+    <files>
+        <file src="..\PostgreSQLCopyHelper\bin\Release\PostgreSQLCopyHelper.dll" target="lib\net45" />
+        <file src="..\PostgreSQLCopyHelper\bin\Release\PostgreSQLCopyHelper.pdb" target="lib\net45" />
+    </files>
+</package>

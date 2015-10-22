@@ -1,8 +1,11 @@
-﻿using Npgsql;
-using NpgsqlTypes;
+﻿// Copyright (c) Philipp Wagner. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using Npgsql;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using NpgsqlTypes;
 
 namespace PostgreSQLCopyHelper
 {
@@ -59,21 +62,7 @@ namespace PostgreSQLCopyHelper
             };
             return this;
         }
-
-        public PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Func<TEntity, string> propertyGetter)
-        {
-            AddColumn(columnName, (writer, entity) => writer.Write(propertyGetter(entity), NpgsqlDbType.Text));
-
-            return this;
-        }
-
-        public PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Func<TEntity, System.DateTime> propertyGetter)
-        {
-            AddColumn(columnName, (writer, entity) => writer.Write(propertyGetter(entity), NpgsqlDbType.Date));
-
-            return this;
-        }
-
+        
         public void SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities)
         {
             using (var binaryCopyWriter = connection.BeginBinaryImport(GetCopyCommand()))
@@ -104,7 +93,12 @@ namespace PostgreSQLCopyHelper
             }
         }
 
-        private PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Action<NpgsqlBinaryImporter, TEntity> action)
+        public PostgreSQLCopyHelper<TEntity> Map<TProperty>(string columnName, Func<TEntity, TProperty> propertyGetter, NpgsqlDbType type)
+        {
+            return AddColumn(columnName, (writer, entity) => writer.Write(propertyGetter(entity), type));
+        }
+        
+        public PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Action<NpgsqlBinaryImporter, TEntity> action)
         {
             Columns.Add(new ColumnDefinition
             {

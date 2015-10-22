@@ -1,0 +1,1 @@
+nuget pack PostgreSQLCopyHelper.nuspec -symbols -NonInteractive -OutputDirectory ./nupkg
