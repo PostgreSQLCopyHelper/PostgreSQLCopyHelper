@@ -80,6 +80,11 @@ namespace PostgreSQLCopyHelper
             }
         }
 
+        public PostgreSQLCopyHelper<TEntity> Map<TProperty>(string columnName, Func<TEntity, TProperty> propertyGetter, NpgsqlDbType type)
+        {
+            return AddColumn(columnName, (writer, entity) => writer.Write(propertyGetter(entity), type));
+        }
+
         private void WriteToStream(NpgsqlBinaryImporter writer, IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)
@@ -92,13 +97,8 @@ namespace PostgreSQLCopyHelper
                 }
             }
         }
-
-        public PostgreSQLCopyHelper<TEntity> Map<TProperty>(string columnName, Func<TEntity, TProperty> propertyGetter, NpgsqlDbType type)
-        {
-            return AddColumn(columnName, (writer, entity) => writer.Write(propertyGetter(entity), type));
-        }
         
-        public PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Action<NpgsqlBinaryImporter, TEntity> action)
+        private PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Action<NpgsqlBinaryImporter, TEntity> action)
         {
             Columns.Add(new ColumnDefinition
             {
