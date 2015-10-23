@@ -400,7 +400,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.AreEqual(entity1.IpAddress, result1);
         }
 
-        [Test, Ignore("This is apparently a Bug in Npgsql")]
+        [Test, Explicit("This is a potential Bug in Npgsql")]
         public void Test_MacAddress()
         {
             var entity0 = new TestEntity()
