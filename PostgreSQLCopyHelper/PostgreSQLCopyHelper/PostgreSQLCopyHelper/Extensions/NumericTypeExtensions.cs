@@ -58,12 +58,12 @@ namespace PostgreSQLCopyHelper.Extensions
             return helper.Map(columnName, propertyGetter, NpgsqlDbType.Real);
         }
 
-        public static PostgreSQLCopyHelper<TEntity> MapReal<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Double> propertyGetter)
+        public static PostgreSQLCopyHelper<TEntity> MapDouble<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Double> propertyGetter)
         {
             return helper.Map(columnName, propertyGetter, NpgsqlDbType.Double);
         }
 
-        public static PostgreSQLCopyHelper<TEntity> MapReal<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Double?> propertyGetter)
+        public static PostgreSQLCopyHelper<TEntity> MapDouble<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Double?> propertyGetter)
         {
             return helper.Map(columnName, propertyGetter, NpgsqlDbType.Double);
         }
