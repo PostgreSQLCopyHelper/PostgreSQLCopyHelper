@@ -10,15 +10,15 @@
         <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
         <projectUrl>https://github.com/bytefish/PostgreSQLCopyHelper</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Provides a nice wrapper around PostgreSQL COPY.</description>
+        <description>Provides a nice wrapper around PostgreSQL COPY (Bulk Copy).</description>
         <copyright>Copyright © 2015 Philipp Wagner</copyright>
         <tags>postgresql, bulk copy</tags>
+        <dependencies>
+            <dependency id="Npgsql" version="(3.0.2,)" />
+        </dependencies>
     </metadata>
-    <dependencies>
-        <dependency id="Npgsql" version="(3.0.2,)" />
-    </dependencies>
     <files>
-        <file src="..\PostgreSQLCopyHelper\bin\Release\PostgreSQLCopyHelper.dll" target="lib\net45" />
-        <file src="..\PostgreSQLCopyHelper\bin\Release\PostgreSQLCopyHelper.pdb" target="lib\net45" />
+        <file src="..\PostgreSQLCopyHelper\PostgreSQLCopyHelper\bin\Release\PostgreSQLCopyHelper.dll" target="lib\net45" />
+        <file src="..\PostgreSQLCopyHelper\PostgreSQLCopyHelper\bin\Release\PostgreSQLCopyHelper.pdb" target="lib\net45" />
     </files>
 </package>
