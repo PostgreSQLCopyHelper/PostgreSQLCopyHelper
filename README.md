@@ -72,7 +72,7 @@ var copyHelper = new PostgreSQLCopyHelper<TestEntity>()
 And then we can use it to efficiently store the data:
 
 ```csharp
-private void WriteToDatabase(PostgreSQLCopyHelper<LocalWeatherData> copyHelper, IEnumerable<LocalWeatherData> entities)
+private void WriteToDatabase(PostgreSQLCopyHelper<TestEntity> copyHelper, IEnumerable<TestEntity> entities)
 {
     using (var connection = new NpgsqlConnection("Server=127.0.0.1;Port=5432;Database=sampledb;User Id=philipp;Password=test_pwd;"))
     {

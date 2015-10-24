@@ -10,7 +10,8 @@
         <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
         <projectUrl>https://github.com/bytefish/PostgreSQLCopyHelper</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Provides a nice wrapper around PostgreSQL COPY (Bulk Copy).</description>
+        <description>Provides a nice wrapper around PostgreSQL COPY (Bulk Copy / Bulk Insert).</description>
+		<summary>Provides a nice wrapper around PostgreSQL COPY (Bulk Copy / Bulk Insert).</summary>
         <copyright>Copyright © 2015 Philipp Wagner</copyright>
         <tags>postgresql, bulk copy</tags>
         <dependencies>

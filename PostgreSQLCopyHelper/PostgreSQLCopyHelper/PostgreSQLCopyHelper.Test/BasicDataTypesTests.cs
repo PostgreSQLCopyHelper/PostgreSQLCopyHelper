@@ -102,7 +102,7 @@ namespace PostgreSQLCopyHelper.Test
             subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = GetAll();
-
+            
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
 
