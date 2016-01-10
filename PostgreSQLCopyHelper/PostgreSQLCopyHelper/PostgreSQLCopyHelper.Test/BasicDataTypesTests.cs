@@ -39,8 +39,7 @@ namespace PostgreSQLCopyHelper.Test
         {
             CreateTable();
 
-            subject = new PostgreSQLCopyHelper<TestEntity>()
-            .WithTableName("sample", "unit_test")
+            subject = new PostgreSQLCopyHelper<TestEntity>("sample", "unit_test")
                 .MapSmallInt("col_smallint", x => x.SmallInt)
                 .MapInteger("col_integer", x => x.Integer)
                 .MapMoney("col_money", x => x.Money)

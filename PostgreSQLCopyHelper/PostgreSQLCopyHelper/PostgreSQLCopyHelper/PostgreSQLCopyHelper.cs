@@ -48,21 +48,17 @@ namespace PostgreSQLCopyHelper
 
         private List<ColumnDefinition> Columns { get; set; }
 
-        public PostgreSQLCopyHelper()
-        {
-            Columns = new List<ColumnDefinition>();
-        }
-
-        public PostgreSQLCopyHelper<TEntity> WithTableName(string schemaName, string tableName)
+        public PostgreSQLCopyHelper(string schemaName, string tableName)
         {
             Table = new TableDefinition
             {
                 Schema = schemaName,
                 TableName = tableName
             };
-            return this;
+
+            Columns = new List<ColumnDefinition>();
         }
-        
+
         public void SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities)
         {
             using (var binaryCopyWriter = connection.BeginBinaryImport(GetCopyCommand()))
