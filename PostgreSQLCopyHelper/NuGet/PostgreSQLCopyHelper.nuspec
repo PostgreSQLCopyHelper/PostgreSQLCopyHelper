@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>PostgreSQLCopyHelper</id>
-        <version>0.1</version>
+        <version>0.2</version>
         <title>PostgreSQLCopyHelper</title>
         <authors>Philipp Wagner</authors>
         <owners>Philipp Wagner</owners>
@@ -12,7 +12,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Provides a nice wrapper around PostgreSQL COPY (Bulk Copy / Bulk Insert).</description>
 		<summary>Provides a nice wrapper around PostgreSQL COPY (Bulk Copy / Bulk Insert).</summary>
-        <copyright>Copyright © 2015 Philipp Wagner</copyright>
+        <copyright>Copyright © 2016 Philipp Wagner</copyright>
         <tags>postgresql, bulk copy</tags>
         <dependencies>
             <dependency id="Npgsql" version="(3.0.2,)" />

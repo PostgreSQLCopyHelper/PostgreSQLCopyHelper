@@ -48,6 +48,11 @@ namespace PostgreSQLCopyHelper
 
         private List<ColumnDefinition> Columns { get; set; }
 
+        public PostgreSQLCopyHelper(string tableName)
+            : this(string.Empty, tableName)
+        {
+        }
+
         public PostgreSQLCopyHelper(string schemaName, string tableName)
         {
             Table = new TableDefinition
