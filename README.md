@@ -1,6 +1,14 @@
 # PostgreSQLCopyHelper #
 
-Hiding the COPY methods from Npgsql behind a nice Fluent API.
+PostgreSQLCopyHelper is a library for efficient bulk inserts to PostgreSQL databases. It wraps the COPY methods from Npgsql behind a nice Fluent API.
+
+## Installing ##
+
+To install PostgreSQLCopyHelper, run the following command in the Package Manager Console:
+
+```
+PM> Install-Package PostgreSQLCopyHelper
+```
 
 ## Basic Usage ##
 
@@ -51,8 +59,7 @@ private class TestEntity
 The PostgreSQLCopyHelper now defines the mapping between domain model and the database table:
 
 ```csharp
-var copyHelper = new PostgreSQLCopyHelper<TestEntity>()
-	.WithTableName("sample", "unit_test")
+var copyHelper = new PostgreSQLCopyHelper<TestEntity>("sample", "unit_test")
 	.MapSmallInt("col_smallint", x => x.SmallInt)
 	.MapInteger("col_integer", x => x.Integer)
 	.MapMoney("col_money", x => x.Money)
