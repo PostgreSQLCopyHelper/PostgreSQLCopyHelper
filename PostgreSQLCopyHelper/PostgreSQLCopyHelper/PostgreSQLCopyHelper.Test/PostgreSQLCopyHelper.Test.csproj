@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="BasicDataTypesTests.cs" />
     <Compile Include="Issues\Issue1_UpperCase_Test.cs" />
+    <Compile Include="MixedCaseEntitiesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransactionalTestBase.cs" />
   </ItemGroup>

@@ -23,7 +23,7 @@ namespace PostgreSQLCopyHelper
                 {
                     return TableName;
                 }
-                return string.Format("{0}.{1}", Schema, TableName);
+                return string.Format("{0}.\"{1}\"", Schema, TableName);
             }
 
             public override string ToString()
@@ -103,7 +103,8 @@ namespace PostgreSQLCopyHelper
 
         private string GetCopyCommand()
         {
-            var commaSeparatedColumns = string.Join(", ", Columns.Select(x => x.ColumnName));
+            var commaSeparatedColumns = string.Join("\",\"", Columns.Select(x => x.ColumnName));
+            commaSeparatedColumns = "\"" + commaSeparatedColumns + "\"";
 
             return string.Format("COPY {0}({1}) FROM STDIN BINARY;",
                 Table.GetFullQualifiedTableName(),
