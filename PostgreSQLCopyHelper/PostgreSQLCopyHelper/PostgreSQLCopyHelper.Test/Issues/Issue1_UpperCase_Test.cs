@@ -27,7 +27,7 @@ namespace PostgreSQLCopyHelper.Test.Issues
             CreateTable();
         }
 
-        [Test]
+        [Test][Ignore("Added support for quoted table and column names, means this behaviour won't work")]
         public void Test_UpperCase_BulkInsert()
         {
             // Use Upper Case Schema Name:

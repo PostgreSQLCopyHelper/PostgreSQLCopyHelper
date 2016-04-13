@@ -19,7 +19,7 @@ namespace PostgreSQLCopyHelper.Test
         {
             OnSetupBeforeTransaction();
 
-            connection = new NpgsqlConnection("Server=127.0.0.1;Port=5432;Database=sampledb;User Id=philipp;Password=test_pwd;");
+            connection = new NpgsqlConnection("Server=voicemanda;Port=5432;Database=sampledb;User Id=philipp;Password=test_pwd;");
             connection.Open();
 
             transaction = connection.BeginTransaction();
