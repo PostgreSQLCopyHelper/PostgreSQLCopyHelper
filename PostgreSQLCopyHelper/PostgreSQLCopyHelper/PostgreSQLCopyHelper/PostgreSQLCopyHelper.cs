@@ -21,7 +21,7 @@ namespace PostgreSQLCopyHelper
             {
                 if (string.IsNullOrWhiteSpace(Schema))
                 {
-                    return TableName;
+                    return string.Format("\"{0}\"", TableName);
                 }
                 return string.Format("{0}.\"{1}\"", Schema, TableName);
             }
@@ -66,6 +66,7 @@ namespace PostgreSQLCopyHelper
 
         public void SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities)
         {
+            
             using (var binaryCopyWriter = connection.BeginBinaryImport(GetCopyCommand()))
             {
                 WriteToStream(binaryCopyWriter, entities);
@@ -103,9 +104,8 @@ namespace PostgreSQLCopyHelper
 
         private string GetCopyCommand()
         {
-            var commaSeparatedColumns = string.Join("\",\"", Columns.Select(x => x.ColumnName));
-            commaSeparatedColumns = "\"" + commaSeparatedColumns + "\"";
-
+            var commaSeparatedColumns = string.Join(",", Columns.Select(x => string.Format("\"{0}\"", x.ColumnName)));
+            
             return string.Format("COPY {0}({1}) FROM STDIN BINARY;",
                 Table.GetFullQualifiedTableName(),
                 commaSeparatedColumns);

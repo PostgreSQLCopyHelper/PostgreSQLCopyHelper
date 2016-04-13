@@ -14,35 +14,28 @@ namespace PostgreSQLCopyHelper.Test
     {
         [TestFixture]
         public class Mixed_Case_Test : TransactionalTestBase
-        {
-            
-            private PostgreSQLCopyHelper<MixedCaseEntity> subject;
+        {            
 
-            protected override void OnSetupInTransaction()
+            private int CreateTable(string schemaName = "")
             {
-                CreateTable();
+                string schemaString = schemaName == "" ? "" : schemaName + ".";
 
-                subject = new PostgreSQLCopyHelper<MixedCaseEntity>("sample", "MixedCaseEntity")
-                    .MapInteger("Property_One", x => x.Property_One)
-                    .MapText("Property_Two", x => x.Property_Two);                    
-            }
-
-            private int CreateTable()
-            {
-                var sqlStatement = @"CREATE TABLE sample.""MixedCaseEntity""
+                var sqlStatement = string.Format(@"CREATE TABLE {0}""MixedCaseEntity""
                                     (
                                         ""Property_One"" integer,
                                         ""Property_Two"" text                
-                                    );";
+                                    );", schemaString);
 
                 var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
 
                 return sqlCommand.ExecuteNonQuery();
             }
 
-            private List<object[]> GetAll()
+            private List<object[]> GetAll(string schemaName = "")
             {
-                var sqlStatement = @"SELECT * FROM sample.""MixedCaseEntity""";
+                string schemaString = schemaName == "" ? "" : schemaName + ".";
+
+                var sqlStatement = String.Format(@"SELECT * FROM {0}""MixedCaseEntity""", schemaString);
                 var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
 
 
@@ -65,8 +58,16 @@ namespace PostgreSQLCopyHelper.Test
 
 
             [Test]
-            public void Test_Mixed_Case()
+            public void Test_Mixed_Case_With_Named_Schema()
             {
+                var schema = "sample";
+                CreateTable(schema);
+
+
+                var subject = new PostgreSQLCopyHelper<MixedCaseEntity>(schema, "MixedCaseEntity")
+                    .MapInteger("Property_One", x => x.Property_One)
+                    .MapText("Property_Two", x => x.Property_Two);
+
                 var t1 = new MixedCaseEntity
                 {
                     Property_One = 44,
@@ -82,6 +83,43 @@ namespace PostgreSQLCopyHelper.Test
                 var set = new HashSet<MixedCaseEntity> { t1, t2 };
 
                 subject.SaveAll(connection, new [] { t1, t2 });
+
+                var result = GetAll(schema);
+
+                Assert.AreEqual(set.Count, result.Count);
+
+                Assert.AreEqual(t1.Property_One, result[0].First());
+                Assert.AreEqual(t1.Property_Two, result[0].Skip(1).First());
+
+                Assert.AreEqual(t2.Property_One, result[1].First());
+                Assert.AreEqual(t2.Property_Two, result[1].Skip(1).First());
+
+            }
+
+            [Test]
+            public void Test_Mixed_Case_With_Default_Schema()
+            {
+                CreateTable();
+
+                var subject = new PostgreSQLCopyHelper<MixedCaseEntity>("MixedCaseEntity")
+                    .MapInteger("Property_One", x => x.Property_One)
+                    .MapText("Property_Two", x => x.Property_Two);
+
+                var t1 = new MixedCaseEntity
+                {
+                    Property_One = 44,
+                    Property_Two = "hello everyone"
+                };
+
+                var t2 = new MixedCaseEntity
+                {
+                    Property_One = 89,
+                    Property_Two = "Isn't it nice to write in Camel Case!"
+                };
+
+                var set = new HashSet<MixedCaseEntity> { t1, t2 };
+
+                subject.SaveAll(connection, new[] { t1, t2 });
 
                 var result = GetAll();
 
