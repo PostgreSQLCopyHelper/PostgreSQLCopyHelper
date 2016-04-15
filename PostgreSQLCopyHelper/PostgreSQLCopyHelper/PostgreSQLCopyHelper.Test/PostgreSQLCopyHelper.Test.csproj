@@ -48,7 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicDataTypesTests.cs" />
+    <Compile Include="Extensions\NpgsqlExtensions.cs" />
     <Compile Include="Issues\Issue1_UpperCase_Test.cs" />
+    <Compile Include="Issues\Issue2_MixedCaseEntity_Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransactionalTestBase.cs" />
   </ItemGroup>

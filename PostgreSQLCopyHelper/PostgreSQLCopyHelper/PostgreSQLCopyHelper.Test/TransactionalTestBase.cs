@@ -57,5 +57,6 @@ namespace PostgreSQLCopyHelper.Test
         protected virtual void OnTeardownAfterTransaction()
         {
         }
+
     }
 }

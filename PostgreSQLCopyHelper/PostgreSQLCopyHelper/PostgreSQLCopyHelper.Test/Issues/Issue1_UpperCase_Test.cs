@@ -1,14 +1,12 @@
-﻿using Npgsql;
-using NpgsqlTypes;
+﻿// Copyright (c) Philipp Wagner. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using Npgsql;
 using NUnit.Framework;
 using PostgreSQLCopyHelper.Extensions;
+using PostgreSQLCopyHelper.Test.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PostgreSQLCopyHelper.Test.Issues
 {
@@ -47,7 +45,7 @@ namespace PostgreSQLCopyHelper.Test.Issues
 
             subject.SaveAll(connection, new[] { entity0, entity1 });
 
-            var result = GetAll();
+            var result = connection.GetAll("sample", "unit_test");
 
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
@@ -71,27 +69,5 @@ namespace PostgreSQLCopyHelper.Test.Issues
             return sqlCommand.ExecuteNonQuery();
         }
 
-        private List<object[]> GetAll()
-        {
-            var sqlStatement = @"SELECT * FROM sample.unit_test";
-            var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
-
-
-            List<object[]> result = new List<object[]>();
-            using (var dataReader = sqlCommand.ExecuteReader())
-            {
-                while (dataReader.Read())
-                {
-                    var values = new object[dataReader.FieldCount];
-                    for (int i = 0; i < dataReader.FieldCount; i++)
-                    {
-                        values[i] = dataReader[i];
-                    }
-                    result.Add(values);
-                }
-            }
-
-            return result;
-        }
     }
 }

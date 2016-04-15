@@ -2,6 +2,7 @@
 using NpgsqlTypes;
 using NUnit.Framework;
 using PostgreSQLCopyHelper.Extensions;
+using PostgreSQLCopyHelper.Test.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,7 +102,7 @@ namespace PostgreSQLCopyHelper.Test
             subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = GetAll();
-            
+
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
 
@@ -191,7 +192,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.AreEqual(entity0.BigInt, (Int64)result[0][3]);
             Assert.AreEqual(entity1.BigInt, (Int64)result[1][3]);
         }
-        
+
         [Test]
         public void Test_Timestamp()
         {
@@ -293,10 +294,10 @@ namespace PostgreSQLCopyHelper.Test
         {
             var entity0 = new TestEntity()
             {
-                ByteArray = new byte[] { 1, 2, 3}
+                ByteArray = new byte[] { 1, 2, 3 }
             };
-            
-            subject.SaveAll(connection, new[] { entity0});
+
+            subject.SaveAll(connection, new[] { entity0 });
 
             var result = GetAll();
 
@@ -331,7 +332,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.AreEqual(entity0.UUID, (Guid)result[0][8]);
             Assert.AreEqual(entity1.UUID, (Guid)result[1][8]);
         }
-        
+
         [Test]
         public void Test_Date()
         {
@@ -482,25 +483,7 @@ namespace PostgreSQLCopyHelper.Test
 
         private List<object[]> GetAll()
         {
-            var sqlStatement = @"SELECT * FROM sample.unit_test";
-            var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
-
-
-            List<object[]> result = new List<object[]>();
-            using (var dataReader = sqlCommand.ExecuteReader())
-            {
-                while (dataReader.Read())
-                {
-                    var values = new object[dataReader.FieldCount];
-                    for (int i = 0; i < dataReader.FieldCount; i++)
-                    {
-                        values[i] = dataReader[i];
-                    }
-                    result.Add(values);
-                }
-            }
-
-            return result;
+            return connection.GetAll("sample", "unit_test");
         }
     }
 }
