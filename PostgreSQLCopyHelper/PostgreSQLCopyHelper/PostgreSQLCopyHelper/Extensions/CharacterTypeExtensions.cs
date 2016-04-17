@@ -4,7 +4,7 @@
 using NpgsqlTypes;
 using System;
 
-namespace PostgreSQLCopyHelper.Extensions
+namespace PostgreSQLCopyHelper
 {
     public static class CharacterTypeExtensions
     {

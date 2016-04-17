@@ -5,7 +5,6 @@ using Npgsql;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using PostgreSQLCopyHelper.Extensions;
 using PostgreSQLCopyHelper.Test.Extensions;
 
 namespace PostgreSQLCopyHelper.Test.Issues

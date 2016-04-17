@@ -3,7 +3,6 @@
 
 using Npgsql;
 using NUnit.Framework;
-using PostgreSQLCopyHelper.Extensions;
 using PostgreSQLCopyHelper.Test.Extensions;
 using System;
 using System.Collections.Generic;

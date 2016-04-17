@@ -6,7 +6,7 @@ using System;
 using System.Net;
 using System.Net.NetworkInformation;
 
-namespace PostgreSQLCopyHelper.Extensions
+namespace PostgreSQLCopyHelper
 {
     public static class NetworkAddressTypeExtensions
     {

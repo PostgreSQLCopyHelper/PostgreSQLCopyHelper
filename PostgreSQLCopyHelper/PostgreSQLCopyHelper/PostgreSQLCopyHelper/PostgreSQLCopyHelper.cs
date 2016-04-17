@@ -6,47 +6,15 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using NpgsqlTypes;
+using PostgreSQLCopyHelper.Model;
 
 namespace PostgreSQLCopyHelper
 {
-    public class PostgreSQLCopyHelper<TEntity>
+    public class PostgreSQLCopyHelper<TEntity> : IPostgreSQLCopyHelper<TEntity>
     {
-        private class TableDefinition
-        {
-            public string Schema { get; set; }
-
-            public string TableName { get; set; }
-
-            public string GetFullQualifiedTableName()
-            {
-                if (string.IsNullOrWhiteSpace(Schema))
-                {
-                    return TableName;
-                }
-                return string.Format("{0}.{1}", Schema, TableName);
-            }
-
-            public override string ToString()
-            {
-                return string.Format("TableDefinition (Schema = {0}, TableName = {1})", Schema, TableName);
-            }
-        }
-
-        private class ColumnDefinition
-        {
-            public string ColumnName { get; set; }
-
-            public Action<NpgsqlBinaryImporter, TEntity> Write { get; set; }
-
-            public override string ToString()
-            {
-                return string.Format("ColumnDefinition (ColumnName = {0}, Serialize = {1})", ColumnName, Write);
-            }
-        }
-
         private TableDefinition Table { get; set; }
 
-        private List<ColumnDefinition> Columns { get; set; }
+        private List<ColumnDefinition<TEntity>> Columns { get; set; }
 
         public PostgreSQLCopyHelper(string tableName)
             : this(string.Empty, tableName)
@@ -61,7 +29,7 @@ namespace PostgreSQLCopyHelper
                 TableName = tableName
             };
 
-            Columns = new List<ColumnDefinition>();
+            Columns = new List<ColumnDefinition<TEntity>>();
         }
 
         public void SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities)
@@ -92,7 +60,7 @@ namespace PostgreSQLCopyHelper
         
         private PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Action<NpgsqlBinaryImporter, TEntity> action)
         {
-            Columns.Add(new ColumnDefinition
+            Columns.Add(new ColumnDefinition<TEntity>
             {
                 ColumnName = columnName,
                 Write = action

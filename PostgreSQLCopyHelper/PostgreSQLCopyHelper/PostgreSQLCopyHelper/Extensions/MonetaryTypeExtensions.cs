@@ -4,7 +4,7 @@
 
 using System;
 
-namespace PostgreSQLCopyHelper.Extensions
+namespace PostgreSQLCopyHelper
 {
     public static class MonetaryTypeExtensions
     {

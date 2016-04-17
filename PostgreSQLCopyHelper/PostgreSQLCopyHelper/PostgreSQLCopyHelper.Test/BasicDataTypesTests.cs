@@ -1,15 +1,13 @@
-﻿using Npgsql;
-using NpgsqlTypes;
+﻿// Copyright (c) Philipp Wagner. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using Npgsql;
 using NUnit.Framework;
-using PostgreSQLCopyHelper.Extensions;
-using PostgreSQLCopyHelper.Test.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
+using PostgreSQLCopyHelper.Test.Extensions;
 
 namespace PostgreSQLCopyHelper.Test
 {

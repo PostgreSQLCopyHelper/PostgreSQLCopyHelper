@@ -52,6 +52,9 @@
     <Compile Include="Extensions\CharacterTypeExtensions.cs" />
     <Compile Include="Extensions\MonetaryTypeExtensions.cs" />
     <Compile Include="Extensions\NumericTypeExtensions.cs" />
+    <Compile Include="IPostgreSQLCopyHelper.cs" />
+    <Compile Include="Model\ColumnDefinition.cs" />
+    <Compile Include="Model\TableDefinition.cs" />
     <Compile Include="PostgreSQLCopyHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
