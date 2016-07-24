@@ -1,0 +1,51 @@
+{
+  "version": "1.0.0",
+  "title": "PostgreSQLCopyHelper",
+  "description": "A library for Bulk Copy / Bulk Inserts with PostgreSQL.",
+  "copyright": "Copyright 2016 Philipp Wagner",
+  "authors": [
+    "Philipp Wagner"
+  ],
+
+  "packOptions": {
+    "owners": [
+      "Philipp Wagner"
+    ],
+    "authors": [
+      "Philipp Wagner"
+    ],
+    "tags": [ "postgresql", "bulk insert" ],
+    "requireLicenseAcceptance": false,
+    "projectUrl": "https://github.com/bytefish/PostgreSQLCopyHelper",
+    "summary": "A library for Bulk Copy / Bulk Inserts with PostgreSQL.",
+    "licenseUrl": "https://opensource.org/licenses/MIT",
+    "repository": {
+      "type": "git",
+      "url": "git://github.com/bytefish/PostgreSQLCopyHelper"
+    }
+  },
+  
+  "dependencies": {
+    "Npgsql" : "3.1.0-*"
+  },
+  
+  "frameworks": {
+    "net45": { 
+	  "frameworkAssemblies": {
+	    "System.Data": "4.0.0.0"
+      }
+	},
+    "netstandard1.6": {
+      "dependencies": {
+        "NETStandard.Library": "1.6.0",
+      },
+      "imports": "dnxcore50"
+    }
+  },
+
+  "scripts": {
+    "postcompile": [
+      "dotnet pack --no-build --configuration %compile:Configuration%"
+    ]
+  }
+}

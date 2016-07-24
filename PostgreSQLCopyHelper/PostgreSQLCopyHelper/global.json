@@ -1,0 +1,3 @@
+{
+    "projects": [ "PostgreSQLCopyHelper", "PostgreSQLCopyHelper.Test" ]
+}

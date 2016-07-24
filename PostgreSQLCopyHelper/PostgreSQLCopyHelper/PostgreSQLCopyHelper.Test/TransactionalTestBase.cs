@@ -7,13 +7,13 @@ using NUnit.Framework;
 namespace PostgreSQLCopyHelper.Test
 {
     [TestFixture]
-    public abstract class TransactionalTestBase
+    public class TransactionalTestBase
     {
         protected NpgsqlConnection connection;
         private NpgsqlTransaction transaction;
 
         [SetUp]
-        protected void Setup()
+        public void Setup()
         {
             OnSetupBeforeTransaction();
 
