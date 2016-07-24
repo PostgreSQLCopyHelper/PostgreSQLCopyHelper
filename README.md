@@ -2,6 +2,8 @@
 
 PostgreSQLCopyHelper is a library for efficient bulk inserts to PostgreSQL databases. It wraps the COPY methods from Npgsql behind a nice Fluent API.
 
+PostgreSQLCopyHelper supports .NET Core 1.0.
+
 ## Installing ##
 
 To install PostgreSQLCopyHelper, run the following command in the Package Manager Console:
