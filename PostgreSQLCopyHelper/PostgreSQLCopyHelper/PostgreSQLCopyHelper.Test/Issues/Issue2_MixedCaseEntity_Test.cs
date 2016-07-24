@@ -8,6 +8,7 @@ using PostgreSQLCopyHelper.Test.Extensions;
 
 namespace PostgreSQLCopyHelper.Test.Issues
 {
+    [TestFixture]
     [Description("A Unit Test to see, if PostgreSQLCopyHelper works with MixedCase Table Definitions.")]
     public class Issue2_MixedCaseEntity_Test : TransactionalTestBase
     {
