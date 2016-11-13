@@ -4,5 +4,5 @@ obj
 *.suo
 packages
 
-project.lock.json
+*project.lock.json
 *.xproj.user

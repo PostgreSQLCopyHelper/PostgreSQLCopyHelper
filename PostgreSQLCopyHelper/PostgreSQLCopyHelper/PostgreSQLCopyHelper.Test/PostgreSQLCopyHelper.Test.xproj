@@ -6,7 +6,7 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>1d4ea163-f7d6-4b09-aab0-edb3b876f8d1</ProjectGuid>
+    <ProjectGuid>5a1014bf-dff8-4899-9f20-b2cd4d7a5b25</ProjectGuid>
     <RootNamespace>PostgreSQLCopyHelper.Test</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
