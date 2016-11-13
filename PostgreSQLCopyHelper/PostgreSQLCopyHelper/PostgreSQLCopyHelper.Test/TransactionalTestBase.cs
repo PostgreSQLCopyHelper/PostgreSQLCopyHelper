@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace PostgreSQLCopyHelper.Test
 {
     [TestFixture]
-    public class TransactionalTestBase
+    public abstract class TransactionalTestBase
     {
         protected NpgsqlConnection connection;
         private NpgsqlTransaction transaction;
@@ -35,7 +35,7 @@ namespace PostgreSQLCopyHelper.Test
         }
 
         [TearDown]
-        protected void TearDown()
+        public void TearDown()
         {
             OnTeardownInTransaction();
 
