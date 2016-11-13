@@ -11,7 +11,7 @@
     <AssemblyName>PostgreSQLCopyHelper.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-	<ResolveNuGetPackages>false</ResolveNuGetPackages>
+    <ResolveNuGetPackages>false</ResolveNuGetPackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArrayTypesTest.cs" />
     <Compile Include="BasicDataTypesTests.cs" />
     <Compile Include="Extensions\NpgsqlExtensions.cs" />
     <Compile Include="Issues\Issue1_UpperCase_Test.cs" />
