@@ -1,11 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostgreSQLCopyHelper", "PostgreSQLCopyHelper\PostgreSQLCopyHelper.csproj", "{75C3DC5C-C842-4A22-9A30-B0EE092C3F7C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostgreSQLCopyHelper.Test", "PostgreSQLCopyHelper.Test\PostgreSQLCopyHelper.Test.csproj", "{AF0280FB-3E4A-4145-8E66-0406164ACB2D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{39BC9860-6D2F-4F8D-8FDA-EAD7A6F82D17}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
