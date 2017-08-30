@@ -30,6 +30,8 @@ namespace PostgreSQLCopyHelper.Test
             public PhysicalAddress MacAddress { get; set; }
             public DateTime? Date { get; set; }
             public TimeSpan? TimeSpan { get; set; }
+            public string Json { get; set; }
+            public string Jsonb { get; set; }
         }
 
         private PostgreSQLCopyHelper<TestEntity> subject;
@@ -52,7 +54,9 @@ namespace PostgreSQLCopyHelper.Test
                 .MapMacAddress("col_macaddr", x => x.MacAddress)
                 .MapDate("col_date", x => x.Date)
                 .MapInterval("col_interval", x => x.TimeSpan)
-                .MapNumeric("col_numeric", x => x.Numeric);
+                .MapNumeric("col_numeric", x => x.Numeric)
+                .MapJson("col_json", x => x.Json)
+                .MapJsonb("col_jsonb", x => x.Jsonb);
         }
 
         [Test]
@@ -454,6 +458,81 @@ namespace PostgreSQLCopyHelper.Test
             Assert.AreEqual(entity1.TimeSpan, (TimeSpan)result[1][13]);
         }
 
+        [Test]
+        public void Test_Json()
+        {
+            var entity0 = new TestEntity()
+            {
+                Json = @"{
+                          ""firstName"": ""John"",
+                          ""lastName"": ""Smith"",
+                          ""isAlive"": true
+                        }"
+            };
+
+            var entity1 = new TestEntity()
+            {
+                Json = @"{
+                          ""firstName"": ""Philipp"",
+                          ""lastName"": ""Wagner""
+                        }"
+            };
+
+
+            subject.SaveAll(connection, new[] { entity0, entity1 });
+
+            var result = GetAll();
+
+            // Check if we have the amount of rows:
+            Assert.AreEqual(2, result.Count);
+
+            Assert.IsNotNull(result[0][14]);
+            Assert.IsNotNull(result[1][14]);
+
+            var result0 = (string)result[0][14];
+
+            Assert.AreEqual(entity0.Json, result0);
+
+            var result1 = (string)result[1][14];
+            Assert.AreEqual(entity1.Json, result1);
+        }
+
+        [Test]
+        public void Test_Jsonb()
+        {
+            var entity0 = new TestEntity()
+            {
+                Jsonb = @"{
+                          ""firstName"": ""John"",
+                          ""lastName"": ""Smith"",
+                          ""isAlive"": true
+                        }"
+            };
+
+            var entity1 = new TestEntity()
+            {
+                Jsonb = @"{
+                          ""firstName"": ""Philipp"",
+                          ""lastName"": ""Wagner""
+                        }"
+            };
+
+
+            subject.SaveAll(connection, new[] { entity0, entity1 });
+
+            var result = GetAll();
+
+            // Check if we have the amount of rows:
+            Assert.AreEqual(2, result.Count);
+
+            Assert.IsNotNull(result[0][15]);
+            Assert.IsNotNull(result[1][15]);
+
+            // TODO: More Useful Test for JSON equality here...
+        }
+
+
+        
         private int CreateTable()
         {
             var sqlStatement = @"CREATE TABLE sample.unit_test
@@ -471,7 +550,9 @@ namespace PostgreSQLCopyHelper.Test
                 col_inet inet,
                 col_macaddr macaddr,
                 col_date date,
-                col_interval interval
+                col_interval interval,
+                col_json json,
+                col_jsonb jsonb
             );";
 
             var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
