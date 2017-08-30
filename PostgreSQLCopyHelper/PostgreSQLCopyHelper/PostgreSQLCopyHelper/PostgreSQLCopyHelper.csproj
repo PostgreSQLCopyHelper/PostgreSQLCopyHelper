@@ -1,72 +1,38 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{75C3DC5C-C842-4A22-9A30-B0EE092C3F7C}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PostgreSQLCopyHelper</RootNamespace>
-    <AssemblyName>PostgreSQLCopyHelper</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+	<TargetFrameworks>net45;netstandard1.3</TargetFrameworks>
+	<Authors>Philipp Wagner</Authors>
+	<Company />
+	<Product />
+	<Description>A library for Bulk Copy / Bulk Inserts with PostgreSQL.</Description>
+	<PackageTags>postgresql, bulk insert</PackageTags>
+	<RepositoryUrl>git://github.com/bytefish/PostgreSQLCopyHelper</RepositoryUrl>
+	<PackageProjectUrl>https://github.com/bytefish/PostgreSQLCopyHelper</PackageProjectUrl>
+	<PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+	<Copyright>Copyright © 2017 Philipp Wagner</Copyright>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<AssemblyVersion>1.1.0.0</AssemblyVersion>
+	<FileVersion>1.1.0.0</FileVersion>
+	<RepositoryType>git</RepositoryType>
+	<Version>1.1.0</Version>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Npgsql">
-      <HintPath>..\packages\Npgsql.3.0.2\lib\net45\Npgsql.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Extensions\BooleanTypeExtensions.cs" />
-    <Compile Include="Extensions\BitStringTypeExtensions.cs" />
-    <Compile Include="Extensions\ArrayTypeExtensions.cs" />
-    <Compile Include="Extensions\UUIDTypeExtensions.cs" />
-    <Compile Include="Extensions\NetworkAddressTypeExtensions.cs" />
-    <Compile Include="Extensions\DateTimeTypeExtensions.cs" />
-    <Compile Include="Extensions\BinaryDataTypeExtensions.cs" />
-    <Compile Include="Extensions\CharacterTypeExtensions.cs" />
-    <Compile Include="Extensions\MonetaryTypeExtensions.cs" />
-    <Compile Include="Extensions\NumericTypeExtensions.cs" />
-    <Compile Include="IPostgreSQLCopyHelper.cs" />
-    <Compile Include="Model\ColumnDefinition.cs" />
-    <Compile Include="Model\TableDefinition.cs" />
-    <Compile Include="PostgreSQLCopyHelper.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|x64'" />
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
+	  <PackageReference Include="Npgsql" Version="3.1.0-*" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <PackageReference Include="Npgsql" Version="3.1.0-*" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Async\**" />
+	  <EmbeddedResource Remove="Async\**" />
+	  <None Remove="Async\**" />
+	</ItemGroup>
+
+
 </Project>
