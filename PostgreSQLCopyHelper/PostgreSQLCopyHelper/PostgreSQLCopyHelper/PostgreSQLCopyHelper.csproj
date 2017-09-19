@@ -1,38 +1,40 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<TargetFrameworks>net45;netstandard1.3</TargetFrameworks>
-	<Authors>Philipp Wagner</Authors>
-	<Company />
-	<Product />
-	<Description>A library for Bulk Copy / Bulk Inserts with PostgreSQL.</Description>
-	<PackageTags>postgresql, bulk insert</PackageTags>
-	<RepositoryUrl>git://github.com/bytefish/PostgreSQLCopyHelper</RepositoryUrl>
-	<PackageProjectUrl>https://github.com/bytefish/PostgreSQLCopyHelper</PackageProjectUrl>
-	<PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
-	<Copyright>Copyright © 2017 Philipp Wagner</Copyright>
-	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	<AssemblyVersion>1.1.0.0</AssemblyVersion>
-	<FileVersion>1.1.0.0</FileVersion>
-	<RepositoryType>git</RepositoryType>
-	<Version>1.1.0</Version>
+    <TargetFrameworks>net45;netstandard1.3</TargetFrameworks>
+    <Authors>Philipp Wagner</Authors>
+    <Company />
+    <Product />
+    <Description>A library for Bulk Copy / Bulk Inserts with PostgreSQL.</Description>
+    <PackageTags>postgresql, bulk insert</PackageTags>
+    <RepositoryUrl>git://github.com/bytefish/PostgreSQLCopyHelper</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/bytefish/PostgreSQLCopyHelper</PackageProjectUrl>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <Copyright>Copyright © 2017 Philipp Wagner</Copyright>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
+    <RepositoryType>git</RepositoryType>
+    <Version>1.2.0</Version>
+    <IncludeSource>True</IncludeSource>
+    <IncludeSymbols>True</IncludeSymbols>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|x64'" />
 
-	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-	  <PackageReference Include="Npgsql" Version="3.1.0-*" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
     <PackageReference Include="Npgsql" Version="3.1.0-*" />
-	</ItemGroup>
+  </ItemGroup>
 
-	<ItemGroup>
-	  <Compile Remove="Async\**" />
-	  <EmbeddedResource Remove="Async\**" />
-	  <None Remove="Async\**" />
-	</ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <PackageReference Include="Npgsql" Version="3.1.0-*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Async\**" />
+    <EmbeddedResource Remove="Async\**" />
+    <None Remove="Async\**" />
+  </ItemGroup>
 
 
 </Project>
