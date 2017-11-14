@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using NpgsqlTypes;
+using PostgreSQLCopyHelper.Exceptions;
 using PostgreSQLCopyHelper.Model;
 
 namespace PostgreSQLCopyHelper
@@ -34,15 +35,34 @@ namespace PostgreSQLCopyHelper
 
         public void SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities)
         {
-            using (var binaryCopyWriter = connection.BeginBinaryImport(GetCopyCommand()))
+            var copyCommand = GetCopyCommand();
+            try
             {
-                WriteToStream(binaryCopyWriter, entities);
+                using (var binaryCopyWriter = connection.BeginBinaryImport(copyCommand))
+                {
+                    WriteToStream(binaryCopyWriter, entities);
+                }
+            }
+            catch (PostgresException e)
+            {
+                throw new PostgresHelperSaveAllException($"Command \"{copyCommand}\" faild", e);
             }
         }
 
         public PostgreSQLCopyHelper<TEntity> Map<TProperty>(string columnName, Func<TEntity, TProperty> propertyGetter, NpgsqlDbType type)
         {
-            return AddColumn(columnName, (writer, entity) => writer.Write(propertyGetter(entity), type));
+            return AddColumn(columnName, (writer, entity) =>
+            {
+                TProperty value = propertyGetter(entity);
+                try
+                {
+                    writer.Write(value, type);
+                }
+                catch (NpgsqlException e)
+                {
+                    throw new PostgresHelperWriteRowException($"Exception occurred while writing \"{value}\" to \"{columnName}\" column", e);
+                }
+            });
         }
 
         private void WriteToStream(NpgsqlBinaryImporter writer, IEnumerable<TEntity> entities)
