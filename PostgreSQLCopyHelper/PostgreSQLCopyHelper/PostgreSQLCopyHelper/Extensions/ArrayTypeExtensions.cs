@@ -8,6 +8,10 @@ namespace PostgreSQLCopyHelper
 {
     public static class ArrayTypeExtensions
     {
+        public static PostgreSQLCopyHelper<TEntity> MapArray<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, byte[][]> propertyGetter)
+        {
+            return MapArray(helper, columnName, propertyGetter, NpgsqlDbType.Bytea);
+        }
         public static PostgreSQLCopyHelper<TEntity> MapArray<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Int16[]> propertyGetter)
         {
             return MapArray(helper, columnName, propertyGetter, NpgsqlDbType.Smallint);

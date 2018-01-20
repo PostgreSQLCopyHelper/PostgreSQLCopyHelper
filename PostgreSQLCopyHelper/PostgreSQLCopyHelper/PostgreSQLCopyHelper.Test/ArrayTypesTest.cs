@@ -12,6 +12,10 @@ namespace PostgreSQLCopyHelper.Test
     [TestFixture]
     public class ArrayTypesTest : TransactionalTestBase
     {
+        private class ByteArrayArrayEntity
+        {
+            public Byte[][] Array { get; set; }
+        }
         private class Int16ArrayEntity
         {
             public Int16[] Array { get; set; }
@@ -264,6 +268,37 @@ namespace PostgreSQLCopyHelper.Test
 
             Assert.AreEqual(1.32, resultArray[0], 1e-5);
             Assert.AreEqual(2.124, resultArray[1], 1e-5);
+        }
+
+        [Test]
+        public void Test_ByteArrayArray()
+        {
+            CreateTable("bytea");
+
+            var subject = new PostgreSQLCopyHelper<ByteArrayArrayEntity>("sample", "unit_test")
+                .MapArray("col_array", x => x.Array);
+
+
+            var entity0 = new ByteArrayArrayEntity()
+            {
+                Array = new byte[][] { new byte[] {1, 2} }
+            };
+
+            subject.SaveAll(connection, new[] { entity0 });
+
+            var result =  GetAll();
+
+            // Check if we have the amount of rows:
+            Assert.AreEqual(1, result.Count);
+
+            // Check if the Result is not null:
+            Assert.IsNotNull(result[0][0]);
+
+            // And now check the values:
+            var resultArray = (byte[][])result[0][0];
+
+            Assert.AreEqual(1, resultArray[0][0]);
+            Assert.AreEqual(2, resultArray[0][1]);
         }
 
 
