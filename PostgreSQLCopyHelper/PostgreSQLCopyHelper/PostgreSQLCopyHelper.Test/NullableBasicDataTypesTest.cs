@@ -12,24 +12,25 @@ using PostgreSQLCopyHelper.Test.Extensions;
 namespace PostgreSQLCopyHelper.Test
 {
     [TestFixture]
-    public class BasicDataTypesTest : TransactionalTestBase
+    [Description("There is a Bug in Npgsql (https://github.com/npgsql/npgsql/issues/1965). It will most probably be fixed in one of the next version, and these tests will work.")]
+    public class NullableBasicDataTypesTest : TransactionalTestBase
     {
         private class TestEntity
         {
-            public Int16 SmallInt { get; set; }
-            public Int32 Integer { get; set; }
-            public Int64 BigInt { get; set; }
-            public Decimal Money { get; set; }
-            public DateTime Timestamp { get; set; }
-            public Decimal Numeric { get; set; }
-            public Single Real { get; set; }
-            public Double DoublePrecision { get; set; }
+            public Int16? SmallInt { get; set; }
+            public Int32? Integer { get; set; }
+            public Int64? BigInt { get; set; }
+            public Decimal? Money { get; set; }
+            public DateTime? Timestamp { get; set; }
+            public Decimal? Numeric { get; set; }
+            public Single? Real { get; set; }
+            public Double? DoublePrecision { get; set; }
             public byte[] ByteArray { get; set; }
-            public Guid UUID { get; set; }
+            public Guid? UUID { get; set; }
             public IPAddress IpAddress { get; set; }
             public PhysicalAddress MacAddress { get; set; }
-            public DateTime Date { get; set; }
-            public TimeSpan TimeSpan { get; set; }
+            public DateTime? Date { get; set; }
+            public TimeSpan? TimeSpan { get; set; }
             public string Json { get; set; }
             public string Jsonb { get; set; }
         }
@@ -223,21 +224,21 @@ namespace PostgreSQLCopyHelper.Test
 
             var result0 = (DateTime)result[0][4];
 
-            Assert.AreEqual(entity0.Timestamp.Year, result0.Year);
-            Assert.AreEqual(entity0.Timestamp.Month, result0.Month);
-            Assert.AreEqual(entity0.Timestamp.Day, result0.Day);
-            Assert.AreEqual(entity0.Timestamp.Hour, result0.Hour);
-            Assert.AreEqual(entity0.Timestamp.Minute, result0.Minute);
-            Assert.AreEqual(entity0.Timestamp.Second, result0.Second);
+            Assert.AreEqual(entity0.Timestamp.Value.Year, result0.Year);
+            Assert.AreEqual(entity0.Timestamp.Value.Month, result0.Month);
+            Assert.AreEqual(entity0.Timestamp.Value.Day, result0.Day);
+            Assert.AreEqual(entity0.Timestamp.Value.Hour, result0.Hour);
+            Assert.AreEqual(entity0.Timestamp.Value.Minute, result0.Minute);
+            Assert.AreEqual(entity0.Timestamp.Value.Second, result0.Second);
 
             var result1 = (DateTime)result[1][4];
 
-            Assert.AreEqual(entity1.Timestamp.Year, result1.Year);
-            Assert.AreEqual(entity1.Timestamp.Month, result1.Month);
-            Assert.AreEqual(entity1.Timestamp.Day, result1.Day);
-            Assert.AreEqual(entity1.Timestamp.Hour, result1.Hour);
-            Assert.AreEqual(entity1.Timestamp.Minute, result1.Minute);
-            Assert.AreEqual(entity1.Timestamp.Second, result1.Second);
+            Assert.AreEqual(entity1.Timestamp.Value.Year, result1.Year);
+            Assert.AreEqual(entity1.Timestamp.Value.Month, result1.Month);
+            Assert.AreEqual(entity1.Timestamp.Value.Day, result1.Day);
+            Assert.AreEqual(entity1.Timestamp.Value.Hour, result1.Hour);
+            Assert.AreEqual(entity1.Timestamp.Value.Minute, result1.Minute);
+            Assert.AreEqual(entity1.Timestamp.Value.Second, result1.Second);
         }
 
         [Test]
@@ -360,15 +361,15 @@ namespace PostgreSQLCopyHelper.Test
 
             var result0 = (DateTime)result[0][12];
 
-            Assert.AreEqual(entity0.Date.Year, result0.Year);
-            Assert.AreEqual(entity0.Date.Month, result0.Month);
-            Assert.AreEqual(entity0.Date.Day, result0.Day);
+            Assert.AreEqual(entity0.Date.Value.Year, result0.Year);
+            Assert.AreEqual(entity0.Date.Value.Month, result0.Month);
+            Assert.AreEqual(entity0.Date.Value.Day, result0.Day);
 
             var result1 = (DateTime)result[1][12];
 
-            Assert.AreEqual(entity1.Date.Year, result1.Year);
-            Assert.AreEqual(entity1.Date.Month, result1.Month);
-            Assert.AreEqual(entity1.Date.Day, result1.Day);
+            Assert.AreEqual(entity1.Date.Value.Year, result1.Year);
+            Assert.AreEqual(entity1.Date.Value.Month, result1.Month);
+            Assert.AreEqual(entity1.Date.Value.Day, result1.Day);
         }
 
         [Test]
