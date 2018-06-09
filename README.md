@@ -6,7 +6,7 @@ PostgreSQLCopyHelper is a library for efficient bulk inserts to PostgreSQL datab
 
 Npgsql 4.0.0 has a bug writing Nullable CLR Types: https://github.com/npgsql/npgsql/issues/1965. The bug will most probably be fixed in 4.0.1, but 
 if you are working with Nullable Types, please stay on PostgreSQLCopyHelper 1.3.0 and Npgsql 3.2.7. There is also a Bug in the PostgreSQLCopyHelper 
-Bugtracker tracking the issue (Issue #21).
+Bugtracker tracking the issue ([Issue #21](https://github.com/bytefish/PostgreSQLCopyHelper/issues/21)).
 
 Furthermore Npgsql dropped .NET Standard 1.3 Support, as such PostgreSQLCopyHelper now also targets .NET Standard 2.0 as lowest supported version.
 
