@@ -15,7 +15,7 @@ namespace PostgreSQLCopyHelper
 
         public static PostgreSQLCopyHelper<TEntity> MapMoney<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Decimal?> propertyGetter)
         {
-            return helper.Map(columnName, propertyGetter, NpgsqlDbType.Money);
+            return helper.MapNullable(columnName, propertyGetter, NpgsqlDbType.Money);
         }
     }
 }

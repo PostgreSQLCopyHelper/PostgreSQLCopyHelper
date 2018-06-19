@@ -46,6 +46,25 @@ namespace PostgreSQLCopyHelper
             return AddColumn(columnName, (writer, entity) => writer.Write(propertyGetter(entity), type));
         }
 
+        public PostgreSQLCopyHelper<TEntity> MapNullable<TProperty>(string columnName, Func<TEntity, TProperty?> propertyGetter, NpgsqlDbType type)
+            where TProperty : struct
+        {
+            return AddColumn(columnName, (writer, entity) =>
+            {
+                var val = propertyGetter(entity);
+                if (!val.HasValue)
+                {
+                    writer.Write(DBNull.Value, type);
+                }
+                else
+                {
+                    writer.Write(val.Value, type);
+                }
+            });
+        }
+
+
+
         private void WriteToStream(NpgsqlBinaryImporter writer, IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)

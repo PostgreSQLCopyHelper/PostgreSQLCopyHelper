@@ -15,7 +15,7 @@ namespace PostgreSQLCopyHelper
 
         public static PostgreSQLCopyHelper<TEntity> MapSmallInt<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Int16?> propertyGetter)
         {
-            return helper.Map(columnName, propertyGetter, NpgsqlDbType.Smallint);
+            return helper.MapNullable(columnName, propertyGetter, NpgsqlDbType.Smallint);
         }
         
         public static PostgreSQLCopyHelper<TEntity> MapInteger<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Int32> propertyGetter)
@@ -25,7 +25,7 @@ namespace PostgreSQLCopyHelper
 
         public static PostgreSQLCopyHelper<TEntity> MapInteger<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Int32?> propertyGetter)
         {
-            return helper.Map(columnName, propertyGetter, NpgsqlDbType.Integer);
+            return helper.MapNullable(columnName, propertyGetter, NpgsqlDbType.Integer);
         }
 
         public static PostgreSQLCopyHelper<TEntity> MapBigInt<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Int64> propertyGetter)
@@ -35,7 +35,7 @@ namespace PostgreSQLCopyHelper
 
         public static PostgreSQLCopyHelper<TEntity> MapBigInt<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Int64?> propertyGetter)
         {
-            return helper.Map(columnName, propertyGetter, NpgsqlDbType.Bigint);
+            return helper.MapNullable(columnName, propertyGetter, NpgsqlDbType.Bigint);
         }
 
         public static PostgreSQLCopyHelper<TEntity> MapNumeric<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Decimal> propertyGetter)
@@ -45,7 +45,7 @@ namespace PostgreSQLCopyHelper
 
         public static PostgreSQLCopyHelper<TEntity> MapNumeric<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Decimal?> propertyGetter)
         {
-            return helper.Map(columnName, propertyGetter, NpgsqlDbType.Numeric);
+            return helper.MapNullable(columnName, propertyGetter, NpgsqlDbType.Numeric);
         }
 
         public static PostgreSQLCopyHelper<TEntity> MapReal<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Single> propertyGetter)
@@ -55,7 +55,7 @@ namespace PostgreSQLCopyHelper
 
         public static PostgreSQLCopyHelper<TEntity> MapReal<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Single?> propertyGetter)
         {
-            return helper.Map(columnName, propertyGetter, NpgsqlDbType.Real);
+            return helper.MapNullable(columnName, propertyGetter, NpgsqlDbType.Real);
         }
 
         public static PostgreSQLCopyHelper<TEntity> MapDouble<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Double> propertyGetter)
@@ -65,7 +65,7 @@ namespace PostgreSQLCopyHelper
 
         public static PostgreSQLCopyHelper<TEntity> MapDouble<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Double?> propertyGetter)
         {
-            return helper.Map(columnName, propertyGetter, NpgsqlDbType.Double);
+            return helper.MapNullable(columnName, propertyGetter, NpgsqlDbType.Double);
         }
     }
 }

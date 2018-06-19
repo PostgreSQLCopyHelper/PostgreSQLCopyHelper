@@ -15,7 +15,7 @@ namespace PostgreSQLCopyHelper
 
         public static PostgreSQLCopyHelper<TEntity> MapUUID<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Guid?> propertyGetter)
         {
-            return helper.Map(columnName, propertyGetter, NpgsqlDbType.Uuid);
+            return helper.MapNullable(columnName, propertyGetter, NpgsqlDbType.Uuid);
         }
     }
 }
