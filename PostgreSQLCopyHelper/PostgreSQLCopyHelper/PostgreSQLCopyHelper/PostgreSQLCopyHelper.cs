@@ -62,9 +62,7 @@ namespace PostgreSQLCopyHelper
                 }
             });
         }
-
-
-
+        
         private void WriteToStream(NpgsqlBinaryImporter writer, IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)
