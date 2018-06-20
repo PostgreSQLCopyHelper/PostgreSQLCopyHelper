@@ -63,7 +63,6 @@ namespace PostgreSQLCopyHelper.Test
         [Test]
         public void Test_NullableSmallInt()
         {
-
             var entity0 = new TestEntity()
             {
                 SmallInt = Int16.MinValue
@@ -85,6 +84,33 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[1][0]);
 
             Assert.AreEqual(Int16.MinValue, (Int16)result[0][0]);
+            Assert.AreEqual(Int16.MaxValue, (Int16)result[1][0]);
+        }
+
+        [Test]
+        public void Test_NullableSmallInt_NullFirst()
+        {
+            var entity0 = new TestEntity()
+            {
+                SmallInt = null
+            };
+
+            var entity1 = new TestEntity()
+            {
+                SmallInt = Int16.MaxValue
+            };
+
+            subject.SaveAll(connection, new[] { entity0, entity1 }); //Currently fails on this line
+
+            var result = GetAll();
+
+            // Check if we have the amount of rows:
+            Assert.AreEqual(2, result.Count);
+
+            Assert.IsNotNull(result[0][0]);
+            Assert.IsNotNull(result[1][0]);
+
+            Assert.AreEqual(null, (Int16)result[0][0]);
             Assert.AreEqual(Int16.MaxValue, (Int16)result[1][0]);
         }
 
