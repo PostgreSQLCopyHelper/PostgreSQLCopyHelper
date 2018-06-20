@@ -54,7 +54,7 @@ namespace PostgreSQLCopyHelper
                 var val = propertyGetter(entity);
                 if (!val.HasValue)
                 {
-                    writer.Write(DBNull.Value, type);
+                    writer.WriteNull();
                 }
                 else
                 {
