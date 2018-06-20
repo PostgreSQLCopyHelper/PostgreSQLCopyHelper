@@ -110,6 +110,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][0]);
             Assert.IsNotNull(result[1][0]);
 
+            Assert.AreEqual(DBNull.Value, result[0][0]);
             Assert.AreEqual(entity1.SmallInt, (Int16)result[1][0]);
         }
 
@@ -163,6 +164,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][1]);
             Assert.IsNotNull(result[1][1]);
 
+            Assert.AreEqual(DBNull.Value, result[0][1]);
             Assert.AreEqual(entity1.Integer, (Int32)result[1][1]);
         }
 
@@ -216,6 +218,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][2]);
             Assert.IsNotNull(result[1][2]);
 
+            Assert.AreEqual(DBNull.Value, result[0][2]);
             Assert.AreEqual(entity1.Money, (Decimal)result[1][2]);
         }
 
@@ -263,6 +266,7 @@ namespace PostgreSQLCopyHelper.Test
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
 
+            Assert.AreEqual(DBNull.Value, result[0][9]);
             Assert.AreEqual(entity1.Numeric, (Decimal)result[1][9]);
         }
 
@@ -316,6 +320,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][3]);
             Assert.IsNotNull(result[1][3]);
 
+            Assert.AreEqual(DBNull.Value, result[0][3]);
             Assert.AreEqual(entity1.BigInt, (Int64)result[1][3]);
         }
 
@@ -389,6 +394,8 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][4]);
             Assert.IsNotNull(result[1][4]);
 
+            Assert.AreEqual(DBNull.Value, result[0][4]);
+
             var result1 = (DateTime)result[1][4];
 
             Assert.AreEqual(entity1.Timestamp.Value.Year, result1.Year);
@@ -449,6 +456,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][5]);
             Assert.IsNotNull(result[1][5]);
 
+            Assert.AreEqual(DBNull.Value, result[0][5]);
             Assert.AreEqual(entity1.Real, (Single)result[1][5]);
         }
 
@@ -496,6 +504,7 @@ namespace PostgreSQLCopyHelper.Test
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
 
+            Assert.AreEqual(DBNull.Value, result[0][6]);
             Assert.AreEqual(entity1.DoublePrecision, (Double)result[1][6]);
         }
 
@@ -533,6 +542,7 @@ namespace PostgreSQLCopyHelper.Test
 
             // Check if we have the amount of rows:
             Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(DBNull.Value, result[0][7]);
         }
 
         [Test]
@@ -580,6 +590,7 @@ namespace PostgreSQLCopyHelper.Test
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
 
+            Assert.AreEqual(DBNull.Value, result[0][8]);
             Assert.AreEqual(entity1.UUID, (Guid)result[1][8]);
         }
 
@@ -642,6 +653,8 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][12]);
             Assert.IsNotNull(result[1][12]);
 
+            Assert.AreEqual(DBNull.Value, result[0][12]);
+
             var result1 = (DateTime)result[1][12];
 
             Assert.AreEqual(entity1.Date.Value.Year, result1.Year);
@@ -703,6 +716,8 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][10]);
             Assert.IsNotNull(result[1][10]);
 
+            Assert.AreEqual(DBNull.Value, result[0][10]);
+
             var result1 = (IPAddress)result[1][10];
             Assert.AreEqual(entity1.IpAddress, result1);
         }
@@ -760,6 +775,8 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][11]);
             Assert.IsNotNull(result[1][11]);
 
+            Assert.AreEqual(DBNull.Value, result[0][11]);
+
             var result1 = (PhysicalAddress)result[1][11];
             Assert.AreEqual(entity1.MacAddress, result1);
         }
@@ -810,6 +827,7 @@ namespace PostgreSQLCopyHelper.Test
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
 
+            Assert.AreEqual(DBNull.Value, result[0][13]);
             Assert.AreEqual(entity1.TimeSpan, (TimeSpan)result[1][13]);
         }
 
@@ -877,6 +895,8 @@ namespace PostgreSQLCopyHelper.Test
 
             Assert.IsNotNull(result[0][14]);
             Assert.IsNotNull(result[1][14]);
+
+            Assert.AreEqual(DBNull.Value, result[0][14]);
 
             var result1 = (string)result[1][14];
             Assert.AreEqual(entity1.Json, result1);
