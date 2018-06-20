@@ -110,7 +110,8 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][0]);
             Assert.IsNotNull(result[1][0]);
 
-            Assert.AreEqual(entity1.SmallInt, (Int16)result[1][0]);
+            Assert.AreEqual(DBNull.Value, result[0][0]);
+            Assert.AreEqual(Int16.MaxValue, (Int16)result[1][0]);
         }
 
         [Test]

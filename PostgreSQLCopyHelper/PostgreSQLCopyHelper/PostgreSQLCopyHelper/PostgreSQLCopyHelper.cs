@@ -52,6 +52,7 @@ namespace PostgreSQLCopyHelper
             return AddColumn(columnName, (writer, entity) =>
             {
                 var val = propertyGetter(entity);
+
                 if (!val.HasValue)
                 {
                     writer.WriteNull();
