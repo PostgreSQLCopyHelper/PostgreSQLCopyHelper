@@ -12,9 +12,9 @@ namespace PostgreSQLCopyHelper
 {
     public class PostgreSQLCopyHelper<TEntity> : IPostgreSQLCopyHelper<TEntity>
     {
-        private TableDefinition Table { get; set; }
+        private TableDefinition Table { get; }
 
-        private List<ColumnDefinition<TEntity>> Columns { get; set; }
+        private List<ColumnDefinition<TEntity>> Columns { get; }
 
         public PostgreSQLCopyHelper(string tableName)
             : this(string.Empty, tableName)
