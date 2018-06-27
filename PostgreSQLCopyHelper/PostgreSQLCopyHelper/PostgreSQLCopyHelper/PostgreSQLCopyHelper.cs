@@ -16,13 +16,16 @@ namespace PostgreSQLCopyHelper
 
         private List<ColumnDefinition<TEntity>> Columns { get; }
 
-        public PostgreSQLCopyHelper(string tableName)
-            : this(string.Empty, tableName)
+        private bool UseQuotedIdentifiers { get; }
+
+        public PostgreSQLCopyHelper(string tableName, bool useQuotedIdentifiers = false)
+            : this(string.Empty, tableName, useQuotedIdentifiers)
         {
         }
 
-        public PostgreSQLCopyHelper(string schemaName, string tableName)
+        public PostgreSQLCopyHelper(string schemaName, string tableName, bool useQuotedIdentifiers = false)
         {
+            UseQuotedIdentifiers = useQuotedIdentifiers;
             Table = new TableDefinition
             {
                 Schema = schemaName,
@@ -63,7 +66,7 @@ namespace PostgreSQLCopyHelper
                 }
             });
         }
-        
+
         private void WriteToStream(NpgsqlBinaryImporter writer, IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)
@@ -76,7 +79,7 @@ namespace PostgreSQLCopyHelper
                 }
             }
         }
-        
+
         private PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Action<NpgsqlBinaryImporter, TEntity> action)
         {
             Columns.Add(new ColumnDefinition<TEntity>
@@ -90,11 +93,9 @@ namespace PostgreSQLCopyHelper
 
         private string GetCopyCommand()
         {
-            var commaSeparatedColumns = string.Join(", ", Columns.Select(x => x.ColumnName));
+            var commaSeparatedColumns = string.Join(", ", Columns.Select(x => UseQuotedIdentifiers ? "\"" + x.ColumnName + "\"" : x.ColumnName));
 
-            return string.Format("COPY {0}({1}) FROM STDIN BINARY;",
-                Table.GetFullQualifiedTableName(),
-                commaSeparatedColumns);
+            return $"COPY {Table.GetFullQualifiedTableName(UseQuotedIdentifiers)}({commaSeparatedColumns}) FROM STDIN BINARY;";
         }
     }
 }
