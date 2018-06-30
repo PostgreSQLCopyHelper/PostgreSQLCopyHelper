@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using PostgreSQLCopyHelper.Utils;
 
 namespace PostgreSQLCopyHelper.Model
 {
@@ -15,14 +16,14 @@ namespace PostgreSQLCopyHelper.Model
         {
             if (string.IsNullOrWhiteSpace(Schema))
             {
-                return TableName;
+                return NpgsqlUtils.QuoteIdentifier(TableName);
             }
-            return string.Format("{0}.{1}", Schema, TableName);
+            return $"{NpgsqlUtils.QuoteIdentifier(Schema)}.{NpgsqlUtils.QuoteIdentifier(TableName)}";
         }
 
         public override string ToString()
         {
-            return string.Format("TableDefinition (Schema = {0}, TableName = {1})", Schema, TableName);
+            return $"TableDefinition (Schema = {Schema}, TableName = {TableName})";
         }
     }
 }

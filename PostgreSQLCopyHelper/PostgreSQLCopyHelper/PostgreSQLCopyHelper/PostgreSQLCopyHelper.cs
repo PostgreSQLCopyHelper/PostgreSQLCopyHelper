@@ -7,14 +7,15 @@ using System.Linq;
 using System.Collections.Generic;
 using NpgsqlTypes;
 using PostgreSQLCopyHelper.Model;
+using PostgreSQLCopyHelper.Utils;
 
 namespace PostgreSQLCopyHelper
 {
     public class PostgreSQLCopyHelper<TEntity> : IPostgreSQLCopyHelper<TEntity>
     {
-        private TableDefinition Table { get; set; }
+        private readonly TableDefinition Table;
 
-        private List<ColumnDefinition<TEntity>> Columns { get; set; }
+        private readonly List<ColumnDefinition<TEntity>> Columns;
 
         public PostgreSQLCopyHelper(string tableName)
             : this(string.Empty, tableName)
@@ -90,7 +91,7 @@ namespace PostgreSQLCopyHelper
 
         private string GetCopyCommand()
         {
-            var commaSeparatedColumns = string.Join(", ", Columns.Select(x => x.ColumnName));
+            var commaSeparatedColumns = string.Join(", ", Columns.Select(x => NpgsqlUtils.QuoteIdentifier(x.ColumnName)));
 
             return string.Format("COPY {0}({1}) FROM STDIN BINARY;",
                 Table.GetFullQualifiedTableName(),
