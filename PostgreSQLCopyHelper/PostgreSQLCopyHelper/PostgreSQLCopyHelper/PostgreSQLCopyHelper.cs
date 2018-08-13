@@ -13,6 +13,8 @@ namespace PostgreSQLCopyHelper
 {
     public class PostgreSQLCopyHelper<TEntity> : IPostgreSQLCopyHelper<TEntity>
     {
+        private bool usePostgresQuoting;
+
         private readonly TableDefinition Table;
 
         private readonly List<ColumnDefinition<TEntity>> Columns;
@@ -24,6 +26,8 @@ namespace PostgreSQLCopyHelper
 
         public PostgreSQLCopyHelper(string schemaName, string tableName)
         {
+            usePostgresQuoting = false;
+
             Table = new TableDefinition
             {
                 Schema = schemaName,
@@ -40,6 +44,13 @@ namespace PostgreSQLCopyHelper
                 WriteToStream(binaryCopyWriter, entities);
                 binaryCopyWriter.Complete();
             }
+        }
+
+        public PostgreSQLCopyHelper<TEntity> UsePostgresQuoting(bool enabled = true)
+        {
+            usePostgresQuoting = enabled;
+
+            return this;
         }
 
         public PostgreSQLCopyHelper<TEntity> Map<TProperty>(string columnName, Func<TEntity, TProperty> propertyGetter, NpgsqlDbType type)
@@ -91,10 +102,10 @@ namespace PostgreSQLCopyHelper
 
         private string GetCopyCommand()
         {
-            var commaSeparatedColumns = string.Join(", ", Columns.Select(x => NpgsqlUtils.QuoteIdentifier(x.ColumnName)));
+            var commaSeparatedColumns = string.Join(", ", Columns.Select(x => x.ColumnName.GetIdentifier(usePostgresQuoting)));
 
             return string.Format("COPY {0}({1}) FROM STDIN BINARY;",
-                Table.GetFullQualifiedTableName(),
+                Table.GetFullQualifiedTableName(usePostgresQuoting),
                 commaSeparatedColumns);
         }
     }

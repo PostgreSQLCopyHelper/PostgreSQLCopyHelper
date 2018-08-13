@@ -30,6 +30,7 @@ namespace PostgreSQLCopyHelper.Test.Issues
         public void Test_Issue1_QuotingColumnsAndTableNameTest()
         {
             subject = new PostgreSQLCopyHelper<MixedCaseEntity>("sample", "MixedCaseEntity")
+                     .UsePostgresQuoting()
                      .MapInteger("Property_One", x => x.Property_One)
                      .MapText("Property_Two", x => x.Property_Two);
             
@@ -75,6 +76,5 @@ namespace PostgreSQLCopyHelper.Test.Issues
 
             return sqlCommand.ExecuteNonQuery();
         }
-
     }
 }
