@@ -95,12 +95,9 @@ private void WriteToDatabase(PostgreSQLCopyHelper<TestEntity> copyHelper, IEnume
 By default the library does not apply quotes to identifiers, such as Table Names and Column Names. If you want PostgreSQL-conform quoting for identifiers, 
 then use the ``UsePostgresQuoting`` method like this:
 
-```
+```csharp
 var copyHelper = new PostgreSQLCopyHelper<MixedCaseEntity>("sample", "MixedCaseEntity")
                      .UsePostgresQuoting()
                      .MapInteger("Property_One", x => x.Property_One)
                      .MapText("Property_Two", x => x.Property_Two);
 ```
-            
-
-`` 
