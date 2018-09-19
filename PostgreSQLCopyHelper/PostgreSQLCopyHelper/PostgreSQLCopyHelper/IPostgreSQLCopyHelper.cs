@@ -8,6 +8,6 @@ namespace PostgreSQLCopyHelper
 {
     public interface IPostgreSQLCopyHelper<TEntity>
     {
-        void SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities);
+        ulong SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities);
     }
 }
