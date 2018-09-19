@@ -311,7 +311,7 @@ namespace PostgreSQLCopyHelper.Test
             return sqlCommand.ExecuteNonQuery();
         }
 
-        private List<object[]> GetAll()
+        private IList<object[]> GetAll()
         {
             return connection.GetAll("sample", "unit_test");
         }
