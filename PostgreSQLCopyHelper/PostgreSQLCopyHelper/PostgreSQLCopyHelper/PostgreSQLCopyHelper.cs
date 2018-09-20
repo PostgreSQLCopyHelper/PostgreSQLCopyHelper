@@ -42,6 +42,7 @@ namespace PostgreSQLCopyHelper
             using (var binaryCopyWriter = connection.BeginBinaryImport(GetCopyCommand()))
             {
                 WriteToStream(binaryCopyWriter, entities);
+
                 return binaryCopyWriter.Complete();
             }
         }
