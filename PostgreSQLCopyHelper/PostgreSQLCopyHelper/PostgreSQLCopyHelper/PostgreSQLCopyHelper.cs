@@ -37,12 +37,12 @@ namespace PostgreSQLCopyHelper
             Columns = new List<ColumnDefinition<TEntity>>();
         }
 
-        public void SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities)
+        public int SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities)
         {
             using (var binaryCopyWriter = connection.BeginBinaryImport(GetCopyCommand()))
             {
                 WriteToStream(binaryCopyWriter, entities);
-                binaryCopyWriter.Complete();
+                return binaryCopyWriter.Complete();
             }
         }
 
