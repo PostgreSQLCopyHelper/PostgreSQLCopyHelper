@@ -81,13 +81,14 @@ var copyHelper = new PostgreSQLCopyHelper<TestEntity>("sample", "unit_test")
 And then we can use it to efficiently store the data:
 
 ```csharp
-private void WriteToDatabase(PostgreSQLCopyHelper<TestEntity> copyHelper, IEnumerable<TestEntity> entities)
+private ulong WriteToDatabase(PostgreSQLCopyHelper<TestEntity> copyHelper, IEnumerable<TestEntity> entities)
 {
     using (var connection = new NpgsqlConnection("Server=127.0.0.1;Port=5432;Database=sampledb;User Id=philipp;Password=test_pwd;"))
     {
         connection.Open();
 
-        copyHelper.SaveAll(connection, entities);
+	// Returns count of rows written 
+        return copyHelper.SaveAll(connection, entities);
     }
 }
 ```
