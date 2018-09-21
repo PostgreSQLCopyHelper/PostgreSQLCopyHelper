@@ -4,6 +4,7 @@
 
 * [See Changes](https://github.com/bytefish/PostgreSQLCopyHelper/compare/2.4.0...2.5.0)
 
+#### This release: 
 - Drops support for `net45` and `net451`
 - Upgrades Npgsql to 4.1
 - SaveAll now returns a count of rows written
