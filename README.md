@@ -104,7 +104,7 @@ var copyHelper = new PostgreSQLCopyHelper<MixedCaseEntity>("sample", "MixedCaseE
                      .MapText("Property_Two", x => x.Property_Two);
 ```
 
-## License
+## License ##
 
 PostgreSQLCopyHelper is licensed under the MIT License. See [LICENSE](LICENSE) for details.
 
