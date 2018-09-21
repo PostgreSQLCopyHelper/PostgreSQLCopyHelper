@@ -6,7 +6,7 @@
 
 - Drops support for `net45` and `net451`
 - Upgrades Npgsql to 4.1
-- SavelAll now returns a count of rows written
+- SaveAll now returns a count of rows written
 
 ## 2.4.0 ##
 
