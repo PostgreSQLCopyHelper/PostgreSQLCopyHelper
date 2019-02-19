@@ -2,7 +2,7 @@
 
 ## 2.4.1 ##
 
-* Setting Npgsql Package Reference to a Floating Version 4.0.*, see Issue #38.
+* Reference Npgsql 4.0.4, see Issue #38.
 
 ## 2.4.0 ##
 
