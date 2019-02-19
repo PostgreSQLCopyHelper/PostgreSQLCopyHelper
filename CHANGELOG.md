@@ -1,5 +1,9 @@
 # CHANGELOG #
 
+## 2.4.1 ##
+
+* Setting Npgsql Package Reference to a Floating Version 4.0.*, see Issue #38.
+
 ## 2.4.0 ##
 
 * [See Changes](https://github.com/bytefish/PostgreSQLCopyHelper/compare/2.3.0...2.4.0)
