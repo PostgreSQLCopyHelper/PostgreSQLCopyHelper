@@ -1,6 +1,17 @@
 # CHANGELOG #
 
+## 2.4.2 ##
+
+* [See Changes](https://github.com/bytefish/PostgreSQLCopyHelper/compare/2.3.0...2.4.2)
+
+Added the following methods for improved ``DateTime`` and ``DateTimeOffset`` mappings, see [Issue #9]():
+
+* ``MapTimeStampTz`` (for ``DateTimeOffset``, ``DateTimeOffset?``)
+* ``MapTimeTz``
+
 ## 2.4.1 ##
+
+* [See Changes](https://github.com/bytefish/PostgreSQLCopyHelper/compare/2.3.0...2.4.1)
 
 * Reference Npgsql 4.0.4, see Issue #38.
 

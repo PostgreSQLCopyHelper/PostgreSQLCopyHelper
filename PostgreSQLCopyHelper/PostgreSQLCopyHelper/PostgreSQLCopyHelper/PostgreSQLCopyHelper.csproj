@@ -9,13 +9,13 @@
     <PackageTags>postgresql, bulk insert</PackageTags>
     <RepositoryUrl>git://github.com/bytefish/PostgreSQLCopyHelper</RepositoryUrl>
     <PackageProjectUrl>https://github.com/bytefish/PostgreSQLCopyHelper</PackageProjectUrl>
-    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright © 2019 Philipp Wagner</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <AssemblyVersion>2.4.1.0</AssemblyVersion>
-    <FileVersion>2.4.1.0</FileVersion>
+    <AssemblyVersion>2.4.2.0</AssemblyVersion>
+    <FileVersion>2.4.2.0</FileVersion>
     <RepositoryType>git</RepositoryType>
-    <Version>2.4.1</Version>
+    <Version>2.4.2</Version>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
   </PropertyGroup>
