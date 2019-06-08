@@ -1,5 +1,5 @@
-﻿using Npgsql;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Npgsql;
 
 namespace PostgreSQLCopyHelper.Test.Extensions
 {
@@ -7,7 +7,7 @@ namespace PostgreSQLCopyHelper.Test.Extensions
     {
         public static IList<object[]> GetAll(this NpgsqlConnection connection, string schema, string table)
         {
-            var sqlStatement = string.Format("SELECT * FROM {0}.{1}", schema, table);
+            var sqlStatement = $"SELECT * FROM {schema}.{table}";
 
             var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
 
