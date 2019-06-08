@@ -32,6 +32,13 @@ namespace PostgreSQLCopyHelper.Test
             public TimeSpan TimeSpan { get; set; }
             public string Json { get; set; }
             public string Jsonb { get; set; }
+
+            public DateTimeOffset DateTimeOffset_TimestampTz { get; set; }
+            public DateTime DateTime_TimestampTz { get; set; }
+
+            public DateTimeOffset DateTimeOffset_TimeTz { get; set; }
+            public DateTime DateTime_TimeTz { get; set; }
+            public TimeSpan TimeSpan_TimeTz { get; set; }
         }
 
         private PostgreSQLCopyHelper<TestEntity> subject;
@@ -56,7 +63,92 @@ namespace PostgreSQLCopyHelper.Test
                 .MapInterval("col_interval", x => x.TimeSpan)
                 .MapNumeric("col_numeric", x => x.Numeric)
                 .MapJson("col_json", x => x.Json)
-                .MapJsonb("col_jsonb", x => x.Jsonb);
+                .MapJsonb("col_jsonb", x => x.Jsonb)
+                .MapTimeStampTz("col_timestamptz_date_time_offset", x => x.DateTimeOffset_TimestampTz)
+                .MapTimeStampTz("col_timestamptz_date_time", x => x.DateTime_TimestampTz)
+                .MapTimeTz("col_timetz_time_span", x => x.TimeSpan_TimeTz)
+                .MapTimeTz("col_timetz_date_time", x => x.DateTime_TimeTz)
+                .MapTimeTz("col_timetz_date_time_offset", x => x.DateTimeOffset_TimeTz);
+        }
+
+        private int CreateTable()
+        {
+            var sqlStatement = @"CREATE TABLE sample.unit_test
+            (
+                col_smallint smallint,
+                col_integer integer,
+                col_money money,
+                col_bigint bigint,
+                col_timestamp timestamp,
+                col_real real,
+                col_double double precision,
+                col_bytea bytea,
+                col_uuid uuid,
+                col_numeric numeric,
+                col_inet inet,
+                col_macaddr macaddr,
+                col_date date,
+                col_interval interval,
+                col_json json,
+                col_jsonb jsonb,
+                col_timestamptz_date_time_offset timestamptz,
+                col_timestamptz_date_time timestamptz,
+                col_timetz_time_span timetz,
+                col_timetz_date_time timetz,
+                col_timetz_date_time_offset timetz
+            );";
+
+            var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
+
+            return sqlCommand.ExecuteNonQuery();
+        }
+
+        [Test]
+        public void Test_TimeStampTz_DateTimeOffset()
+        {
+
+            var entity0 = new TestEntity()
+            {
+                DateTimeOffset_TimestampTz = new DateTimeOffset(2019, 1, 1, 22, 0, 0, TimeSpan.Zero)
+            };
+
+         
+            subject.SaveAll(connection, new[] { entity0 });
+
+            var result = GetAll();
+
+            // Check if we have the amount of rows:
+            Assert.AreEqual(1, result.Count);
+
+            Assert.IsNotNull(result[0][16]);
+
+            var localDateTimeAsRead = (DateTime) result[0][16];
+
+            Assert.AreEqual(new DateTimeOffset(2019, 1, 1, 22, 0, 0, TimeSpan.Zero).UtcDateTime, localDateTimeAsRead.ToUniversalTime());
+        }
+
+        [Test]
+        public void Test_TimeStampTz_DateTime()
+        {
+            var expected = new DateTime(2019, 1, 1, 22, 0, 0, DateTimeKind.Utc);
+
+            var entity0 = new TestEntity()
+            {
+                DateTime_TimestampTz = expected
+            };
+
+            subject.SaveAll(connection, new[] { entity0 });
+
+            var result = GetAll();
+
+            // Check if we have the amount of rows:
+            Assert.AreEqual(1, result.Count);
+
+            Assert.IsNotNull(result[0][17]);
+
+            var localDateTimeAsRead = (DateTime)result[0][17];
+
+            Assert.AreEqual(expected, localDateTimeAsRead.ToUniversalTime());
         }
 
         [Test]
@@ -542,36 +634,7 @@ namespace PostgreSQLCopyHelper.Test
 
             // TODO: More Useful Test for JSON equality here...
         }
-
-
         
-        private int CreateTable()
-        {
-            var sqlStatement = @"CREATE TABLE sample.unit_test
-            (
-                col_smallint smallint,
-                col_integer integer,
-                col_money money,
-                col_bigint bigint,
-                col_timestamp timestamp,
-                col_real real,
-                col_double double precision,
-                col_bytea bytea,
-                col_uuid uuid,
-                col_numeric numeric,
-                col_inet inet,
-                col_macaddr macaddr,
-                col_date date,
-                col_interval interval,
-                col_json json,
-                col_jsonb jsonb
-            );";
-
-            var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
-
-            return sqlCommand.ExecuteNonQuery();
-        }
-
         private IList<object[]> GetAll()
         {
             return connection.GetAll("sample", "unit_test");
