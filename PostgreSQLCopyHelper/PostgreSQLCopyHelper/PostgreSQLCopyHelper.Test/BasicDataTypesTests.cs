@@ -635,7 +635,7 @@ namespace PostgreSQLCopyHelper.Test
             // TODO: More Useful Test for JSON equality here...
         }
         
-        private List<object[]> GetAll()
+        private IList<object[]> GetAll()
         {
             return connection.GetAll("sample", "unit_test");
         }
