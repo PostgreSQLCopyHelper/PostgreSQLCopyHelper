@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Philipp Wagner. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using NpgsqlTypes;
 using System;
 using System.Net;
 using System.Net.NetworkInformation;
+using NpgsqlTypes;
 
 namespace PostgreSQLCopyHelper
 {

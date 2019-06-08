@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Philipp Wagner. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using Npgsql;
 using NUnit.Framework;
-using System;
 using PostgreSQLCopyHelper.Test.Extensions;
 
 namespace PostgreSQLCopyHelper.Test.Issues
@@ -33,7 +33,7 @@ namespace PostgreSQLCopyHelper.Test.Issues
                      .UsePostgresQuoting()
                      .MapInteger("Property_One", x => x.Property_One)
                      .MapText("Property_Two", x => x.Property_Two);
-            
+
             // Try to work with the Bulk Inserter:
             var entity0 = new MixedCaseEntity
             {
@@ -57,11 +57,11 @@ namespace PostgreSQLCopyHelper.Test.Issues
             Assert.IsNotNull(result[0][0]);
             Assert.IsNotNull(result[1][0]);
 
-            Assert.AreEqual(entity0.Property_One, (Int32)result[0][0]);
-            Assert.AreEqual(entity0.Property_Two, (string)result[0][1]);
+            Assert.AreEqual(entity0.Property_One, (Int32) result[0][0]);
+            Assert.AreEqual(entity0.Property_Two, (string) result[0][1]);
 
-            Assert.AreEqual(entity1.Property_One, (Int32)result[1][0]);
-            Assert.AreEqual(entity1.Property_Two, (string)result[1][1]);
+            Assert.AreEqual(entity1.Property_One, (Int32) result[1][0]);
+            Assert.AreEqual(entity1.Property_Two, (string) result[1][1]);
         }
 
         private int CreateTable()
