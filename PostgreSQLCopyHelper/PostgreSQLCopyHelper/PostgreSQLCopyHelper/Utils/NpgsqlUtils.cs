@@ -11,12 +11,9 @@ namespace PostgreSQLCopyHelper.Utils
 
         public static string QuoteIdentifier(string identifier)
         {
-            if (RequiresQuoting(identifier))
-            {
-                return $"{QuoteChar}{identifier}{QuoteChar}";
-            }
-
-            return identifier;
+            return RequiresQuoting(identifier)
+                ? $"{QuoteChar}{identifier}{QuoteChar}"
+                : identifier;
         }
 
         /// <summary>

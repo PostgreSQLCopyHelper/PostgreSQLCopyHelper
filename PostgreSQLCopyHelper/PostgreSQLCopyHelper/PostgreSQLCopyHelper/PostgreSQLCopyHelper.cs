@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Philipp Wagner. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Npgsql;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using Npgsql;
 using NpgsqlTypes;
 using PostgreSQLCopyHelper.Model;
 using PostgreSQLCopyHelper.Utils;
@@ -13,11 +13,11 @@ namespace PostgreSQLCopyHelper
 {
     public class PostgreSQLCopyHelper<TEntity> : IPostgreSQLCopyHelper<TEntity>
     {
-        private bool usePostgresQuoting;
+        private bool _usePostgresQuoting;
 
-        private readonly TableDefinition Table;
+        private readonly TableDefinition _table;
 
-        private readonly List<ColumnDefinition<TEntity>> Columns;
+        private readonly List<ColumnDefinition<TEntity>> _columns;
 
         public PostgreSQLCopyHelper(string tableName)
             : this(string.Empty, tableName)
@@ -26,15 +26,15 @@ namespace PostgreSQLCopyHelper
 
         public PostgreSQLCopyHelper(string schemaName, string tableName)
         {
-            usePostgresQuoting = false;
+            _usePostgresQuoting = false;
 
-            Table = new TableDefinition
+            _table = new TableDefinition
             {
                 Schema = schemaName,
                 TableName = tableName
             };
 
-            Columns = new List<ColumnDefinition<TEntity>>();
+            _columns = new List<ColumnDefinition<TEntity>>();
         }
 
         public void SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities)
@@ -48,7 +48,7 @@ namespace PostgreSQLCopyHelper
 
         public PostgreSQLCopyHelper<TEntity> UsePostgresQuoting(bool enabled = true)
         {
-            usePostgresQuoting = enabled;
+            _usePostgresQuoting = enabled;
 
             return this;
         }
@@ -75,23 +75,23 @@ namespace PostgreSQLCopyHelper
                 }
             });
         }
-        
+
         private void WriteToStream(NpgsqlBinaryImporter writer, IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)
             {
                 writer.StartRow();
 
-                foreach (var columnDefinition in Columns)
+                foreach (var columnDefinition in _columns)
                 {
                     columnDefinition.Write(writer, entity);
                 }
             }
         }
-        
+
         private PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Action<NpgsqlBinaryImporter, TEntity> action)
         {
-            Columns.Add(new ColumnDefinition<TEntity>
+            _columns.Add(new ColumnDefinition<TEntity>
             {
                 ColumnName = columnName,
                 Write = action
@@ -102,11 +102,9 @@ namespace PostgreSQLCopyHelper
 
         private string GetCopyCommand()
         {
-            var commaSeparatedColumns = string.Join(", ", Columns.Select(x => x.ColumnName.GetIdentifier(usePostgresQuoting)));
+            var commaSeparatedColumns = string.Join(", ", _columns.Select(x => x.ColumnName.GetIdentifier(_usePostgresQuoting)));
 
-            return string.Format("COPY {0}({1}) FROM STDIN BINARY;",
-                Table.GetFullQualifiedTableName(usePostgresQuoting),
-                commaSeparatedColumns);
+            return $"COPY {_table.GetFullQualifiedTableName(_usePostgresQuoting)}({commaSeparatedColumns}) FROM STDIN BINARY;";
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Philipp Wagner. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Npgsql;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using Npgsql;
+using NUnit.Framework;
 using PostgreSQLCopyHelper.Test.Extensions;
 
 namespace PostgreSQLCopyHelper.Test
@@ -51,7 +51,7 @@ namespace PostgreSQLCopyHelper.Test
             public String[] Array { get; set; }
         }
 
-        
+
         [Test]
         public void Test_StringArray()
         {
@@ -77,7 +77,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][0]);
 
             // And now check the values:
-            var resultArray = (String[])result[0][0];
+            var resultArray = (String[]) result[0][0];
 
             Assert.AreEqual("A", resultArray[0]);
             Assert.AreEqual("B", resultArray[1]);
@@ -108,7 +108,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][0]);
 
             // And now check the values:
-            var resultArray = (Int16[])result[0][0];
+            var resultArray = (Int16[]) result[0][0];
 
             Assert.AreEqual(1, resultArray[0]);
             Assert.AreEqual(2, resultArray[1]);
@@ -125,7 +125,7 @@ namespace PostgreSQLCopyHelper.Test
 
             var entity0 = new Int32ArrayEntity()
             {
-                Array = new [] { 1, 2 }
+                Array = new[] { 1, 2 }
             };
 
             subject.SaveAll(connection, new[] { entity0 });
@@ -139,7 +139,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][0]);
 
             // And now check the values:
-            var resultArray = (Int32[])result[0][0];
+            var resultArray = (Int32[]) result[0][0];
 
             Assert.AreEqual(1, resultArray[0]);
             Assert.AreEqual(2, resultArray[1]);
@@ -171,7 +171,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][0]);
 
             // And now check the values:
-            var resultArray = (Int64[])result[0][0];
+            var resultArray = (Int64[]) result[0][0];
 
             Assert.AreEqual(1, resultArray[0]);
             Assert.AreEqual(2, resultArray[1]);
@@ -191,7 +191,7 @@ namespace PostgreSQLCopyHelper.Test
                 Array = new Decimal[] { 1, 2 }
             };
 
-            subject.SaveAll(connection, new [] { entity0 });
+            subject.SaveAll(connection, new[] { entity0 });
 
             var result = GetAll();
 
@@ -202,7 +202,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][0]);
 
             // And now check the values:
-            var resultArray = (Decimal[])result[0][0];
+            var resultArray = (Decimal[]) result[0][0];
 
             Assert.AreEqual(1, resultArray[0]);
             Assert.AreEqual(2, resultArray[1]);
@@ -233,7 +233,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][0]);
 
             // And now check the values:
-            var resultArray = (Single[])result[0][0];
+            var resultArray = (Single[]) result[0][0];
 
             Assert.AreEqual(1.32f, resultArray[0], 1e-5);
             Assert.AreEqual(2.124f, resultArray[1], 1e-5);
@@ -264,7 +264,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][0]);
 
             // And now check the values:
-            var resultArray = (Double[])result[0][0];
+            var resultArray = (Double[]) result[0][0];
 
             Assert.AreEqual(1.32, resultArray[0], 1e-5);
             Assert.AreEqual(2.124, resultArray[1], 1e-5);
@@ -281,12 +281,12 @@ namespace PostgreSQLCopyHelper.Test
 
             var entity0 = new ByteArrayArrayEntity()
             {
-                Array = new byte[][] { new byte[] {1, 2} }
+                Array = new byte[][] { new byte[] { 1, 2 } }
             };
 
             subject.SaveAll(connection, new[] { entity0 });
 
-            var result =  GetAll();
+            var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(1, result.Count);
@@ -295,7 +295,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][0]);
 
             // And now check the values:
-            var resultArray = (byte[][])result[0][0];
+            var resultArray = (byte[][]) result[0][0];
 
             Assert.AreEqual(1, resultArray[0][0]);
             Assert.AreEqual(2, resultArray[0][1]);
@@ -304,7 +304,7 @@ namespace PostgreSQLCopyHelper.Test
 
         private int CreateTable(string arrayType)
         {
-            var sqlStatement = string.Format("CREATE TABLE sample.unit_test(col_array {0}[]);", arrayType);
+            var sqlStatement = $"CREATE TABLE sample.unit_test(col_array {arrayType}[]);";
 
             var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
 
