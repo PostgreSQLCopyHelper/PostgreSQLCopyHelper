@@ -9,28 +9,19 @@
     <PackageTags>postgresql, bulk insert</PackageTags>
     <RepositoryUrl>git://github.com/bytefish/PostgreSQLCopyHelper</RepositoryUrl>
     <PackageProjectUrl>https://github.com/bytefish/PostgreSQLCopyHelper</PackageProjectUrl>
-    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <Copyright>Copyright © 2018 Philipp Wagner</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright © 2019 Philipp Wagner</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <AssemblyVersion>2.5.0.0</AssemblyVersion>
     <FileVersion>2.5.0.0</FileVersion>
     <RepositoryType>git</RepositoryType>
-    <Version>2.5.0-alpha</Version>
+    <Version>2.5.0-alpha2</Version>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|x64'" />
-
-  <ItemGroup>
-    <Compile Remove="Async\**" />
-    <EmbeddedResource Remove="Async\**" />
-    <None Remove="Async\**" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Npgsql" Version="4.1.0-ci.1320" />
   </ItemGroup>
-
 
 </Project>
