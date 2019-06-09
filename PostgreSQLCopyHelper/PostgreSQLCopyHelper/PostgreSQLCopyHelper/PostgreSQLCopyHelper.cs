@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Npgsql;
 using NpgsqlTypes;
 using PostgreSQLCopyHelper.Model;
@@ -37,13 +38,16 @@ namespace PostgreSQLCopyHelper
             _columns = new List<ColumnDefinition<TEntity>>();
         }
 
-        public ulong SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities)
+        public ulong SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities) =>
+            SaveAllAsync(connection, entities).GetAwaiter().GetResult();
+
+        public async Task<ulong> SaveAllAsync(NpgsqlConnection connection, IEnumerable<TEntity> entities)
         {
             using (var binaryCopyWriter = connection.BeginBinaryImport(GetCopyCommand()))
             {
-                WriteToStream(binaryCopyWriter, entities);
+                await WriteToStream(binaryCopyWriter, entities);
 
-                return binaryCopyWriter.Complete();
+                return await binaryCopyWriter.Complete(async: true);
             }
         }
 
@@ -77,11 +81,11 @@ namespace PostgreSQLCopyHelper
             });
         }
 
-        private void WriteToStream(NpgsqlBinaryImporter writer, IEnumerable<TEntity> entities)
+        private async Task WriteToStream(NpgsqlBinaryImporter writer, IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)
             {
-                writer.StartRow();
+                await writer.StartRow(async: true);
 
                 foreach (var columnDefinition in _columns)
                 {
