@@ -109,4 +109,4 @@ var copyHelper = new PostgreSQLCopyHelper<MixedCaseEntity>("sample", "MixedCaseE
 
 PostgreSQLCopyHelper is licensed under the MIT License. See [LICENSE](LICENSE) for details.
 
-Copyright (c) Philipp Wagner and [Contributors](https://github.com/bytefish/PostgreSQLCopyHelper/graphs/contributors)
+Copyright (c) Philipp Wagner, Steven Yeh and [Contributors](https://github.com/bytefish/PostgreSQLCopyHelper/graphs/contributors)
