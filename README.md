@@ -1,6 +1,7 @@
 # PostgreSQLCopyHelper #
 
 [![stable](https://img.shields.io/nuget/v/PostgreSQLCopyHelper.svg?label=stable)](https://www.nuget.org/packages/PostgreSQLCopyHelper/)
+[![prerelease](https://img.shields.io/nuget/vpre/PostgreSQLCopyHelper.svg?label=prerelease)](https://www.nuget.org/packages/PostgreSQLCopyHelper/)
 
 PostgreSQLCopyHelper is a library for efficient bulk inserts to PostgreSQL databases. It wraps the COPY methods from Npgsql behind a nice Fluent API.
 
@@ -109,4 +110,4 @@ var copyHelper = new PostgreSQLCopyHelper<MixedCaseEntity>("sample", "MixedCaseE
 
 PostgreSQLCopyHelper is licensed under the MIT License. See [LICENSE](LICENSE) for details.
 
-Copyright (c) Philipp Wagner and [Contributors](https://github.com/bytefish/PostgreSQLCopyHelper/graphs/contributors)
+Copyright (c) Philipp Wagner, Steven Yeh and [Contributors](https://github.com/bytefish/PostgreSQLCopyHelper/graphs/contributors)
