@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Philipp Wagner. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Npgsql;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.NetworkInformation;
+using Npgsql;
+using NUnit.Framework;
 using PostgreSQLCopyHelper.Test.Extensions;
 
 namespace PostgreSQLCopyHelper.Test
@@ -84,8 +84,8 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][0]);
             Assert.IsNotNull(result[1][0]);
 
-            Assert.AreEqual(entity0.SmallInt, (Int16)result[0][0]);
-            Assert.AreEqual(entity1.SmallInt, (Int16)result[1][0]);
+            Assert.AreEqual(entity0.SmallInt, (Int16) result[0][0]);
+            Assert.AreEqual(entity1.SmallInt, (Int16) result[1][0]);
         }
 
         [Test]
@@ -113,7 +113,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[1][0]);
 
             Assert.AreEqual(DBNull.Value, result[0][0]);
-            Assert.AreEqual(entity1.SmallInt, (Int16)result[1][0]);
+            Assert.AreEqual(entity1.SmallInt, (Int16) result[1][0]);
         }
 
         [Test]
@@ -140,8 +140,8 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][1]);
             Assert.IsNotNull(result[1][1]);
 
-            Assert.AreEqual(entity0.Integer, (Int32)result[0][1]);
-            Assert.AreEqual(entity1.Integer, (Int32)result[1][1]);
+            Assert.AreEqual(entity0.Integer, (Int32) result[0][1]);
+            Assert.AreEqual(entity1.Integer, (Int32) result[1][1]);
         }
 
         [Test]
@@ -169,7 +169,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[1][1]);
 
             Assert.AreEqual(DBNull.Value, result[0][1]);
-            Assert.AreEqual(entity1.Integer, (Int32)result[1][1]);
+            Assert.AreEqual(entity1.Integer, (Int32) result[1][1]);
         }
 
         [Test]
@@ -196,8 +196,8 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][2]);
             Assert.IsNotNull(result[1][2]);
 
-            Assert.AreEqual(entity0.Money, (Decimal)result[0][2]);
-            Assert.AreEqual(entity1.Money, (Decimal)result[1][2]);
+            Assert.AreEqual(entity0.Money, (Decimal) result[0][2]);
+            Assert.AreEqual(entity1.Money, (Decimal) result[1][2]);
         }
 
         [Test]
@@ -225,7 +225,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[1][2]);
 
             Assert.AreEqual(DBNull.Value, result[0][2]);
-            Assert.AreEqual(entity1.Money, (Decimal)result[1][2]);
+            Assert.AreEqual(entity1.Money, (Decimal) result[1][2]);
         }
 
         [Test]
@@ -249,8 +249,8 @@ namespace PostgreSQLCopyHelper.Test
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual(2, recordSaved);
 
-            Assert.AreEqual(entity0.Numeric, (Decimal)result[0][9]);
-            Assert.AreEqual(entity1.Numeric, (Decimal)result[1][9]);
+            Assert.AreEqual(entity0.Numeric, (Decimal) result[0][9]);
+            Assert.AreEqual(entity1.Numeric, (Decimal) result[1][9]);
         }
 
         [Test]
@@ -275,7 +275,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.AreEqual(2, recordSaved);
 
             Assert.AreEqual(DBNull.Value, result[0][9]);
-            Assert.AreEqual(entity1.Numeric, (Decimal)result[1][9]);
+            Assert.AreEqual(entity1.Numeric, (Decimal) result[1][9]);
         }
 
         [Test]
@@ -302,8 +302,8 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][3]);
             Assert.IsNotNull(result[1][3]);
 
-            Assert.AreEqual(entity0.BigInt, (Int64)result[0][3]);
-            Assert.AreEqual(entity1.BigInt, (Int64)result[1][3]);
+            Assert.AreEqual(entity0.BigInt, (Int64) result[0][3]);
+            Assert.AreEqual(entity1.BigInt, (Int64) result[1][3]);
         }
 
         [Test]
@@ -331,7 +331,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[1][3]);
 
             Assert.AreEqual(DBNull.Value, result[0][3]);
-            Assert.AreEqual(entity1.BigInt, (Int64)result[1][3]);
+            Assert.AreEqual(entity1.BigInt, (Int64) result[1][3]);
         }
 
         [Test]
@@ -361,7 +361,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[1][4]);
 
 
-            var result0 = (DateTime)result[0][4];
+            var result0 = (DateTime) result[0][4];
 
             Assert.AreEqual(entity0.Timestamp.Value.Year, result0.Year);
             Assert.AreEqual(entity0.Timestamp.Value.Month, result0.Month);
@@ -370,7 +370,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.AreEqual(entity0.Timestamp.Value.Minute, result0.Minute);
             Assert.AreEqual(entity0.Timestamp.Value.Second, result0.Second);
 
-            var result1 = (DateTime)result[1][4];
+            var result1 = (DateTime) result[1][4];
 
             Assert.AreEqual(entity1.Timestamp.Value.Year, result1.Year);
             Assert.AreEqual(entity1.Timestamp.Value.Month, result1.Month);
@@ -408,7 +408,7 @@ namespace PostgreSQLCopyHelper.Test
 
             Assert.AreEqual(DBNull.Value, result[0][4]);
 
-            var result1 = (DateTime)result[1][4];
+            var result1 = (DateTime) result[1][4];
 
             Assert.AreEqual(entity1.Timestamp.Value.Year, result1.Year);
             Assert.AreEqual(entity1.Timestamp.Value.Month, result1.Month);
@@ -442,8 +442,8 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][5]);
             Assert.IsNotNull(result[1][5]);
 
-            Assert.AreEqual(entity0.Real, (Single)result[0][5]);
-            Assert.AreEqual(entity1.Real, (Single)result[1][5]);
+            Assert.AreEqual(entity0.Real, (Single) result[0][5]);
+            Assert.AreEqual(entity1.Real, (Single) result[1][5]);
         }
 
         [Test]
@@ -471,7 +471,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[1][5]);
 
             Assert.AreEqual(DBNull.Value, result[0][5]);
-            Assert.AreEqual(entity1.Real, (Single)result[1][5]);
+            Assert.AreEqual(entity1.Real, (Single) result[1][5]);
         }
 
         [Test]
@@ -495,8 +495,8 @@ namespace PostgreSQLCopyHelper.Test
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual(2, recordSaved);
 
-            Assert.AreEqual(entity0.DoublePrecision, (Double)result[0][6]);
-            Assert.AreEqual(entity1.DoublePrecision, (Double)result[1][6]);
+            Assert.AreEqual(entity0.DoublePrecision, (Double) result[0][6]);
+            Assert.AreEqual(entity1.DoublePrecision, (Double) result[1][6]);
         }
 
         [Test]
@@ -521,7 +521,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.AreEqual(2, recordSaved);
 
             Assert.AreEqual(DBNull.Value, result[0][6]);
-            Assert.AreEqual(entity1.DoublePrecision, (Double)result[1][6]);
+            Assert.AreEqual(entity1.DoublePrecision, (Double) result[1][6]);
         }
 
         [Test]
@@ -540,9 +540,9 @@ namespace PostgreSQLCopyHelper.Test
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual(1, recordSaved);
 
-            Assert.AreEqual(entity0.ByteArray[0], ((byte[])result[0][7])[0]);
-            Assert.AreEqual(entity0.ByteArray[1], ((byte[])result[0][7])[1]);
-            Assert.AreEqual(entity0.ByteArray[2], ((byte[])result[0][7])[2]);
+            Assert.AreEqual(entity0.ByteArray[0], ((byte[]) result[0][7])[0]);
+            Assert.AreEqual(entity0.ByteArray[1], ((byte[]) result[0][7])[1]);
+            Assert.AreEqual(entity0.ByteArray[2], ((byte[]) result[0][7])[2]);
         }
 
         [Test]
@@ -584,8 +584,8 @@ namespace PostgreSQLCopyHelper.Test
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual(2, recordSaved);
 
-            Assert.AreEqual(entity0.UUID, (Guid)result[0][8]);
-            Assert.AreEqual(entity1.UUID, (Guid)result[1][8]);
+            Assert.AreEqual(entity0.UUID, (Guid) result[0][8]);
+            Assert.AreEqual(entity1.UUID, (Guid) result[1][8]);
         }
 
 
@@ -611,7 +611,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.AreEqual(2, recordSaved);
 
             Assert.AreEqual(DBNull.Value, result[0][8]);
-            Assert.AreEqual(entity1.UUID, (Guid)result[1][8]);
+            Assert.AreEqual(entity1.UUID, (Guid) result[1][8]);
         }
 
         [Test]
@@ -638,13 +638,13 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][12]);
             Assert.IsNotNull(result[1][12]);
 
-            var result0 = (DateTime)result[0][12];
+            var result0 = (DateTime) result[0][12];
 
             Assert.AreEqual(entity0.Date.Value.Year, result0.Year);
             Assert.AreEqual(entity0.Date.Value.Month, result0.Month);
             Assert.AreEqual(entity0.Date.Value.Day, result0.Day);
 
-            var result1 = (DateTime)result[1][12];
+            var result1 = (DateTime) result[1][12];
 
             Assert.AreEqual(entity1.Date.Value.Year, result1.Year);
             Assert.AreEqual(entity1.Date.Value.Month, result1.Month);
@@ -677,7 +677,7 @@ namespace PostgreSQLCopyHelper.Test
 
             Assert.AreEqual(DBNull.Value, result[0][12]);
 
-            var result1 = (DateTime)result[1][12];
+            var result1 = (DateTime) result[1][12];
 
             Assert.AreEqual(entity1.Date.Value.Year, result1.Year);
             Assert.AreEqual(entity1.Date.Value.Month, result1.Month);
@@ -709,10 +709,10 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][10]);
             Assert.IsNotNull(result[1][10]);
 
-            var result0 = (IPAddress)result[0][10];
+            var result0 = (IPAddress) result[0][10];
             Assert.AreEqual(entity0.IpAddress, result0);
 
-            var result1 = (IPAddress)result[1][10];
+            var result1 = (IPAddress) result[1][10];
             Assert.AreEqual(entity1.IpAddress, result1);
         }
 
@@ -742,7 +742,7 @@ namespace PostgreSQLCopyHelper.Test
 
             Assert.AreEqual(DBNull.Value, result[0][10]);
 
-            var result1 = (IPAddress)result[1][10];
+            var result1 = (IPAddress) result[1][10];
             Assert.AreEqual(entity1.IpAddress, result1);
         }
 
@@ -770,10 +770,10 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][11]);
             Assert.IsNotNull(result[1][11]);
 
-            var result0 = (PhysicalAddress)result[0][11];
+            var result0 = (PhysicalAddress) result[0][11];
             Assert.AreEqual(entity0.MacAddress, result0);
 
-            var result1 = (PhysicalAddress)result[1][11];
+            var result1 = (PhysicalAddress) result[1][11];
             Assert.AreEqual(entity1.MacAddress, result1);
         }
 
@@ -803,7 +803,7 @@ namespace PostgreSQLCopyHelper.Test
 
             Assert.AreEqual(DBNull.Value, result[0][11]);
 
-            var result1 = (PhysicalAddress)result[1][11];
+            var result1 = (PhysicalAddress) result[1][11];
             Assert.AreEqual(entity1.MacAddress, result1);
         }
 
@@ -829,8 +829,8 @@ namespace PostgreSQLCopyHelper.Test
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual(2, recordSaved);
 
-            Assert.AreEqual(entity0.TimeSpan, (TimeSpan)result[0][13]);
-            Assert.AreEqual(entity1.TimeSpan, (TimeSpan)result[1][13]);
+            Assert.AreEqual(entity0.TimeSpan, (TimeSpan) result[0][13]);
+            Assert.AreEqual(entity1.TimeSpan, (TimeSpan) result[1][13]);
         }
 
         [Test]
@@ -856,7 +856,7 @@ namespace PostgreSQLCopyHelper.Test
             Assert.AreEqual(2, recordSaved);
 
             Assert.AreEqual(DBNull.Value, result[0][13]);
-            Assert.AreEqual(entity1.TimeSpan, (TimeSpan)result[1][13]);
+            Assert.AreEqual(entity1.TimeSpan, (TimeSpan) result[1][13]);
         }
 
         [Test]
@@ -891,10 +891,10 @@ namespace PostgreSQLCopyHelper.Test
             Assert.IsNotNull(result[0][14]);
             Assert.IsNotNull(result[1][14]);
 
-            var result0 = (string)result[0][14];
+            var result0 = (string) result[0][14];
             Assert.AreEqual(entity0.Json, result0);
 
-            var result1 = (string)result[1][14];
+            var result1 = (string) result[1][14];
             Assert.AreEqual(entity1.Json, result1);
         }
 
@@ -928,7 +928,7 @@ namespace PostgreSQLCopyHelper.Test
 
             Assert.AreEqual(DBNull.Value, result[0][14]);
 
-            var result1 = (string)result[1][14];
+            var result1 = (string) result[1][14];
             Assert.AreEqual(entity1.Json, result1);
         }
 
