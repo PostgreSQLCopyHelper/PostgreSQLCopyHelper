@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
-    <Authors>Philipp Wagner</Authors>
+    <Authors>Philipp Wagner;Steven Yeh</Authors>
     <Company />
     <Product />
     <Description>A library for Bulk Copy / Bulk Inserts with PostgreSQL.</Description>
@@ -15,13 +15,13 @@
     <AssemblyVersion>2.5.0.0</AssemblyVersion>
     <FileVersion>2.5.0.0</FileVersion>
     <RepositoryType>git</RepositoryType>
-    <Version>2.5.0-alpha2</Version>
+    <Version>2.5.0-preview1</Version>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Npgsql" Version="4.1.0-ci.1863" />
+    <PackageReference Include="Npgsql" Version="4.1.0-preview1" />
   </ItemGroup>
 
 </Project>
