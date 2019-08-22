@@ -1,5 +1,6 @@
 # PostgreSQLCopyHelper #
 
+[![Build Status](https://dev.azure.com/PostgreSqlCopyHelper/PostgreSQLCopyHelper/_apis/build/status/postgresqlcopyhelper.PostgreSQLCopyHelper?branchName=master)](https://dev.azure.com/PostgreSqlCopyHelper/PostgreSQLCopyHelper/_build/latest?definitionId=1&branchName=master)
 [![stable](https://img.shields.io/nuget/v/PostgreSQLCopyHelper.svg?label=stable)](https://www.nuget.org/packages/PostgreSQLCopyHelper/)
 [![prerelease](https://img.shields.io/nuget/vpre/PostgreSQLCopyHelper.svg?label=prerelease)](https://www.nuget.org/packages/PostgreSQLCopyHelper/)
 
