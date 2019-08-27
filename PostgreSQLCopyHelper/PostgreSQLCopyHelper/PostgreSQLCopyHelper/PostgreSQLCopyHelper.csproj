@@ -7,8 +7,8 @@
     <Product />
     <Description>A library for Bulk Copy / Bulk Inserts with PostgreSQL.</Description>
     <PackageTags>postgresql, bulk insert</PackageTags>
-    <RepositoryUrl>git://github.com/bytefish/PostgreSQLCopyHelper</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/bytefish/PostgreSQLCopyHelper</PackageProjectUrl>
+    <RepositoryUrl>git://github.com/PostgreSQLCopyHelper/PostgreSQLCopyHelper</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/PostgreSQLCopyHelper/PostgreSQLCopyHelper</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright © 2019 Philipp Wagner</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>

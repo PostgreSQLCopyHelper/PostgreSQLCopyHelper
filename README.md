@@ -1,5 +1,6 @@
 # PostgreSQLCopyHelper #
 
+[![Build Status](https://dev.azure.com/PostgreSqlCopyHelper/PostgreSQLCopyHelper/_apis/build/status/postgresqlcopyhelper.PostgreSQLCopyHelper?branchName=master)](https://dev.azure.com/PostgreSqlCopyHelper/PostgreSQLCopyHelper/_build/latest?definitionId=1&branchName=master)
 [![stable](https://img.shields.io/nuget/v/PostgreSQLCopyHelper.svg?label=stable)](https://www.nuget.org/packages/PostgreSQLCopyHelper/)
 [![prerelease](https://img.shields.io/nuget/vpre/PostgreSQLCopyHelper.svg?label=prerelease)](https://www.nuget.org/packages/PostgreSQLCopyHelper/)
 
@@ -88,7 +89,7 @@ private ulong WriteToDatabase(PostgreSQLCopyHelper<TestEntity> copyHelper, IEnum
     {
         connection.Open();
 
-	// Returns count of rows written 
+		// Returns count of rows written 
         return copyHelper.SaveAll(connection, entities);
     }
 }
@@ -110,4 +111,4 @@ var copyHelper = new PostgreSQLCopyHelper<MixedCaseEntity>("sample", "MixedCaseE
 
 PostgreSQLCopyHelper is licensed under the MIT License. See [LICENSE](LICENSE) for details.
 
-Copyright (c) [Philipp Wagner](https://github.com/bytefish), [Steven Yeh](https://github.com/say25) and [Contributors](https://github.com/bytefish/PostgreSQLCopyHelper/graphs/contributors)
+Copyright (c) Philipp Wagner, Steven Yeh and [Contributors](https://github.com/PostgreSQLCopyHelper/PostgreSQLCopyHelper/graphs/contributors)
