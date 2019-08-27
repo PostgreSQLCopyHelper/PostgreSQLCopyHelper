@@ -1,7 +1,7 @@
-﻿// Copyright (c) Philipp Wagner. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Threading.Tasks;
 using Npgsql;
 
 namespace PostgreSQLCopyHelper.Model
@@ -10,7 +10,7 @@ namespace PostgreSQLCopyHelper.Model
     {
         public string ColumnName { get; set; }
 
-        public Action<NpgsqlBinaryImporter, TEntity> Write { get; set; }
+        public Func<NpgsqlBinaryImporter, TEntity, Task> Write { get; set; }
 
         public override string ToString()
         {
