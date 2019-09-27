@@ -4,7 +4,6 @@
 _ReSharper.*
 packages/
 artifacts/
-*.user
 *.suo
 *.userprefs
 *DS_Store
