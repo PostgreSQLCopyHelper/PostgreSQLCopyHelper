@@ -20,7 +20,7 @@ resources:
 
 variables:
    buildConfiguration: 'Release'
-   DOTNET_SDK_VERSION: 2.x
+   DOTNET_SDK_VERSION: 3.x
 
 jobs:
 
@@ -50,6 +50,13 @@ jobs:
       packageType: 'sdk'
       version: '$(DOTNET_SDK_VERSION)'
 
+  - task: DotNetCoreCLI@2
+    displayName: 'Build'
+    inputs:
+      command: 'build'
+      configuration: $(buildConfiguration)
+      projects: '**/*.csproj'
+
   # - task: DotNetCoreCLI@2
   #   displayName: 'Test'
   #   inputs:
@@ -69,6 +76,13 @@ jobs:
     inputs:
       packageType: 'sdk'
       version: '$(DOTNET_SDK_VERSION)'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build'
+    inputs:
+      command: 'build'
+      configuration: $(buildConfiguration)
+      projects: '**/*.csproj'
 
   # - task: DotNetCoreCLI@2
   #   displayName: 'Test'
