@@ -20,7 +20,7 @@ resources:
 
 variables:
    buildConfiguration: 'Release'
-   DOTNET_SDK_VERSION: 2.x
+   DOTNET_SDK_VERSION: 3.x
 
 jobs:
 
