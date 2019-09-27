@@ -1,5 +1,4 @@
-﻿// Copyright (c) Philipp Wagner. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using Npgsql;
@@ -47,12 +46,13 @@ namespace PostgreSQLCopyHelper.Test.Issues
                 Property_Two = "Isn't it nice to write in Camel Case!"
             };
 
-            subject.SaveAll(connection, new[] { entity0, entity1 });
+            var recordsSaved = subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = connection.GetAll("sample", "\"MixedCaseEntity\"");
 
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, recordsSaved);
 
             Assert.IsNotNull(result[0][0]);
             Assert.IsNotNull(result[1][0]);

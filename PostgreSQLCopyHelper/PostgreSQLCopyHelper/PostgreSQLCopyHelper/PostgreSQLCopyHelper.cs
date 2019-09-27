@@ -1,9 +1,10 @@
-﻿// Copyright (c) Philipp Wagner. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Npgsql;
 using NpgsqlTypes;
 using PostgreSQLCopyHelper.Model;
@@ -37,12 +38,29 @@ namespace PostgreSQLCopyHelper
             _columns = new List<ColumnDefinition<TEntity>>();
         }
 
-        public void SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities)
+        public ulong SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities) =>
+            DoSaveAllAsync(connection, entities).GetAwaiter().GetResult();
+
+        public ValueTask<ulong> SaveAllAsync(NpgsqlConnection connection, IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+        {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return new ValueTask<ulong>(Task.FromCanceled<ulong>(cancellationToken));
+            }
+
+            using (NoSynchronizationContextScope.Enter())
+            {
+                return DoSaveAllAsync(connection, entities);
+            }
+        }
+
+        private async ValueTask<ulong> DoSaveAllAsync(NpgsqlConnection connection, IEnumerable<TEntity> entities)
         {
             using (var binaryCopyWriter = connection.BeginBinaryImport(GetCopyCommand()))
             {
-                WriteToStream(binaryCopyWriter, entities);
-                binaryCopyWriter.Complete();
+                await WriteToStream(binaryCopyWriter, entities);
+
+                return await binaryCopyWriter.CompleteAsync();
             }
         }
 
@@ -55,41 +73,41 @@ namespace PostgreSQLCopyHelper
 
         public PostgreSQLCopyHelper<TEntity> Map<TProperty>(string columnName, Func<TEntity, TProperty> propertyGetter, NpgsqlDbType type)
         {
-            return AddColumn(columnName, (writer, entity) => writer.Write(propertyGetter(entity), type));
+            return AddColumn(columnName, (writer, entity) => writer.WriteAsync(propertyGetter(entity), type));
         }
 
         public PostgreSQLCopyHelper<TEntity> MapNullable<TProperty>(string columnName, Func<TEntity, TProperty?> propertyGetter, NpgsqlDbType type)
             where TProperty : struct
         {
-            return AddColumn(columnName, (writer, entity) =>
+            return AddColumn(columnName, async (writer, entity) =>
             {
                 var val = propertyGetter(entity);
 
                 if (!val.HasValue)
                 {
-                    writer.WriteNull();
+                    await writer.WriteNullAsync();
                 }
                 else
                 {
-                    writer.Write(val.Value, type);
+                    await writer.WriteAsync(val.Value, type);
                 }
             });
         }
 
-        private void WriteToStream(NpgsqlBinaryImporter writer, IEnumerable<TEntity> entities)
+        private async Task WriteToStream(NpgsqlBinaryImporter writer, IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)
             {
-                writer.StartRow();
+                await writer.StartRowAsync();
 
                 foreach (var columnDefinition in _columns)
                 {
-                    columnDefinition.Write(writer, entity);
+                    await columnDefinition.Write(writer, entity);
                 }
             }
         }
 
-        private PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Action<NpgsqlBinaryImporter, TEntity> action)
+        private PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Func<NpgsqlBinaryImporter, TEntity, Task> action)
         {
             _columns.Add(new ColumnDefinition<TEntity>
             {

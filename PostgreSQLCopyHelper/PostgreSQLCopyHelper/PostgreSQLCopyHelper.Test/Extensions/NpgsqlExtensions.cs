@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System.Collections.Generic;
 using Npgsql;
 
 namespace PostgreSQLCopyHelper.Test.Extensions
 {
     public static class NpgsqlExtensions
     {
-        public static List<object[]> GetAll(this NpgsqlConnection connection, string schema, string table)
+        public static IList<object[]> GetAll(this NpgsqlConnection connection, string schema, string table)
         {
             var sqlStatement = $"SELECT * FROM {schema}.{table}";
 

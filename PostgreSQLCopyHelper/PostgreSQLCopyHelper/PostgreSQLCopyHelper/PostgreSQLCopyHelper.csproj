@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;net451;netstandard2.0</TargetFrameworks>
-    <Authors>Philipp Wagner</Authors>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+    <Authors>Philipp Wagner;Steven Yeh</Authors>
     <Company />
     <Product />
     <Description>A library for Bulk Copy / Bulk Inserts with PostgreSQL.</Description>
@@ -12,16 +12,20 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Copyright © 2019 Philipp Wagner</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <AssemblyVersion>2.4.2.0</AssemblyVersion>
-    <FileVersion>2.4.2.0</FileVersion>
+    <AssemblyVersion>2.5.0.0</AssemblyVersion>
+    <FileVersion>2.5.0.0</FileVersion>
     <RepositoryType>git</RepositoryType>
-    <Version>2.4.2</Version>
+    <Version>2.5.0-preview2</Version>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Npgsql" Version="4.0.4" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql" Version="4.1.0" />
   </ItemGroup>
 
 </Project>

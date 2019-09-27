@@ -1,5 +1,4 @@
-﻿// Copyright (c) Philipp Wagner. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
@@ -66,12 +65,13 @@ namespace PostgreSQLCopyHelper.Test
                 Array = new[] { "A", "B" }
             };
 
-            subject.SaveAll(connection, new[] { entity0 });
+            var recordsSaved = subject.SaveAll(connection, new[] { entity0 });
 
             var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(1, recordsSaved);
 
             // Check if the Result is not null:
             Assert.IsNotNull(result[0][0]);
@@ -311,7 +311,7 @@ namespace PostgreSQLCopyHelper.Test
             return sqlCommand.ExecuteNonQuery();
         }
 
-        private List<object[]> GetAll()
+        private IList<object[]> GetAll()
         {
             return connection.GetAll("sample", "unit_test");
         }

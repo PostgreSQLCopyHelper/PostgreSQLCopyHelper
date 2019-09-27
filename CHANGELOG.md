@@ -1,5 +1,14 @@
 # CHANGELOG #
 
+## 2.5.0 ##
+
+* [See Changes](https://github.com/bytefish/PostgreSQLCopyHelper/compare/2.4.0...2.5.0)
+
+#### This release: 
+- Drops support for `net45`, `net451` and `net452`
+- Upgrades Npgsql to 4.1
+- SaveAll now returns a count of rows written
+
 ## 2.4.2 ##
 
 * [See Changes](https://github.com/bytefish/PostgreSQLCopyHelper/compare/2.3.0...2.4.2)

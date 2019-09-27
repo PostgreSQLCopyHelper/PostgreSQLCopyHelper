@@ -1,5 +1,4 @@
-﻿// Copyright (c) Philipp Wagner. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
@@ -69,9 +68,6 @@ namespace PostgreSQLCopyHelper.Test
                 .MapTimeTz("col_timetz_time_span", x => x.TimeSpan_TimeTz)
                 .MapTimeTz("col_timetz_date_time", x => x.DateTime_TimeTz)
                 .MapTimeTz("col_timetz_date_time_offset", x => x.DateTimeOffset_TimeTz);
-
-
-
         }
 
         private int CreateTable()
@@ -114,8 +110,7 @@ namespace PostgreSQLCopyHelper.Test
             {
                 DateTimeOffset_TimestampTz = new DateTimeOffset(2019, 1, 1, 22, 0, 0, TimeSpan.Zero)
             };
-
-
+   
             subject.SaveAll(connection, new[] { entity0 });
 
             var result = GetAll();
@@ -168,12 +163,13 @@ namespace PostgreSQLCopyHelper.Test
                 SmallInt = Int16.MaxValue
             };
 
-            subject.SaveAll(connection, new[] { entity0, entity1 });
+            var recordsSaved = subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, recordsSaved);
 
             Assert.IsNotNull(result[0][0]);
             Assert.IsNotNull(result[1][0]);
@@ -185,7 +181,6 @@ namespace PostgreSQLCopyHelper.Test
         [Test]
         public void Test_NullableInteger()
         {
-
             var entity0 = new TestEntity()
             {
                 Integer = Int32.MinValue
@@ -196,12 +191,13 @@ namespace PostgreSQLCopyHelper.Test
                 Integer = Int32.MaxValue
             };
 
-            subject.SaveAll(connection, new[] { entity0, entity1 });
+            var recordSaved = subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, recordSaved);
 
             Assert.IsNotNull(result[0][1]);
             Assert.IsNotNull(result[1][1]);
@@ -213,7 +209,6 @@ namespace PostgreSQLCopyHelper.Test
         [Test]
         public void Test_NullableMoney()
         {
-
             var entity0 = new TestEntity()
             {
                 Money = -1234567890123.45M
@@ -224,12 +219,13 @@ namespace PostgreSQLCopyHelper.Test
                 Money = 92233720368547758.07M
             };
 
-            subject.SaveAll(connection, new[] { entity0, entity1 });
+            var recordSaved = subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, recordSaved);
 
             Assert.IsNotNull(result[0][2]);
             Assert.IsNotNull(result[1][2]);
@@ -241,7 +237,6 @@ namespace PostgreSQLCopyHelper.Test
         [Test]
         public void Test_NullableNumeric()
         {
-
             var entity0 = new TestEntity()
             {
                 Numeric = Decimal.MinValue
@@ -252,12 +247,13 @@ namespace PostgreSQLCopyHelper.Test
                 Numeric = Decimal.MaxValue
             };
 
-            subject.SaveAll(connection, new[] { entity0, entity1 });
+            var recordSaved = subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, recordSaved);
 
             Assert.AreEqual(entity0.Numeric, (Decimal) result[0][9]);
             Assert.AreEqual(entity1.Numeric, (Decimal) result[1][9]);
@@ -276,12 +272,13 @@ namespace PostgreSQLCopyHelper.Test
                 BigInt = Int64.MaxValue
             };
 
-            subject.SaveAll(connection, new[] { entity0, entity1 });
+            var recordSaved = subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, recordSaved);
 
             Assert.IsNotNull(result[0][3]);
             Assert.IsNotNull(result[1][3]);
@@ -348,12 +345,13 @@ namespace PostgreSQLCopyHelper.Test
                 Real = Single.MaxValue
             };
 
-            subject.SaveAll(connection, new[] { entity0, entity1 });
+            var recordSaved = subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, recordSaved);
 
             Assert.IsNotNull(result[0][5]);
             Assert.IsNotNull(result[1][5]);
@@ -375,12 +373,13 @@ namespace PostgreSQLCopyHelper.Test
                 DoublePrecision = Double.MaxValue
             };
 
-            subject.SaveAll(connection, new[] { entity0, entity1 });
+            var recordSaved = subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, recordSaved);
 
             Assert.AreEqual(entity0.DoublePrecision, (Double) result[0][6]);
             Assert.AreEqual(entity1.DoublePrecision, (Double) result[1][6]);
@@ -394,12 +393,13 @@ namespace PostgreSQLCopyHelper.Test
                 ByteArray = new byte[] { 1, 2, 3 }
             };
 
-            subject.SaveAll(connection, new[] { entity0 });
+            var recordSaved = subject.SaveAll(connection, new[] { entity0 });
 
             var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(1, recordSaved);
 
             Assert.AreEqual(entity0.ByteArray[0], ((byte[]) result[0][7])[0]);
             Assert.AreEqual(entity0.ByteArray[1], ((byte[]) result[0][7])[1]);
@@ -419,12 +419,13 @@ namespace PostgreSQLCopyHelper.Test
                 UUID = Guid.NewGuid()
             };
 
-            subject.SaveAll(connection, new[] { entity0, entity1 });
+            var recordSaved = subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, recordSaved);
 
             Assert.AreEqual(entity0.UUID, (Guid) result[0][8]);
             Assert.AreEqual(entity1.UUID, (Guid) result[1][8]);
@@ -443,12 +444,13 @@ namespace PostgreSQLCopyHelper.Test
                 Date = DateTime.UtcNow
             };
 
-            subject.SaveAll(connection, new[] { entity0, entity1 });
+            var recordSaved = subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, recordSaved);
 
             Assert.IsNotNull(result[0][12]);
             Assert.IsNotNull(result[1][12]);
@@ -479,12 +481,13 @@ namespace PostgreSQLCopyHelper.Test
                 IpAddress = IPAddress.Parse("1.2.3.4")
             };
 
-            subject.SaveAll(connection, new[] { entity0, entity1 });
+            var recordSaved = subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, recordSaved);
 
             Assert.IsNotNull(result[0][10]);
             Assert.IsNotNull(result[1][10]);
@@ -510,12 +513,13 @@ namespace PostgreSQLCopyHelper.Test
                 MacAddress = PhysicalAddress.Parse("01-02-2B-01-02-03")
             };
 
-            subject.SaveAll(connection, new[] { entity0, entity1 });
+            var recordsSaved = subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, recordsSaved);
 
             Assert.IsNotNull(result[0][11]);
             Assert.IsNotNull(result[1][11]);
@@ -542,12 +546,13 @@ namespace PostgreSQLCopyHelper.Test
             };
 
 
-            subject.SaveAll(connection, new[] { entity0, entity1 });
+            var recordsSaved = subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, recordsSaved);
 
             Assert.AreEqual(entity0.TimeSpan, (TimeSpan) result[0][13]);
             Assert.AreEqual(entity1.TimeSpan, (TimeSpan) result[1][13]);
@@ -574,12 +579,13 @@ namespace PostgreSQLCopyHelper.Test
             };
 
 
-            subject.SaveAll(connection, new[] { entity0, entity1 });
+            var recordSaved = subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, recordSaved);
 
             Assert.IsNotNull(result[0][14]);
             Assert.IsNotNull(result[1][14]);
@@ -613,20 +619,21 @@ namespace PostgreSQLCopyHelper.Test
             };
 
 
-            subject.SaveAll(connection, new[] { entity0, entity1 });
+            var recordSaved = subject.SaveAll(connection, new[] { entity0, entity1 });
 
             var result = GetAll();
 
             // Check if we have the amount of rows:
             Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, recordSaved);
 
             Assert.IsNotNull(result[0][15]);
             Assert.IsNotNull(result[1][15]);
 
             // TODO: More Useful Test for JSON equality here...
         }
-
-        private List<object[]> GetAll()
+        
+        private IList<object[]> GetAll()
         {
             return connection.GetAll("sample", "unit_test");
         }
