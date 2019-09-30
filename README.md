@@ -82,6 +82,8 @@ var copyHelper = new PostgreSQLCopyHelper<TestEntity>("sample", "unit_test")
 
 And then we can use it to efficiently store the data:
 
+Synchronously:
+
 ```csharp
 private ulong WriteToDatabase(PostgreSQLCopyHelper<TestEntity> copyHelper, IEnumerable<TestEntity> entities)
 {
@@ -89,8 +91,23 @@ private ulong WriteToDatabase(PostgreSQLCopyHelper<TestEntity> copyHelper, IEnum
     {
         connection.Open();
 
-		// Returns count of rows written 
+        // Returns count of rows written 
         return copyHelper.SaveAll(connection, entities);
+    }
+}
+```
+
+Or asynchronously:
+
+```csharp
+private async Task<ulong> WriteToDatabaseAsync(PostgreSQLCopyHelper<TestEntity> copyHelper, IEnumerable<TestEntity> entities, CancellationToken cancellationToken = default)
+{
+    using (var connection = new NpgsqlConnection("Server=127.0.0.1;Port=5432;Database=sampledb;User Id=philipp;Password=test_pwd;"))
+    {
+        await connection.OpenAsync(cancellationToken);
+
+        // Returns count of rows written 
+        return await copyHelper.SaveAllAsync(connection, entities, cancellationToken);
     }
 }
 ```
