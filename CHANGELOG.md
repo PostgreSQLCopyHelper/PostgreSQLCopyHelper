@@ -1,12 +1,21 @@
 # CHANGELOG #
 
+
+## 2.5.1 ##
+
+* [See Changes](https://github.com/bytefish/PostgreSQLCopyHelper/compare/2.5.0...2.5.1)
+
+#### This release: 
+- Takes advantage of C#8 await using (IAsyncDisposable)
+- Bumps to Npgsql `4.1.1` which removes some unintentional breaking changes in the below library
+
 ## 2.5.0 ##
 
 * [See Changes](https://github.com/bytefish/PostgreSQLCopyHelper/compare/2.4.0...2.5.0)
 
 #### This release: 
 - Drops support for `net45`, `net451` and `net452`
-- Upgrades Npgsql to 4.1
+- Upgrades Npgsql to `4.1`
 - SaveAll now returns a count of rows written
 - Async Support
 
@@ -23,7 +32,7 @@ Added the following methods for improved ``DateTime`` and ``DateTimeOffset`` map
 
 * [See Changes](https://github.com/bytefish/PostgreSQLCopyHelper/compare/2.3.0...2.4.1)
 
-* Reference Npgsql 4.0.4, see Issue #38.
+* Reference Npgsql `4.0.4`, see Issue #38.
 
 ## 2.4.0 ##
 
@@ -52,7 +61,7 @@ In this release PostgreSQL-compatible quoting for case-sensitive identifiers is 
 
 * [See Changes](https://github.com/bytefish/PostgreSQLCopyHelper/compare/2.1.0...2.2.0)
 
-Fixes the Null Value Handling with Npgsql 4.0.0, see PostgreSQLCopyHelper Issue #22.
+Fixes the Null Value Handling with Npgsql `4.0.0`, see PostgreSQLCopyHelper Issue #22.
 
 Thanks to @say25 for fixing the bug, adding Unit Tests and improving the code.
 
@@ -66,13 +75,13 @@ This version attempted to fix a Bug regarding null value handling. It didn't fix
 
 * [See Changes](https://github.com/bytefish/PostgreSQLCopyHelper/compare/1.3.0...2.0.0)
 
-Added support for Npgsql 4.0.0. Thanks to @marklahn for updating the COPY API usage to 4.0 and @wejto for bringing up the Npgsql issues regarding Nullable Types in early Npgsql 4.0.0 releases.
+Added support for Npgsql `4.0.0`. Thanks to @marklahn for updating the COPY API usage to 4.0 and @wejto for bringing up the Npgsql issues regarding Nullable Types in early Npgsql `4.0.0` releases.
 
 ## 1.3.0 ##
 
 * [See Changes](https://github.com/bytefish/PostgreSQLCopyHelper/compare/1.2.0...1.3.0)
 
-Updated the package depdencies to Npgsql 3.2.6.
+Updated the package depdencies to Npgsql `3.2.6`.
 
 ## 1.2.0 ##
 
@@ -86,7 +95,7 @@ Added Support for mapping String Arrays with the ``MapArray`` method:
 
 * [See Changes](https://github.com/bytefish/PostgreSQLCopyHelper/compare/1.0.0...1.1.0)
 
-Adding .netstandard1.3 as Target Framework to support .NET Core.
+Adding `netstandard1.3` as Target Framework to support .NET Core.
 
 ## 1.0.0 ##
 
