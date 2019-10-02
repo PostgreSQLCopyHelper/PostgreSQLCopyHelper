@@ -56,12 +56,10 @@ namespace PostgreSQLCopyHelper
 
         private async ValueTask<ulong> DoSaveAllAsync(NpgsqlConnection connection, IEnumerable<TEntity> entities)
         {
-            using (var binaryCopyWriter = connection.BeginBinaryImport(GetCopyCommand()))
-            {
-                await WriteToStream(binaryCopyWriter, entities);
+            await using var binaryCopyWriter = connection.BeginBinaryImport(GetCopyCommand());
+            await WriteToStream(binaryCopyWriter, entities);
 
-                return await binaryCopyWriter.CompleteAsync();
-            }
+            return await binaryCopyWriter.CompleteAsync();
         }
 
         public PostgreSQLCopyHelper<TEntity> UsePostgresQuoting(bool enabled = true)
