@@ -1,6 +1,7 @@
 ﻿// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
+using System.Linq;
 using Npgsql;
 using NUnit.Framework;
 using PostgreSQLCopyHelper.Test.Extensions;
@@ -8,7 +9,7 @@ using PostgreSQLCopyHelper.Test.Extensions;
 namespace PostgreSQLCopyHelper.Test.Issues
 {
     [TestFixture]
-    [Description("A Unit Test to see, if PostgreSQLCopyHelper works with Auto Incrementing Foreign Keys.")]
+    [Description("A Unit Test to see, if PostgreSQLCopyHelper works with Auto Incrementing Foreign Keys. https://github.com/PostgreSQLCopyHelper/PostgreSQLCopyHelper/issues/53")]
     public class Issue53_AutoIncrementingForeignKeys : TransactionalTestBase
     {
         private class Parent
@@ -30,7 +31,6 @@ namespace PostgreSQLCopyHelper.Test.Issues
         }
 
         [Test]
-        [Description("https://github.com/PostgreSQLCopyHelper/PostgreSQLCopyHelper/issues/53")]
         public void Test_Issue53()
         {
             var subject2 = new PostgreSQLCopyHelper<Parent>("sample", "Issue53Parent")
@@ -57,7 +57,6 @@ namespace PostgreSQLCopyHelper.Test.Issues
         }
 
         [Test]
-        [Description("https://github.com/PostgreSQLCopyHelper/PostgreSQLCopyHelper/issues/53")]
         public void Test_Issue53_Wrong_Order()
         {
             var subject = new PostgreSQLCopyHelper<Child>("sample", "Issue53Child")
@@ -68,6 +67,28 @@ namespace PostgreSQLCopyHelper.Test.Issues
             const string errorText = "insert or update on table \"issue53child\" violates foreign key constraint \"issue53child_parentid_fkey\"";
             var ex = Assert.Throws<PostgresException>(() => subject.SaveAll(connection, CreateChildData()));
             Assert.That(ex.Message, Is.SupersetOf(errorText));
+        }
+
+        [Test]
+        public void Test_Issue53_Auto_Increment()
+        {
+            var subject = new PostgreSQLCopyHelper<Parent>("sample", "Issue53Parent")
+                .MapText("Name", x => x.Name);
+
+            // Try to work with the Bulk Inserter:
+            var parentData = CreateParentData().ToArray();
+            var parentRecordsSaved = subject.SaveAll(connection, parentData);
+
+            var parentResults = connection.GetAll("sample", "Issue53Parent");
+
+            Assert.AreEqual(2, parentResults.Count);
+            Assert.AreEqual(2, parentRecordsSaved);
+
+            Assert.AreEqual(parentData[0].Id, (int) parentResults[0][0]);
+            Assert.AreEqual(parentData[0].Name, (string) parentResults[0][1]);
+
+            Assert.AreEqual(parentData[1].Id, (int) parentResults[1][0]);
+            Assert.AreEqual(parentData[1].Name, (string) parentResults[1][1]);
         }
 
         private static IEnumerable<Parent> CreateParentData()
