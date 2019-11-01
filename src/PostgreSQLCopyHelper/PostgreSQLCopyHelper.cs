@@ -92,23 +92,23 @@ namespace PostgreSQLCopyHelper
 
         public PostgreSQLCopyHelper<TEntity> Map<TProperty>(string columnName, Func<TEntity, TProperty> propertyGetter, NpgsqlDbType type)
         {
-            return AddColumn(columnName, (writer, entity, token) => writer.WriteAsync(propertyGetter(entity), type, cancellationToken: token));
+            return AddColumn(columnName, (writer, entity, cancellationToken) => writer.WriteAsync(propertyGetter(entity), type, cancellationToken));
         }
 
         public PostgreSQLCopyHelper<TEntity> MapNullable<TProperty>(string columnName, Func<TEntity, TProperty?> propertyGetter, NpgsqlDbType type)
             where TProperty : struct
         {
-            return AddColumn(columnName, async (writer, entity, token) =>
+            return AddColumn(columnName, async (writer, entity, cancellationToken) =>
             {
                 var val = propertyGetter(entity);
 
                 if (!val.HasValue)
                 {
-                    await writer.WriteNullAsync(cancellationToken: token);
+                    await writer.WriteNullAsync(cancellationToken);
                 }
                 else
                 {
-                    await writer.WriteAsync(val.Value, type, cancellationToken: token);
+                    await writer.WriteAsync(val.Value, type, cancellationToken);
                 }
             });
         }
