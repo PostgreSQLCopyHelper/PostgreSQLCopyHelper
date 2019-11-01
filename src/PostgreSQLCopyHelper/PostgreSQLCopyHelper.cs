@@ -39,7 +39,7 @@ namespace PostgreSQLCopyHelper
         }
 
         public ulong SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities) =>
-            DoSaveAllAsync(connection, entities).GetAwaiter().GetResult();
+            DoSaveAllAsync(connection, entities, CancellationToken.None).GetAwaiter().GetResult();
 
         public ValueTask<ulong> SaveAllAsync(NpgsqlConnection connection, IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
         {
@@ -50,7 +50,7 @@ namespace PostgreSQLCopyHelper
 
             using (NoSynchronizationContextScope.Enter())
             {
-                return DoSaveAllAsync(connection, entities);
+                return DoSaveAllAsync(connection, entities, cancellationToken);
             }
         }
 
@@ -67,12 +67,12 @@ namespace PostgreSQLCopyHelper
             }
         }
 
-        private async ValueTask<ulong> DoSaveAllAsync(NpgsqlConnection connection, IEnumerable<TEntity> entities)
+        private async ValueTask<ulong> DoSaveAllAsync(NpgsqlConnection connection, IEnumerable<TEntity> entities, CancellationToken cancellationToken)
         {
             await using var binaryCopyWriter = connection.BeginBinaryImport(GetCopyCommand());
-            await WriteToStream(binaryCopyWriter, entities);
+            await WriteToStreamAsync(binaryCopyWriter, entities, cancellationToken);
 
-            return await binaryCopyWriter.CompleteAsync();
+            return await binaryCopyWriter.CompleteAsync(cancellationToken);
         }
 
         private async ValueTask<ulong> DoSaveAllAsync(NpgsqlConnection connection, IAsyncEnumerable<TEntity> entities, CancellationToken cancellationToken)
@@ -80,7 +80,7 @@ namespace PostgreSQLCopyHelper
             await using var binaryCopyWriter = connection.BeginBinaryImport(GetCopyCommand());
             await WriteToStreamAsync(binaryCopyWriter, entities, cancellationToken);
 
-            return await binaryCopyWriter.CompleteAsync();
+            return await binaryCopyWriter.CompleteAsync(cancellationToken);
         }
 
         public PostgreSQLCopyHelper<TEntity> UsePostgresQuoting(bool enabled = true)
@@ -113,16 +113,11 @@ namespace PostgreSQLCopyHelper
             });
         }
 
-        private async Task WriteToStream(NpgsqlBinaryImporter writer, IEnumerable<TEntity> entities)
+        private async Task WriteToStreamAsync(NpgsqlBinaryImporter writer, IEnumerable<TEntity> entities, CancellationToken cancellationToken)
         {
             foreach (var entity in entities)
             {
-                await writer.StartRowAsync();
-
-                foreach (var columnDefinition in _columns)
-                {
-                    await columnDefinition.Write(writer, entity);
-                }
+                await WriteToStreamAsync(writer, entity, cancellationToken);
             }
         }
 
@@ -130,12 +125,17 @@ namespace PostgreSQLCopyHelper
         {
             await foreach (var entity in entities.WithCancellation(cancellationToken))
             {
-                await writer.StartRowAsync(cancellationToken: cancellationToken);
+                await WriteToStreamAsync(writer, entity, cancellationToken);
+            }
+        }
 
-                foreach (var columnDefinition in _columns)
-                {
-                    await columnDefinition.Write(writer, entity);
-                }
+        private async Task WriteToStreamAsync(NpgsqlBinaryImporter writer, TEntity entity, CancellationToken cancellationToken)
+        {
+            await writer.StartRowAsync(cancellationToken);
+
+            foreach (var columnDefinition in _columns)
+            {
+                await columnDefinition.Write(writer, entity);
             }
         }
 
