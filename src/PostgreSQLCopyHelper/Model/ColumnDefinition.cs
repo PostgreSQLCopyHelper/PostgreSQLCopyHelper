@@ -1,6 +1,7 @@
 ﻿// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Npgsql;
 
@@ -10,11 +11,11 @@ namespace PostgreSQLCopyHelper.Model
     {
         public string ColumnName { get; set; }
 
-        public Func<NpgsqlBinaryImporter, TEntity, Task> Write { get; set; }
+        public Func<NpgsqlBinaryImporter, TEntity, CancellationToken, Task> WriteAsync { get; set; }
 
         public override string ToString()
         {
-            return $"ColumnDefinition (ColumnName = {ColumnName}, Serialize = {Write})";
+            return $"ColumnDefinition (ColumnName = {ColumnName}, Serialize = {WriteAsync})";
         }
     }
 }

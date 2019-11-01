@@ -112,6 +112,21 @@ private async Task<ulong> WriteToDatabaseAsync(PostgreSQLCopyHelper<TestEntity> 
 }
 ```
 
+Or asynchronously with asynchronous enumerables:
+
+```csharp
+private async Task<ulong> WriteToDatabaseAsync(PostgreSQLCopyHelper<TestEntity> copyHelper, IAsyncEnumerable<TestEntity> entities, CancellationToken cancellationToken = default)
+{
+    using (var connection = new NpgsqlConnection("Server=127.0.0.1;Port=5432;Database=sampledb;User Id=philipp;Password=test_pwd;"))
+    {
+        await connection.OpenAsync(cancellationToken);
+
+        // Returns count of rows written 
+        return await copyHelper.SaveAllAsync(connection, entities, cancellationToken);
+    }
+}
+```
+
 ## Case-Sensitive Identifiers ##
 
 By default the library does not apply quotes to identifiers, such as Table Names and Column Names. If you want PostgreSQL-conform quoting for identifiers, 

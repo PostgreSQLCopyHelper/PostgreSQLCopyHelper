@@ -92,23 +92,23 @@ namespace PostgreSQLCopyHelper
 
         public PostgreSQLCopyHelper<TEntity> Map<TProperty>(string columnName, Func<TEntity, TProperty> propertyGetter, NpgsqlDbType type)
         {
-            return AddColumn(columnName, (writer, entity) => writer.WriteAsync(propertyGetter(entity), type));
+            return AddColumn(columnName, (writer, entity, token) => writer.WriteAsync(propertyGetter(entity), type, cancellationToken: token));
         }
 
         public PostgreSQLCopyHelper<TEntity> MapNullable<TProperty>(string columnName, Func<TEntity, TProperty?> propertyGetter, NpgsqlDbType type)
             where TProperty : struct
         {
-            return AddColumn(columnName, async (writer, entity) =>
+            return AddColumn(columnName, async (writer, entity, token) =>
             {
                 var val = propertyGetter(entity);
 
                 if (!val.HasValue)
                 {
-                    await writer.WriteNullAsync();
+                    await writer.WriteNullAsync(cancellationToken: token);
                 }
                 else
                 {
-                    await writer.WriteAsync(val.Value, type);
+                    await writer.WriteAsync(val.Value, type, cancellationToken: token);
                 }
             });
         }
@@ -135,16 +135,16 @@ namespace PostgreSQLCopyHelper
 
             foreach (var columnDefinition in _columns)
             {
-                await columnDefinition.Write(writer, entity);
+                await columnDefinition.WriteAsync(writer, entity, cancellationToken);
             }
         }
 
-        private PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Func<NpgsqlBinaryImporter, TEntity, Task> action)
+        private PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Func<NpgsqlBinaryImporter, TEntity, CancellationToken, Task> action)
         {
             _columns.Add(new ColumnDefinition<TEntity>
             {
                 ColumnName = columnName,
-                Write = action
+                WriteAsync = action
             });
 
             return this;
