@@ -11,5 +11,6 @@ namespace PostgreSQLCopyHelper
     {
         ulong SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities);
         ValueTask<ulong> SaveAllAsync(NpgsqlConnection connection, IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
+        ValueTask<ulong> SaveAllAsync(NpgsqlConnection connection, IAsyncEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
     }
 }
