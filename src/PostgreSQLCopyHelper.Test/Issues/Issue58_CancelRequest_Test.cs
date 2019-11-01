@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Npgsql;
@@ -34,11 +32,11 @@ namespace PostgreSQLCopyHelper.Test.Issues
                      .MapInteger("Id", x => x.Id)
                      .MapText("Name", x => x.Name);
 
-            using (var cts = new CancellationTokenSource(1))
+            Assert.ThrowsAsync<TaskCanceledException>(async () =>
             {
-                Assert.ThrowsAsync<TaskCanceledException>(async () =>
-                    await subject.SaveAllAsync(connection, FetchUserData(5), cts.Token), $"Should Throw Exception of Type {nameof(TaskCanceledException)}!");
-            }
+                using var cancellationTokenSource = new CancellationTokenSource(1);
+                await subject.SaveAllAsync(connection, FetchUserData(5), cancellationTokenSource.Token);
+            }, $"Should Throw Exception of Type {nameof(TaskCanceledException)}!");
 
             return Task.CompletedTask;
         }
@@ -50,11 +48,11 @@ namespace PostgreSQLCopyHelper.Test.Issues
                      .MapInteger("Id", x => x.Id)
                      .MapText("Name", x => x.Name);
 
-            using (var cts = new CancellationTokenSource(15))
+            Assert.ThrowsAsync<TaskCanceledException>(async () =>
             {
-                Assert.ThrowsAsync<TaskCanceledException>(async () =>
-                    await subject.SaveAllAsync(connection, FetchUserData(10), cts.Token), $"Should Throw Exception of Type {nameof(TaskCanceledException)}!");
-            }
+                using var cancellationTokenSource = new CancellationTokenSource(15);
+                await subject.SaveAllAsync(connection, FetchUserData(10), cancellationTokenSource.Token);
+            }, $"Should Throw Exception of Type {nameof(TaskCanceledException)}!");
 
             return Task.CompletedTask;
         }
@@ -66,26 +64,39 @@ namespace PostgreSQLCopyHelper.Test.Issues
                      .MapInteger("Id", x => x.Id)
                      .MapText("Name", x => x.Name);
 
-            using (var cts = new CancellationTokenSource(50))
-            {
-                var recordsSaved = await subject.SaveAllAsync(connection, FetchUserData(10), cts.Token);
-                var result = connection.GetAll("sample", "\"TestUsers\"")
-                    .Cast<User>()
-                    .OrderBy(x => x.Id)
-                    .ToList();
+            var users = new List<User>();
 
-                Assert.AreEqual(2, recordsSaved);
-                Assert.AreEqual(1, result.First().Id);
-                Assert.AreEqual(2, result.Last().Id);
+            await foreach (var user in FetchUserData(0))
+            {
+                users.Add(user);
             }
+
+            using var cancellationTokenSource = new CancellationTokenSource(100);
+            var recordsSaved = await subject.SaveAllAsync(connection, FetchUserData(1), cancellationTokenSource.Token);
+
+            var result = connection.GetAll("sample", "TestUsers");
+
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, recordsSaved);
+
+            Assert.IsNotNull(result[0][0]);
+            Assert.IsNotNull(result[1][0]);
+
+            Assert.AreEqual(users[0].Id, (int) result[0][0]);
+            Assert.AreEqual(users[0].Name, (string) result[0][1]);
+
+            Assert.AreEqual(users[1].Id, (int) result[1][0]);
+            Assert.AreEqual(users[1].Name, (string) result[1][1]);
+
+            Assert.AreEqual(2, recordsSaved);
         }
 
-        private static async IAsyncEnumerable<User> FetchUserData(int delayMillis, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        private static async IAsyncEnumerable<User> FetchUserData(int delayMillis)
         {
             for (var i = 1; i <= 2; i++)
             {
                 // Simulate waiting for data to come through.
-                await Task.Delay(delayMillis, cancellationToken);
+                await Task.Delay(delayMillis);
                 yield return new User
                 {
                     Id = i,
