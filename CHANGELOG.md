@@ -1,5 +1,12 @@
 # CHANGELOG #
 
+## 2.6.0 ##
+
+* [See Changes](https://github.com/bytefish/PostgreSQLCopyHelper/compare/2.5.1...2.6.0)
+
+#### This release: 
+- Exposes ability to use IAsyncEnumerable
+- Better support when cancelling `SaveAllAsync`
 
 ## 2.5.1 ##
 
