@@ -54,10 +54,31 @@ namespace PostgreSQLCopyHelper
             }
         }
 
+        public ValueTask<ulong> SaveAllAsync(NpgsqlConnection connection, IAsyncEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+        {
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return new ValueTask<ulong>(Task.FromCanceled<ulong>(cancellationToken));
+            }
+
+            using (NoSynchronizationContextScope.Enter())
+            {
+                return DoSaveAllAsync(connection, entities, cancellationToken);
+            }
+        }
+
         private async ValueTask<ulong> DoSaveAllAsync(NpgsqlConnection connection, IEnumerable<TEntity> entities)
         {
             await using var binaryCopyWriter = connection.BeginBinaryImport(GetCopyCommand());
             await WriteToStream(binaryCopyWriter, entities);
+
+            return await binaryCopyWriter.CompleteAsync();
+        }
+
+        private async ValueTask<ulong> DoSaveAllAsync(NpgsqlConnection connection, IAsyncEnumerable<TEntity> entities, CancellationToken cancellationToken)
+        {
+            await using var binaryCopyWriter = connection.BeginBinaryImport(GetCopyCommand());
+            await WriteToStreamAsync(binaryCopyWriter, entities, cancellationToken);
 
             return await binaryCopyWriter.CompleteAsync();
         }
@@ -97,6 +118,19 @@ namespace PostgreSQLCopyHelper
             foreach (var entity in entities)
             {
                 await writer.StartRowAsync();
+
+                foreach (var columnDefinition in _columns)
+                {
+                    await columnDefinition.Write(writer, entity);
+                }
+            }
+        }
+
+        private async Task WriteToStreamAsync(NpgsqlBinaryImporter writer, IAsyncEnumerable<TEntity> entities, CancellationToken cancellationToken)
+        {
+            await foreach (var entity in entities.WithCancellation(cancellationToken))
+            {
+                await writer.StartRowAsync(cancellationToken: cancellationToken);
 
                 foreach (var columnDefinition in _columns)
                 {
