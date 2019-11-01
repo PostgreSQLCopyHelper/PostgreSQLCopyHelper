@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Npgsql;
 using NUnit.Framework;
+using PostgreSQLCopyHelper.Test.Extensions;
 
 namespace PostgreSQLCopyHelper.Test.Issues
 {
@@ -26,40 +28,64 @@ namespace PostgreSQLCopyHelper.Test.Issues
         }
 
         [Test]
-        public async Task Test_CanceledBulkInsertThrowsWhenCanceled()
+        public Task Test_CanceledBulkInsertThrowsWhenCanceledBeforeStarting()
         {
             subject = new PostgreSQLCopyHelper<User>("sample", "TestUsers")
                      .MapInteger("Id", x => x.Id)
                      .MapText("Name", x => x.Name);
 
-            var cancellationTokenSource = new CancellationTokenSource();
+            using (var cts = new CancellationTokenSource(1))
+            {
+                Assert.ThrowsAsync<TaskCanceledException>(async () =>
+                    await subject.SaveAllAsync(connection, FetchUserData(5), cts.Token), $"Should Throw Exception of Type {nameof(TaskCanceledException)}!");
+            }
 
-            // Try to work with the Bulk Inserter:
-            try
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        public Task Test_CanceledBulkInsertThrowsWhenCanceled()
+        {
+            subject = new PostgreSQLCopyHelper<User>("sample", "TestUsers")
+                     .MapInteger("Id", x => x.Id)
+                     .MapText("Name", x => x.Name);
+
+            using (var cts = new CancellationTokenSource(15))
             {
-                cancellationTokenSource.CancelAfter(15);
-                await subject.SaveAllAsync(connection, FetchUserData(), cancellationTokenSource.Token);
-                Assert.Fail("Should Never Reach Here!");
+                Assert.ThrowsAsync<TaskCanceledException>(async () =>
+                    await subject.SaveAllAsync(connection, FetchUserData(10), cts.Token), $"Should Throw Exception of Type {nameof(TaskCanceledException)}!");
             }
-            catch (TaskCanceledException)
+
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        public async Task Test_CanceledBulkInsertDoesNotThrowWhenCancelledAfterCompletion()
+        {
+            subject = new PostgreSQLCopyHelper<User>("sample", "TestUsers")
+                     .MapInteger("Id", x => x.Id)
+                     .MapText("Name", x => x.Name);
+
+            using (var cts = new CancellationTokenSource(50))
             {
-            }
-            catch (Exception)
-            {
-                Assert.Fail("Should Throw Exception of Type TaskCanceledException!");
-            }
-            finally
-            {
-                cancellationTokenSource.Dispose();
+                var recordsSaved = await subject.SaveAllAsync(connection, FetchUserData(10), cts.Token);
+                var result = connection.GetAll("sample", "\"TestUsers\"")
+                    .Cast<User>()
+                    .OrderBy(x => x.Id)
+                    .ToList();
+
+                Assert.AreEqual(2, recordsSaved);
+                Assert.AreEqual(1, result.First().Id);
+                Assert.AreEqual(2, result.Last().Id);
             }
         }
 
-        private static async IAsyncEnumerable<User> FetchUserData()
+        private static async IAsyncEnumerable<User> FetchUserData(int delayMillis, [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             for (var i = 1; i <= 2; i++)
             {
                 // Simulate waiting for data to come through.
-                await Task.Delay(10);
+                await Task.Delay(delayMillis, cancellationToken);
                 yield return new User
                 {
                     Id = i,
