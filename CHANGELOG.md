@@ -1,10 +1,19 @@
 # CHANGELOG #
 
+## 2.6.1 ##
+
+* [See Changes](https://github.com/PostgreSQLCopyHelper/PostgreSQLCopyHelper/compare/2.6.0...2.6.1)
+
+#### This release: 
+
+- Executes asynchronous methods without the ``SynchronizationContext`` to prevent blocking from the UI Thread
+
 ## 2.6.0 ##
 
 * [See Changes](https://github.com/PostgreSQLCopyHelper/PostgreSQLCopyHelper/compare/2.5.1...2.6.0)
 
 #### This release: 
+
 - Exposes ability to use IAsyncEnumerable
 - Better support when cancelling `SaveAllAsync`
 
