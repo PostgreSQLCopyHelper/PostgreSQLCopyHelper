@@ -38,8 +38,13 @@ namespace PostgreSQLCopyHelper
             _columns = new List<ColumnDefinition<TEntity>>();
         }
 
-        public ulong SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities) =>
-            DoSaveAllAsync(connection, entities, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+        public ulong SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities)
+        {
+            using (NoSynchronizationContextScope.Enter())
+            {
+                return DoSaveAllAsync(connection, entities, CancellationToken.None).GetAwaiter().GetResult();
+            }
+        }
 
         public ValueTask<ulong> SaveAllAsync(NpgsqlConnection connection, IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
         {
