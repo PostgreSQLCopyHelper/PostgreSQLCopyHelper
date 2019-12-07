@@ -98,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="PostgreSQLCopyHelper">
-      <Version>2.6.1-alpha</Version>
+      <Version>2.6.1-alpha2</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
