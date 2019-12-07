@@ -1,0 +1,17 @@
+﻿<Window x:Class="WpfAppSample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAppSample"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="200" Width="200">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Margin="10" x:Name="SynchronousImportButton" Height="50" Click="SynchronousImportButton_Click">Insert Data Synchronously</Button>
+        <Button Grid.Row="1" Margin="10" x:Name="AsynchronousImportButton" Height="50" Click="AsynchronousImportButton_Click">Insert Data Asynchronously</Button>
+    </Grid>
+</Window>
