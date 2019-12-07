@@ -39,7 +39,7 @@ namespace PostgreSQLCopyHelper
         }
 
         public ulong SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities) =>
-            DoSaveAllAsync(connection, entities, CancellationToken.None).GetAwaiter().GetResult();
+            DoSaveAllAsync(connection, entities, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
 
         public ValueTask<ulong> SaveAllAsync(NpgsqlConnection connection, IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
         {
