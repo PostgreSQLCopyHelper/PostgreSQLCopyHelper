@@ -63,7 +63,28 @@ namespace PostgreSQLCopyHelper.Test.Issues
 
             Assert.AreEqual("Name", targetTable.Columns[1].ColumnName);
             Assert.AreEqual(NpgsqlDbType.Text, targetTable.Columns[1].DbType);
+        }
 
+        [Test]
+        public void Test_TargetTable_FullQualifiedTableName_NoPostgresQuoting()
+        {
+            var subject = new PostgreSQLCopyHelper<User>("sample", "TestUsers")
+                .UsePostgresQuoting(false);
+
+            var targetTable = subject.TargetTable;
+
+            Assert.AreEqual("sample.TestUsers", targetTable.GetFullQualifiedTableName());
+        }
+
+        [Test]
+        public void Test_TargetTable_FullQualifiedTableName_WithPostgresQuoting()
+        {
+            var subject = new PostgreSQLCopyHelper<User>("Sample", "TestUsers")
+                .UsePostgresQuoting();
+
+            var targetTable = subject.TargetTable;
+
+            Assert.AreEqual("\"Sample\".\"TestUsers\"", targetTable.GetFullQualifiedTableName());
         }
     }
 }

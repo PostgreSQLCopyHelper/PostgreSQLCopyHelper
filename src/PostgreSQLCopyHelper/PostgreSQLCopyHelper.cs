@@ -46,6 +46,7 @@ namespace PostgreSQLCopyHelper
                 {
                     SchemaName = _table.Schema,
                     TableName = _table.TableName,
+                    UsePostgresQuoting = _usePostgresQuoting,
                     Columns = _columns
                         .Select(x => new TargetColumn { ColumnName = x.ColumnName, DbType = x.DbType })
                         .ToList()

@@ -12,9 +12,7 @@ namespace PostgreSQLCopyHelper.Model
 
         public string GetFullQualifiedTableName(bool usePostgresQuoting)
         {
-            return string.IsNullOrWhiteSpace(Schema)
-                ? TableName.GetIdentifier(usePostgresQuoting)
-                : $"{Schema.GetIdentifier(usePostgresQuoting)}.{TableName.GetIdentifier(usePostgresQuoting)}";
+            return NpgsqlUtils.GetFullQualifiedTableName(Schema, TableName, usePostgresQuoting);
         }
 
         public override string ToString()
