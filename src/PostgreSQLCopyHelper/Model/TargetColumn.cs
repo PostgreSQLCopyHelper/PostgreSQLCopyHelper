@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using NpgsqlTypes;
 
 namespace PostgreSQLCopyHelper.Model
 {
     public class TargetColumn
     {
-        public string ColumnName { get; set; }
+        public string ColumnName { get; internal set; }
 
-        public NpgsqlDbType DbType { get; set; }
+        public NpgsqlDbType DbType { get; internal set; }
     }
 }

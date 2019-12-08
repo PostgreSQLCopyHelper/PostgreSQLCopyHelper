@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Npgsql;
+﻿// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using NpgsqlTypes;
 using NUnit.Framework;
-using PostgreSQLCopyHelper.Test.Extensions;
 
 namespace PostgreSQLCopyHelper.Test.Issues
 {
