@@ -38,6 +38,21 @@ namespace PostgreSQLCopyHelper
             _columns = new List<ColumnDefinition<TEntity>>();
         }
 
+        public TargetTable TargetTable
+        {
+            get
+            {
+                return new TargetTable
+                {
+                    SchemaName = _table.Schema,
+                    TableName = _table.TableName,
+                    Columns = _columns
+                        .Select(x => new TargetColumn { ColumnName = x.ColumnName, DbType = x.DbType })
+                        .ToList()
+                };
+            }
+        }
+
         public ulong SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities)
         {
             using (NoSynchronizationContextScope.Enter())
@@ -97,7 +112,7 @@ namespace PostgreSQLCopyHelper
 
         public PostgreSQLCopyHelper<TEntity> Map<TProperty>(string columnName, Func<TEntity, TProperty> propertyGetter, NpgsqlDbType type)
         {
-            return AddColumn(columnName, (writer, entity, cancellationToken) => writer.WriteAsync(propertyGetter(entity), type, cancellationToken));
+            return AddColumn(columnName, (writer, entity, cancellationToken) => writer.WriteAsync(propertyGetter(entity), type, cancellationToken), type);
         }
 
         public PostgreSQLCopyHelper<TEntity> MapNullable<TProperty>(string columnName, Func<TEntity, TProperty?> propertyGetter, NpgsqlDbType type)
@@ -115,7 +130,7 @@ namespace PostgreSQLCopyHelper
                 {
                     await writer.WriteAsync(val.Value, type, cancellationToken);
                 }
-            });
+            }, type);
         }
 
         private async Task WriteToStreamAsync(NpgsqlBinaryImporter writer, IEnumerable<TEntity> entities, CancellationToken cancellationToken)
@@ -144,11 +159,12 @@ namespace PostgreSQLCopyHelper
             }
         }
 
-        private PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Func<NpgsqlBinaryImporter, TEntity, CancellationToken, Task> action)
+        private PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Func<NpgsqlBinaryImporter, TEntity, CancellationToken, Task> action, NpgsqlDbType type)
         {
             _columns.Add(new ColumnDefinition<TEntity>
             {
                 ColumnName = columnName,
+                DbType = type,
                 WriteAsync = action
             });
 
@@ -161,5 +177,7 @@ namespace PostgreSQLCopyHelper
 
             return $"COPY {_table.GetFullQualifiedTableName(_usePostgresQuoting)}({commaSeparatedColumns}) FROM STDIN BINARY;";
         }
+
+
     }
 }

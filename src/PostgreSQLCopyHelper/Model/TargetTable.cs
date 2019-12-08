@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PostgreSQLCopyHelper.Model
+{
+    public class TargetTable
+    {
+        public string SchemaName { get; set; }
+
+        public string TableName { get; set; }
+
+        public IList<TargetColumn> Columns { get; set; }
+    }
+}
