@@ -56,9 +56,11 @@ namespace PostgreSQLCopyHelper.Test.Issues
             Assert.AreEqual(2, targetTable.Columns.Count);
 
             Assert.AreEqual("Id", targetTable.Columns[0].ColumnName);
+            Assert.AreEqual(typeof(int), targetTable.Columns[0].ClrType);
             Assert.AreEqual(NpgsqlDbType.Integer, targetTable.Columns[0].DbType);
 
             Assert.AreEqual("Name", targetTable.Columns[1].ColumnName);
+            Assert.AreEqual(typeof(string), targetTable.Columns[1].ClrType);
             Assert.AreEqual(NpgsqlDbType.Text, targetTable.Columns[1].DbType);
         }
 

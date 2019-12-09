@@ -48,7 +48,7 @@ namespace PostgreSQLCopyHelper
                     TableName = _table.TableName,
                     UsePostgresQuoting = _usePostgresQuoting,
                     Columns = _columns
-                        .Select(x => new TargetColumn { ColumnName = x.ColumnName, DbType = x.DbType })
+                        .Select(x => new TargetColumn { ColumnName = x.ColumnName, DbType = x.DbType, ClrType = x.ClrType })
                         .ToList()
                 };
             }
@@ -111,12 +111,12 @@ namespace PostgreSQLCopyHelper
             return this;
         }
 
-        public PostgreSQLCopyHelper<TEntity> Map<TProperty>(string columnName, Func<TEntity, TProperty> propertyGetter, NpgsqlDbType type)
+        public PostgreSQLCopyHelper<TEntity> Map<TProperty>(string columnName, Func<TEntity, TProperty> propertyGetter, NpgsqlDbType dbType)
         {
-            return AddColumn(columnName, (writer, entity, cancellationToken) => writer.WriteAsync(propertyGetter(entity), type, cancellationToken), type);
+            return AddColumn(columnName, (writer, entity, cancellationToken) => writer.WriteAsync(propertyGetter(entity), dbType, cancellationToken), dbType, typeof(TProperty));
         }
 
-        public PostgreSQLCopyHelper<TEntity> MapNullable<TProperty>(string columnName, Func<TEntity, TProperty?> propertyGetter, NpgsqlDbType type)
+        public PostgreSQLCopyHelper<TEntity> MapNullable<TProperty>(string columnName, Func<TEntity, TProperty?> propertyGetter, NpgsqlDbType dbType)
             where TProperty : struct
         {
             return AddColumn(columnName, async (writer, entity, cancellationToken) =>
@@ -129,9 +129,9 @@ namespace PostgreSQLCopyHelper
                 }
                 else
                 {
-                    await writer.WriteAsync(val.Value, type, cancellationToken);
+                    await writer.WriteAsync(val.Value, dbType, cancellationToken);
                 }
-            }, type);
+            }, dbType, typeof(TProperty));
         }
 
         private async Task WriteToStreamAsync(NpgsqlBinaryImporter writer, IEnumerable<TEntity> entities, CancellationToken cancellationToken)
@@ -160,12 +160,13 @@ namespace PostgreSQLCopyHelper
             }
         }
 
-        private PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Func<NpgsqlBinaryImporter, TEntity, CancellationToken, Task> action, NpgsqlDbType type)
+        private PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Func<NpgsqlBinaryImporter, TEntity, CancellationToken, Task> action, NpgsqlDbType dbType, Type clrType)
         {
             _columns.Add(new ColumnDefinition<TEntity>
             {
                 ColumnName = columnName,
-                DbType = type,
+                DbType = dbType,
+                ClrType = clrType,
                 WriteAsync = action
             });
 

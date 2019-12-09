@@ -12,6 +12,8 @@ namespace PostgreSQLCopyHelper.Model
     {
         public string ColumnName { get; set; }
 
+        public Type ClrType { get; set; }
+
         public NpgsqlDbType DbType { get; set; }
 
         public Func<NpgsqlBinaryImporter, TEntity, CancellationToken, Task> WriteAsync { get; set; }
