@@ -12,6 +12,9 @@
 
 * [See Changes](https://github.com/PostgreSQLCopyHelper/PostgreSQLCopyHelper/compare/2.6.1...2.6.2)
 
+### This release:
+
+- Adds a dependency to ``Microsoft.Bcl.AsyncInterfaces`` to enable ``IAsyncEnumerable`` for .NET 4.6.1 and netstandard 2.0
 
 ## 2.6.1 ##
 
