@@ -38,6 +38,22 @@ namespace PostgreSQLCopyHelper
             _columns = new List<ColumnDefinition<TEntity>>();
         }
 
+        public TargetTable TargetTable
+        {
+            get
+            {
+                return new TargetTable
+                {
+                    SchemaName = _table.Schema,
+                    TableName = _table.TableName,
+                    UsePostgresQuoting = _usePostgresQuoting,
+                    Columns = _columns
+                        .Select(x => new TargetColumn { ColumnName = x.ColumnName, DbType = x.DbType, ClrType = x.ClrType })
+                        .ToList()
+                };
+            }
+        }
+
         public ulong SaveAll(NpgsqlConnection connection, IEnumerable<TEntity> entities)
         {
             using (NoSynchronizationContextScope.Enter())
@@ -95,12 +111,12 @@ namespace PostgreSQLCopyHelper
             return this;
         }
 
-        public PostgreSQLCopyHelper<TEntity> Map<TProperty>(string columnName, Func<TEntity, TProperty> propertyGetter, NpgsqlDbType type)
+        public PostgreSQLCopyHelper<TEntity> Map<TProperty>(string columnName, Func<TEntity, TProperty> propertyGetter, NpgsqlDbType dbType)
         {
-            return AddColumn(columnName, (writer, entity, cancellationToken) => writer.WriteAsync(propertyGetter(entity), type, cancellationToken));
+            return AddColumn(columnName, (writer, entity, cancellationToken) => writer.WriteAsync(propertyGetter(entity), dbType, cancellationToken), dbType, typeof(TProperty));
         }
 
-        public PostgreSQLCopyHelper<TEntity> MapNullable<TProperty>(string columnName, Func<TEntity, TProperty?> propertyGetter, NpgsqlDbType type)
+        public PostgreSQLCopyHelper<TEntity> MapNullable<TProperty>(string columnName, Func<TEntity, TProperty?> propertyGetter, NpgsqlDbType dbType)
             where TProperty : struct
         {
             return AddColumn(columnName, async (writer, entity, cancellationToken) =>
@@ -113,9 +129,9 @@ namespace PostgreSQLCopyHelper
                 }
                 else
                 {
-                    await writer.WriteAsync(val.Value, type, cancellationToken);
+                    await writer.WriteAsync(val.Value, dbType, cancellationToken);
                 }
-            });
+            }, dbType, typeof(TProperty));
         }
 
         private async Task WriteToStreamAsync(NpgsqlBinaryImporter writer, IEnumerable<TEntity> entities, CancellationToken cancellationToken)
@@ -144,11 +160,13 @@ namespace PostgreSQLCopyHelper
             }
         }
 
-        private PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Func<NpgsqlBinaryImporter, TEntity, CancellationToken, Task> action)
+        private PostgreSQLCopyHelper<TEntity> AddColumn(string columnName, Func<NpgsqlBinaryImporter, TEntity, CancellationToken, Task> action, NpgsqlDbType dbType, Type clrType)
         {
             _columns.Add(new ColumnDefinition<TEntity>
             {
                 ColumnName = columnName,
+                DbType = dbType,
+                ClrType = clrType,
                 WriteAsync = action
             });
 
@@ -159,7 +177,9 @@ namespace PostgreSQLCopyHelper
         {
             var commaSeparatedColumns = string.Join(", ", _columns.Select(x => x.ColumnName.GetIdentifier(_usePostgresQuoting)));
 
-            return $"COPY {_table.GetFullQualifiedTableName(_usePostgresQuoting)}({commaSeparatedColumns}) FROM STDIN BINARY;";
+            return $"COPY {_table.GetFullyQualifiedTableName(_usePostgresQuoting)}({commaSeparatedColumns}) FROM STDIN BINARY;";
         }
+
+
     }
 }

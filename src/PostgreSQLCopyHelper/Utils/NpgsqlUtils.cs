@@ -15,6 +15,13 @@ namespace PostgreSQLCopyHelper.Utils
                 : identifier;
         }
 
+        public static string GetFullyQualifiedTableName(string schemaName, string tableName, bool usePostgresQuoting)
+        {
+            return string.IsNullOrWhiteSpace(schemaName)
+                ? tableName.GetIdentifier(usePostgresQuoting)
+                : $"{schemaName.GetIdentifier(usePostgresQuoting)}.{tableName.GetIdentifier(usePostgresQuoting)}";
+        }
+
         /// <summary>
         /// Determines, if an identifier required quoting according to the ANSI Standard.
         /// 
