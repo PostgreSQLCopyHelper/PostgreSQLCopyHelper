@@ -72,7 +72,7 @@ namespace PostgreSQLCopyHelper.Test.Issues
 
             var targetTable = subject.TargetTable;
 
-            Assert.AreEqual("sample.TestUsers", targetTable.GetFullQualifiedTableName());
+            Assert.AreEqual("sample.TestUsers", targetTable.GetFullyQualifiedTableName());
         }
 
         [Test]
@@ -83,7 +83,7 @@ namespace PostgreSQLCopyHelper.Test.Issues
 
             var targetTable = subject.TargetTable;
 
-            Assert.AreEqual("\"Sample\".\"TestUsers\"", targetTable.GetFullQualifiedTableName());
+            Assert.AreEqual("\"Sample\".\"TestUsers\"", targetTable.GetFullyQualifiedTableName());
         }
 
 
@@ -95,7 +95,7 @@ namespace PostgreSQLCopyHelper.Test.Issues
 
             var targetTable = subject.TargetTable;
 
-            Assert.AreEqual("\"TestUsers\"", targetTable.GetFullQualifiedTableName());
+            Assert.AreEqual("\"TestUsers\"", targetTable.GetFullyQualifiedTableName());
         }
     }
 }

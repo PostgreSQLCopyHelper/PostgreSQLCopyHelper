@@ -15,9 +15,9 @@ namespace PostgreSQLCopyHelper.Model
 
         public IReadOnlyList<TargetColumn> Columns { get; internal set; }
 
-        public string GetFullQualifiedTableName()
+        public string GetFullyQualifiedTableName()
         {
-            return NpgsqlUtils.GetFullQualifiedTableName(SchemaName, TableName, UsePostgresQuoting);
+            return NpgsqlUtils.GetFullyQualifiedTableName(SchemaName, TableName, UsePostgresQuoting);
         }
     }
 }
