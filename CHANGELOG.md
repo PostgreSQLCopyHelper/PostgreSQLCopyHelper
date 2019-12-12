@@ -1,5 +1,18 @@
 # CHANGELOG #
 
+## 2.6.3 ##
+
+* [See Changes](https://github.com/PostgreSQLCopyHelper/PostgreSQLCopyHelper/compare/2.6.2...2.6.3)
+
+#### This release: 
+
+- Adds the Property ``TargetTable`` and associated classes to get the Table and Column mapping
+
+## 2.6.2 ##
+
+* [See Changes](https://github.com/PostgreSQLCopyHelper/PostgreSQLCopyHelper/compare/2.6.1...2.6.2)
+
+
 ## 2.6.1 ##
 
 * [See Changes](https://github.com/PostgreSQLCopyHelper/PostgreSQLCopyHelper/compare/2.6.0...2.6.1)
