@@ -47,7 +47,7 @@ namespace PostgreSQLCopyHelper.NodaTime
         }
 
 
-        public static PostgreSQLCopyHelper<TEntity> MapInterval<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Interval> propertyGetter)
+        public static PostgreSQLCopyHelper<TEntity> MapInterval<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Period> propertyGetter)
         {
             return helper.Map(columnName, propertyGetter, NpgsqlDbType.Interval);
         }

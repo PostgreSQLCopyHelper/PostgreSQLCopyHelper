@@ -29,9 +29,41 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
 
             public OffsetDateTime OffsetDateTime { get; set; }
 
-            public Interval Interval { get; set; }
+            public Period Period { get; set; }
 
             public LocalDate LocalDate { get; set; }
+        }
+
+        [Test]
+        public void Test_Interval()
+        {
+            CreateTable("interval");
+
+
+            var begin = new LocalDateTime(2020, 1, 23, 0, 12);
+            var end = new LocalDateTime(2020, 12, 8, 12, 44);
+
+            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "nody_time_test")
+                .MapInterval("col_noda", x => x.Period);
+
+            var entity = new AllNodaTypesEntity
+            {
+                Period = Period.Between(begin, end)
+            };
+
+            var entities = new[]
+            {
+                entity
+            };
+
+            subject.SaveAll(connection, entities);
+
+            // Check what's written to DB:
+            var rows = GetAll();
+
+            var actual = (Period) rows[0][0];
+
+            Assert.AreEqual(entity.Period, actual);
         }
 
         [Test]
@@ -63,6 +95,38 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
         }
 
         [Test]
+        public void Test_LocalDateTime()
+        {
+            CreateTable("timestamp");
+
+            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "nody_time_test")
+                .MapTimeStamp("col_noda", x => x.LocalDateTime);
+
+            var entity = new AllNodaTypesEntity
+            {
+                LocalDateTime = new LocalDateTime(2011, 1, 2, 21, 0, 0)
+            };
+
+            var entities = new[]
+            {
+                entity
+            };
+
+            subject.SaveAll(connection, entities);
+
+            // Check what's written to DB:
+            var rows = GetAll();
+
+            var actual = (Instant) rows[0][0];
+
+            var localTime = entity.LocalDateTime;
+            var zonedTime = localTime.InZoneStrictly(DateTimeZone.Utc);
+            var expected = zonedTime.ToInstant();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
         public void Test_Instant()
         {
             CreateTable("timestamp");
@@ -88,6 +152,62 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
             var actual = (Instant) rows[0][0];
 
             Assert.AreEqual(entity.Instant, actual);
+        }
+
+        [Test]
+        public void Test_OffsetTime()
+        {
+            CreateTable("timetz");
+
+            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "nody_time_test")
+                .MapTimeTz("col_noda", x => x.OffsetTime);
+
+            var entity = new AllNodaTypesEntity
+            {
+                OffsetTime = new OffsetTime(new LocalTime(12, 41), Offset.FromHours(2))
+            };
+
+            var entities = new[]
+            {
+                entity
+            };
+
+            subject.SaveAll(connection, entities);
+
+            // Check what's written to DB:
+            var rows = GetAll();
+
+            var actual = (OffsetTime) rows[0][0];
+
+            Assert.AreEqual(entity.OffsetTime, actual);
+        }
+
+        [Test]
+        public void Test_OffsetDateTime()
+        {
+            CreateTable("timestamptz");
+
+            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "nody_time_test")
+                .MapTimeStampTz("col_noda", x => x.OffsetDateTime);
+
+            var entity = new AllNodaTypesEntity
+            {
+                OffsetDateTime = new OffsetDateTime(new LocalDateTime(2001, 11, 21, 0, 32), Offset.FromHours(2))
+            };
+
+            var entities = new[]
+            {
+                entity
+            };
+
+            subject.SaveAll(connection, entities);
+
+            // Check what's written to DB:
+            var rows = GetAll();
+
+            var actual = (Instant) rows[0][0];
+
+            Assert.AreEqual(entity.OffsetDateTime.ToInstant(), actual);
         }
 
         [Test]
