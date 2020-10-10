@@ -6,12 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
+    <PackageReference Include="Npgsql.NodaTime" Version="4.1.5" />
     <PackageReference Include="NUnit" Version="3.12.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PostgreSQLCopyHelper.NodaTime\PostgreSQLCopyHelper.NodaTime.csproj" />
     <ProjectReference Include="..\PostgreSQLCopyHelper\PostgreSQLCopyHelper.csproj" />
   </ItemGroup>
 
