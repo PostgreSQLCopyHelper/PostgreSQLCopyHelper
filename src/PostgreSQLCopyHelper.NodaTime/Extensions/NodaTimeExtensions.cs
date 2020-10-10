@@ -6,22 +6,22 @@ namespace PostgreSQLCopyHelper.NodaTime
 {
     public static class NodaTimeExtensions
     {
-        public static PostgreSQLCopyHelper<TEntity> MapTimestampTz<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, ZonedDateTime> propertyGetter)
+        public static PostgreSQLCopyHelper<TEntity> MapTimeStampTz<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, ZonedDateTime> propertyGetter)
         {
             return helper.Map(columnName, propertyGetter, NpgsqlDbType.TimestampTz); 
         }
 
-        public static PostgreSQLCopyHelper<TEntity> MapTimestampTz<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, OffsetDateTime> propertyGetter)
+        public static PostgreSQLCopyHelper<TEntity> MapTimeStampTz<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, OffsetDateTime> propertyGetter)
         {
             return helper.Map(columnName, propertyGetter, NpgsqlDbType.TimestampTz);
         }
 
-        public static PostgreSQLCopyHelper<TEntity> MapTimestamp<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Instant> propertyGetter)
+        public static PostgreSQLCopyHelper<TEntity> MapTimeStamp<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, Instant> propertyGetter)
         {
             return helper.Map(columnName, propertyGetter, NpgsqlDbType.Timestamp);
         }
 
-        public static PostgreSQLCopyHelper<TEntity> MapTimestamp<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, LocalDateTime> propertyGetter)
+        public static PostgreSQLCopyHelper<TEntity> MapTimeStamp<TEntity>(this PostgreSQLCopyHelper<TEntity> helper, string columnName, Func<TEntity, LocalDateTime> propertyGetter)
         {
             return helper.Map(columnName, propertyGetter, NpgsqlDbType.Timestamp);
         }

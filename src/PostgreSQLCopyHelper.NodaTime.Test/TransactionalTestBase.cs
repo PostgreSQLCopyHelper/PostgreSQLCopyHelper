@@ -18,13 +18,14 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
 
             connection = new NpgsqlConnection("Server=127.0.0.1;Port=5432;Database=sampledb;User Id=philipp;Password=test_pwd;");
             connection.Open();
+
+            // Add NodaTime support:
             connection.TypeMapper.UseNodaTime();
 
             transaction = connection.BeginTransaction();
 
             OnSetupInTransaction();
         }
-
 
         protected virtual void OnSetupBeforeTransaction()
         {
