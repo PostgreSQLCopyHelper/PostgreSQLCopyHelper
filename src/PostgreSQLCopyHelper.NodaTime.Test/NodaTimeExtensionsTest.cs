@@ -1,13 +1,10 @@
 ﻿// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using NodaTime;
 using Npgsql;
 using NUnit.Framework;
-using PostgreSQLCopyHelper.NodaTime;
-using PostgreSQLCopyHelper.NodaTime.Test.Extensions;
+using PostgreSQLCopyHelper.Test.Extensions;
 
 namespace PostgreSQLCopyHelper.NodaTime.Test
 {
@@ -43,7 +40,7 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
             var begin = new LocalDateTime(2020, 1, 23, 0, 12);
             var end = new LocalDateTime(2020, 12, 8, 12, 44);
 
-            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "nody_time_test")
+            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "noda_time_test")
                 .MapInterval("col_noda", x => x.Period);
 
             var entity = new AllNodaTypesEntity
@@ -71,7 +68,7 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
         {
             CreateTable("date");
 
-            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "nody_time_test")
+            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "noda_time_test")
                 .MapDate("col_noda", x => x.LocalDate);
 
             var entity = new AllNodaTypesEntity
@@ -99,7 +96,7 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
         {
             CreateTable("timestamp");
 
-            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "nody_time_test")
+            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "noda_time_test")
                 .MapTimeStamp("col_noda", x => x.LocalDateTime);
 
             var entity = new AllNodaTypesEntity
@@ -131,7 +128,7 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
         {
             CreateTable("timestamp");
 
-            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "nody_time_test")
+            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "noda_time_test")
                 .MapTimeStamp("col_noda", x => x.Instant);
 
             var entity = new AllNodaTypesEntity
@@ -159,7 +156,7 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
         {
             CreateTable("timetz");
 
-            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "nody_time_test")
+            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "noda_time_test")
                 .MapTimeTz("col_noda", x => x.OffsetTime);
 
             var entity = new AllNodaTypesEntity
@@ -187,7 +184,7 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
         {
             CreateTable("timestamptz");
 
-            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "nody_time_test")
+            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "noda_time_test")
                 .MapTimeStampTz("col_noda", x => x.OffsetDateTime);
 
             var entity = new AllNodaTypesEntity
@@ -216,7 +213,7 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
             CreateTable("time");
 
       
-            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "nody_time_test")
+            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "noda_time_test")
                 .MapTime("col_noda", x => x.LocalTime);
 
             var entity = new AllNodaTypesEntity
@@ -244,7 +241,7 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
         {
             CreateTable("timestamptz");
 
-            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "nody_time_test")
+            var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "noda_time_test")
                 .MapTimeStampTz("col_noda", x => x.ZonedDateTime);
 
             var timezone = DateTimeZoneProviders.Tzdb.GetZoneOrNull("Africa/Kigali");
@@ -277,7 +274,7 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
 
         private int CreateTable(string postgresDbType)
         {
-            var sqlStatement = $"CREATE TABLE sample.nody_time_test(col_noda {postgresDbType});";
+            var sqlStatement = $"CREATE TABLE sample.noda_time_test(col_noda {postgresDbType});";
 
             var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
 
@@ -286,7 +283,7 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
 
         private IList<object[]> GetAll()
         {
-            return connection.GetAll("sample", "nody_time_test");
+            return connection.GetAll("sample", "noda_time_test");
         }
     }
 }
