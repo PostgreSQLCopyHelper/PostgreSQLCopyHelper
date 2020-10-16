@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using NodaTime;
 using Npgsql;
 using NUnit.Framework;
+using PostgreSQLCopyHelper.Test;
 using PostgreSQLCopyHelper.Test.Extensions;
 
 namespace PostgreSQLCopyHelper.NodaTime.Test
@@ -11,7 +12,6 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
     [TestFixture]
     public class NodaTimeExtensionsTest : TransactionalTestBase
     {
-
         public class AllNodaTypesEntity
         {
             public LocalTime LocalTime { get; set; }
@@ -35,7 +35,6 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
         public void Test_Interval()
         {
             CreateTable("interval");
-
 
             var begin = new LocalDateTime(2020, 1, 23, 0, 12);
             var end = new LocalDateTime(2020, 12, 8, 12, 44);
@@ -211,8 +210,7 @@ namespace PostgreSQLCopyHelper.NodaTime.Test
         public void Test_LocalTime()
         {
             CreateTable("time");
-
-      
+            
             var subject = new PostgreSQLCopyHelper<AllNodaTypesEntity>("sample", "noda_time_test")
                 .MapTime("col_noda", x => x.LocalTime);
 
