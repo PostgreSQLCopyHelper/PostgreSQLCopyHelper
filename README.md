@@ -137,7 +137,7 @@ To install PostgreSQLCopyHelper.NodaTime, run the following command in the Packa
 PM> Install-Package PostgreSQLCopyHelper
 ```
 
-It uses the Npgsql.NodaTime plugin, which needs to be enabled by running:
+It uses the [Npgsql.NodaTime plugin](https://www.npgsql.org/doc/types/nodatime.html), which needs to be enabled by running:
 
 ```csharp
 using Npgsql;
