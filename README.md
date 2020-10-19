@@ -127,7 +127,7 @@ private async Task<ulong> WriteToDatabaseAsync(PostgreSQLCopyHelper<TestEntity> 
 }
 ```
 
-## PostgreSQLCopyHelper.NodaTime: Noda Time Support ##
+## PostgreSQLCopyHelper.NodaTime: NodaTime Support ##
 
 The [PostgreSQLCopyHelper.NodaTime](https://www.nuget.org/packages/PostgreSQLCopyHelper.NodaTime/) package extends PostgreSQLCopyHelper for [NodaTime](https://nodatime.org/) types. 
 
