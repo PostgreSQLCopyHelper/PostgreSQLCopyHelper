@@ -6,12 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="NUnit" />
-    <PackageReference Include="NUnit3TestAdapter" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\PostgreSQLCopyHelper.NodaTime\PostgreSQLCopyHelper.NodaTime.csproj" />
+    <ProjectReference Include="..\PostgreSQLCopyHelper.Test\PostgreSQLCopyHelper.Test.csproj" />
     <ProjectReference Include="..\PostgreSQLCopyHelper\PostgreSQLCopyHelper.csproj" />
   </ItemGroup>
 

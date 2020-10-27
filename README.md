@@ -127,6 +127,32 @@ private async Task<ulong> WriteToDatabaseAsync(PostgreSQLCopyHelper<TestEntity> 
 }
 ```
 
+## PostgreSQLCopyHelper.NodaTime: NodaTime Support ##
+
+The [PostgreSQLCopyHelper.NodaTime](https://www.nuget.org/packages/PostgreSQLCopyHelper.NodaTime/) package extends PostgreSQLCopyHelper for [NodaTime](https://nodatime.org/) types. 
+
+To install PostgreSQLCopyHelper.NodaTime, run the following command in the Package Manager Console:
+
+```
+PM> Install-Package PostgreSQLCopyHelper
+```
+
+It uses the [Npgsql.NodaTime plugin](https://www.npgsql.org/doc/types/nodatime.html), which needs to be enabled by running:
+
+```csharp
+using Npgsql;
+
+// Place this at the beginning of your program to use NodaTime everywhere (recommended)
+NpgsqlConnection.GlobalTypeMapper.UseNodaTime();
+
+// Or to temporarily use NodaTime on a single connection only:
+conn.TypeMapper.UseNodaTime();
+```
+
+For more details see the Npgsql documentation:
+
+* [https://www.npgsql.org/doc/types/nodatime.html](https://www.npgsql.org/doc/types/nodatime.html)
+
 ## Case-Sensitive Identifiers ##
 
 By default the library does not apply quotes to identifiers, such as Table Names and Column Names. If you want PostgreSQL-conform quoting for identifiers, 
