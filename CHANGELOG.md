@@ -1,5 +1,13 @@
 # CHANGELOG #
 
+## 2.7.0 ##
+
+* [See Changes](https://github.com/PostgreSQLCopyHelper/PostgreSQLCopyHelper/compare/2.6.3...2.7.0)
+
+#### This release: 
+
+- Add NodaTime Support to PostgreSQLCopyHelper
+
 ## 2.6.3 ##
 
 * [See Changes](https://github.com/PostgreSQLCopyHelper/PostgreSQLCopyHelper/compare/2.6.2...2.6.3)
