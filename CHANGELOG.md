@@ -6,7 +6,7 @@
 
 #### This release: 
 
-- Add NodaTime Support to PostgreSQLCopyHelper
+- Adds NodaTime Support to PostgreSQLCopyHelper
 
 ## 2.6.3 ##
 
