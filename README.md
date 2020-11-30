@@ -127,6 +127,16 @@ private async Task<ulong> WriteToDatabaseAsync(PostgreSQLCopyHelper<TestEntity> 
 }
 ```
 
+## PostgreSQLCopyHelper Custom Type Maps ##
+
+One can always define a custom map function for any property to any `Npgsql` type.
+
+For example:
+
+```csharp
+.Map("geo", x => x.geo, NpgsqlDbType.Point)
+```
+
 ## PostgreSQLCopyHelper.NodaTime: NodaTime Support ##
 
 The [PostgreSQLCopyHelper.NodaTime](https://www.nuget.org/packages/PostgreSQLCopyHelper.NodaTime/) package extends PostgreSQLCopyHelper for [NodaTime](https://nodatime.org/) types. 
@@ -149,9 +159,7 @@ NpgsqlConnection.GlobalTypeMapper.UseNodaTime();
 conn.TypeMapper.UseNodaTime();
 ```
 
-For more details see the Npgsql documentation:
-
-* [https://www.npgsql.org/doc/types/nodatime.html](https://www.npgsql.org/doc/types/nodatime.html)
+For more details see the [Npgsql documentation for NodaTime](https://www.npgsql.org/doc/types/nodatime.html).
 
 ## Case-Sensitive Identifiers ##
 
