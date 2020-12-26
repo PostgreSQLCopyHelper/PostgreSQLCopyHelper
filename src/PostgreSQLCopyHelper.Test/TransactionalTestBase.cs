@@ -9,7 +9,7 @@ namespace PostgreSQLCopyHelper.Test
     public abstract class TransactionalTestBase
     {
         protected NpgsqlConnection connection;
-        protected NpgsqlTransaction transaction;
+        private NpgsqlTransaction transaction;
 
         [SetUp]
         public void Setup()

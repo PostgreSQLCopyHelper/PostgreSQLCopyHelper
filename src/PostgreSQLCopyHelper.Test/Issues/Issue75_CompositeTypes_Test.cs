@@ -29,13 +29,13 @@ namespace PostgreSQLCopyHelper.Test.Issues
 
         protected override void OnSetupInTransaction()
         {
-            DropTableAndType(connection, transaction);
-            CreateTableAndType(connection, transaction);
+            DropTableAndType();
+            CreateTableAndType();
         }
 
         protected override void OnTeardownInTransaction()
         {
-            DropTableAndType(connection, transaction);
+            DropTableAndType();
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace PostgreSQLCopyHelper.Test.Issues
             Assert.AreEqual(new DateTime(1912, 1, 11), result[1].BirthDate);
         }
 
-        private void CreateTableAndType(NpgsqlConnection connection, NpgsqlTransaction transaction)
+        private void CreateTableAndType()
         {
             {
                 var sqlStatement = @"create type sample.person_type as
@@ -82,7 +82,7 @@ namespace PostgreSQLCopyHelper.Test.Issues
                                     birth_date date
                                 );";
 
-                var sqlCommand = new NpgsqlCommand(sqlStatement, connection, transaction);
+                var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
 
                 sqlCommand.ExecuteNonQuery();
             }
@@ -92,23 +92,23 @@ namespace PostgreSQLCopyHelper.Test.Issues
                                     col_person sample.person_type                
                                  );";
 
-                var sqlCommand = new NpgsqlCommand(sqlStatement, connection, transaction);
+                var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
 
                 sqlCommand.ExecuteNonQuery();
             }
         }
 
-        private void DropTableAndType(NpgsqlConnection connection, NpgsqlTransaction transaction)
+        private void DropTableAndType()
         {
             {
                 var sqlStatement = @"DROP TABLE IF EXISTS sample.CompositeTest";
-                var sqlCommand = new NpgsqlCommand(sqlStatement, connection, transaction);
+                var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
 
                 sqlCommand.ExecuteNonQuery();
             }
             {
                 var sqlStatement = @"DROP TYPE IF EXISTS sample.person_type";
-                var sqlCommand = new NpgsqlCommand(sqlStatement, connection, transaction);
+                var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
 
                 sqlCommand.ExecuteNonQuery();
             }
