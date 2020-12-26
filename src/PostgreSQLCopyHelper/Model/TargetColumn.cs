@@ -11,6 +11,8 @@ namespace PostgreSQLCopyHelper.Model
 
         public Type ClrType { get; internal set; } 
 
-        public NpgsqlDbType DbType { get; internal set; }
+        public NpgsqlDbType? DbType { get; internal set; }
+
+        public string DataTypeName { get; internal set; }
     }
 }
