@@ -29,5 +29,27 @@ namespace PostgreSQLCopyHelper.Test.Extensions
 
             return result;
         }
+
+        public static IList<object[]> GetAll(this NpgsqlConnection connection, string sqlStatement)
+        {
+            var sqlCommand = new NpgsqlCommand(sqlStatement, connection);
+
+            var result = new List<object[]>();
+            using (var dataReader = sqlCommand.ExecuteReader())
+            {
+                while (dataReader.Read())
+                {
+                    var values = new object[dataReader.FieldCount];
+                    for (var i = 0; i < dataReader.FieldCount; i++)
+                    {
+                        values[i] = dataReader[i];
+                    }
+                    result.Add(values);
+                }
+            }
+
+            return result;
+        }
+
     }
 }

@@ -137,6 +137,101 @@ For example:
 .Map("geo", x => x.geo, NpgsqlDbType.Point)
 ```
 
+## Mapping Composite Types ##
+
+Imagine you have a composite type called ``person_type`` in a schema of your database:
+
+```sql
+create type sample.person_type as
+(
+    first_name text,
+    last_name text,
+    birth_date date
+);
+```
+
+And it is used in a table called ``CompositeTest``:
+
+```sql
+create table sample.CompositeTest
+(
+    col_text text,
+    col_person sample.person_type                
+)
+```
+
+You first need to map the Postgres ``person_type`` to a C\# class:
+
+```csharp
+private class PersonType
+{
+    public string FirstName { get; set; }
+
+    public string LastName { get; set; }
+
+    public DateTime BirthDate { get; set; }
+}
+```
+
+A hint: Npgsql always converts the property name to a snake case column name, so ``FirstName`` is mapped 
+to ``first_name`` by convention. You can use the ``[PgName]`` attribute to explicitly set the Postgres type 
+name.
+
+Next the table is mapped to the following C\# model:
+
+```csharp
+private class SampleEntity
+{
+    public string TextColumn { get; set; }
+
+    public PersonType CompositeTypeColumn { get; set; }
+}
+```
+
+And now we can bulk write ``SampleEntity`` instances using PostgreSQLCopyHelper like this:
+
+```csharp
+connection.TypeMapper.MapComposite<PersonType>("sample.person_type");
+
+// ... alternatively you can set it globally at any place in your application using the NpgsqlConnection.GlobalTypeMapper:
+//
+// NpgsqlConnection.GlobalTypeMapper.MapComposite<PersonType>("sample.person_type");
+
+var subject = new PostgreSQLCopyHelper<SampleEntity>("sample", "CompositeTest")
+         .MapText("col_text", x => x.TextColumn)
+         .Map("col_person", x => x.CompositeTypeColumn);
+
+var entities = new List<SampleEntity>();
+
+entities.Add(new SampleEntity
+{
+    TextColumn = "0",
+    CompositeTypeColumn = new PersonType { FirstName = "Fake", LastName = "Fakerton", BirthDate = new DateTime(1987, 1, 11) }
+});
+
+entities.Add(new SampleEntity
+{
+    TextColumn = "1",
+    CompositeTypeColumn = new PersonType { FirstName = "Philipp", LastName = "Wagner", BirthDate = new DateTime(1912, 1, 11) }
+});
+
+subject.SaveAll(connection, entities);
+
+```
+
+In the listing you see, that we need to tell Npgsql how to map the Postgres type using ``MapComposite<>``. This can 
+be done per Connection like this:
+
+```
+connection.TypeMapper.MapComposite<PersonType>("sample.person_type");
+```
+
+Or you can alternatively set the Mapping globally at any place in your application using the ``NpgsqlConnection.GlobalTypeMapper``:
+
+```
+NpgsqlConnection.GlobalTypeMapper.MapComposite<PersonType>("sample.person_type");
+```
+
 ## PostgreSQLCopyHelper.NodaTime: NodaTime Support ##
 
 The [PostgreSQLCopyHelper.NodaTime](https://www.nuget.org/packages/PostgreSQLCopyHelper.NodaTime/) package extends PostgreSQLCopyHelper for [NodaTime](https://nodatime.org/) types. 
