@@ -1,5 +1,13 @@
 # CHANGELOG #
 
+## 2.8.0 ##
+
+* [See Changes](https://github.com/PostgreSQLCopyHelper/PostgreSQLCopyHelper/compare/2.7.0...2.8.0)
+
+#### This release: 
+
+- Adds Support for Composite Types
+
 ## 2.7.0 ##
 
 * [See Changes](https://github.com/PostgreSQLCopyHelper/PostgreSQLCopyHelper/compare/2.6.3...2.7.0)
