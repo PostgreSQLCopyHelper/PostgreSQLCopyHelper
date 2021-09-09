@@ -4,7 +4,7 @@
 [![stable](https://img.shields.io/nuget/v/PostgreSQLCopyHelper.svg?label=stable)](https://www.nuget.org/packages/PostgreSQLCopyHelper/)
 [![prerelease](https://img.shields.io/nuget/vpre/PostgreSQLCopyHelper.svg?label=prerelease)](https://www.nuget.org/packages/PostgreSQLCopyHelper/)
 
-PostgreSQLCopyHelper is a library for efficient bulk inserts to PostgreSQL databases. It wraps the COPY methods from Npgsql behind a nice Fluent API.
+PostgreSQLCopyHelper is a library for efficient bulk inserts to PostgreSQL databases. It wraps the COPY methods from [Npgsql](https://github.com/npgsql/npgsql) behind a nice Fluent API.
 
 ## Installing ##
 
@@ -236,7 +236,7 @@ NpgsqlConnection.GlobalTypeMapper.MapComposite<PersonType>("sample.person_type")
 
 The [PostgreSQLCopyHelper.NodaTime](https://www.nuget.org/packages/PostgreSQLCopyHelper.NodaTime/) package extends PostgreSQLCopyHelper for [NodaTime](https://nodatime.org/) types. 
 
-To install PostgreSQLCopyHelper.NodaTime, run the following command in the Package Manager Console:
+To install `PostgreSQLCopyHelper.NodaTime`, run the following command in the Package Manager Console:
 
 ```
 PM> Install-Package PostgreSQLCopyHelper
